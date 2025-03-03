@@ -1,0 +1,150 @@
+@prefix : <http://www.example.org/test#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+<http://www.example.org/test#> a owl:Ontology .
+
+:EnergyData a owl:Class ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasChange ;
+        owl:someValuesFrom :EnergyDataChange
+    ] .
+
+:EnergyDataChange a owl:Class ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasTimestamp ;
+        owl:onDataRange xsd:dateTime ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+    ] ,
+    [
+        a owl:Restriction ;
+        owl:onProperty :hasEnergyConsumption ;
+        owl:onDataRange xsd:float ;
+        owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger
+    ] ,
+    [
+        a owl:Restriction ;
+        owl:onProperty :hasCarbonEmission ;
+        owl:onDataRange xsd:float ;
+        owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger
+    ] ,
+    [
+        a owl:Restriction ;
+        owl:onProperty :hasMaterialFlow ;
+        owl:onDataRange xsd:float ;
+        owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger
+    ] ,
+    [
+        a owl:Restriction ;
+        owl:onProperty :hasDirectEffect ;
+        owl:onDataRange xsd:float ;
+        owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger
+    ] ,
+    [
+        a owl:Restriction ;
+        owl:onProperty :hasIndirectEffect ;
+        owl:onDataRange xsd:float ;
+        owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger
+    ] ,
+    [
+        a owl:Restriction ;
+        owl:onProperty :hasReboundEffect ;
+        owl:onDataRange xsd:float ;
+        owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger
+    ] ,
+    [
+        a owl:Restriction ;
+        owl:onProperty :hasEconomicValue ;
+        owl:onDataRange xsd:float ;
+        owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger
+    ] ,
+    [
+        a owl:Restriction ;
+        owl:onProperty :hasEnvironmentalValue ;
+        owl:onDataRange xsd:float ;
+        owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger
+    ] ,
+    [
+        a owl:Restriction ;
+        owl:onProperty :hasSocialValue ;
+        owl:onDataRange xsd:float ;
+        owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger
+    ] ,
+    [
+        a owl:Restriction ;
+        owl:onProperty :hasValueCreated ;
+        owl:onDataRange xsd:float ;
+        owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger
+    ] ,
+    [
+        a owl:Restriction ;
+        owl:onProperty :hasValueMissed ;
+        owl:onDataRange xsd:float ;
+        owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger
+    ] ,
+    [
+        a owl:Restriction ;
+        owl:onProperty :hasValueDestroyed ;
+        owl:onDataRange xsd:float ;
+        owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger
+    ] .
+
+:hasChange a owl:ObjectProperty ;
+    rdfs:domain :EnergyData ;
+    rdfs:range :EnergyDataChange .
+
+:hasTimestamp a owl:DatatypeProperty ;
+    rdfs:domain :EnergyDataChange ;
+    rdfs:range xsd:dateTime .
+
+:hasEnergyConsumption a owl:DatatypeProperty ;
+    rdfs:domain :EnergyDataChange ;
+    rdfs:range xsd:float .
+
+:hasCarbonEmission a owl:DatatypeProperty ;
+    rdfs:domain :EnergyDataChange ;
+    rdfs:range xsd:float .
+
+:hasMaterialFlow a owl:DatatypeProperty ;
+    rdfs:domain :EnergyDataChange ;
+    rdfs:range xsd:float .
+
+:hasDirectEffect a owl:DatatypeProperty ;
+    rdfs:domain :EnergyDataChange ;
+    rdfs:range xsd:float .
+
+:hasIndirectEffect a owl:DatatypeProperty ;
+    rdfs:domain :EnergyDataChange ;
+    rdfs:range xsd:float .
+
+:hasReboundEffect a owl:DatatypeProperty ;
+    rdfs:domain :EnergyDataChange ;
+    rdfs:range xsd:float .
+
+:hasEconomicValue a owl:DatatypeProperty ;
+    rdfs:domain :EnergyDataChange ;
+    rdfs:range xsd:float .
+
+:hasEnvironmentalValue a owl:DatatypeProperty ;
+    rdfs:domain :EnergyDataChange ;
+    rdfs:range xsd:float .
+
+:hasSocialValue a owl:DatatypeProperty ;
+    rdfs:domain :EnergyDataChange ;
+    rdfs:range xsd:float .
+
+:hasValueCreated a owl:DatatypeProperty ;
+    rdfs:domain :EnergyDataChange ;
+    rdfs:range xsd:float .
+
+:hasValueMissed a owl:DatatypeProperty ;
+    rdfs:domain :EnergyDataChange ;
+    rdfs:range xsd:float .
+
+:hasValueDestroyed a owl:DatatypeProperty ;
+    rdfs:domain :EnergyDataChange ;
+    rdfs:range xsd:float .
