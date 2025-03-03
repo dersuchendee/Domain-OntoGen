@@ -1,0 +1,44 @@
+@prefix : <http://www.example.org/test#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+<http://www.example.org/test#> a owl:Ontology .
+
+:Flow a owl:Class ;
+    rdfs:label "Flow" .
+
+:Quality a owl:Class ;
+    rdfs:label "Quality" .
+
+:FlowQualityAssessment a owl:Class ;
+    rdfs:label "Flow Quality Assessment" ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :assessesFlow ;
+        owl:onClass :Flow ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+    ] , [
+        a owl:Restriction ;
+        owl:onProperty :hasQuality ;
+        owl:onClass :Quality ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+    ] , [
+        a owl:Restriction ;
+        owl:onProperty :atTime ;
+        owl:onDataRange xsd:dateTime ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+    ] .
+
+:assessesFlow a owl:ObjectProperty ;
+    rdfs:domain :FlowQualityAssessment ;
+    rdfs:range :Flow .
+
+:hasQuality a owl:ObjectProperty ;
+    rdfs:domain :FlowQualityAssessment ;
+    rdfs:range :Quality .
+
+:atTime a owl:DatatypeProperty ;
+    rdfs:domain :FlowQualityAssessment ;
+    rdfs:range xsd:dateTime .
