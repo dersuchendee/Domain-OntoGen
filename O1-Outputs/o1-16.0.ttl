@@ -1,0 +1,72 @@
+O: 
+@prefix : <http://www.example.org/test#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+<http://www.example.org/test#> a owl:Ontology .
+
+:SetOfBells a owl:Class ;
+    rdfs:label "Set of Bells" ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasPlayMethod ;
+        owl:someValuesFrom :PlayMethod
+    ] .
+
+:PlayMethod a owl:Class ;
+    rdfs:label "Play Method" .
+
+:ManualPlayMethod a owl:Class ;
+    rdfs:label "Manual Play Method" ;
+    rdfs:subClassOf :PlayMethod .
+
+:ElectricPlayMethod a owl:Class ;
+    rdfs:label "Electric Play Method" ;
+    rdfs:subClassOf :PlayMethod .
+
+:ManualPlayMethod owl:disjointWith :ElectricPlayMethod .
+
+:hasPlayMethod a owl:ObjectProperty ;
+    rdfs:label "has Play Method" ;
+    rdfs:domain :SetOfBells ;
+    rdfs:range :PlayMethod .
+
+:SetOfBellsPlayedManually a owl:Class ;
+    rdfs:label "Set of Bells Played Manually" ;
+    owl:equivalentClass [
+        a owl:Class ;
+        owl:intersectionOf (
+            :SetOfBells
+            [
+                a owl:Restriction ;
+                owl:onProperty :hasPlayMethod ;
+                owl:someValuesFrom :ManualPlayMethod
+            ]
+        )
+    ] .
+
+:SetOfBellsPlayedElectrically a owl:Class ;
+    rdfs:label "Set of Bells Played Electrically" ;
+    owl:equivalentClass [
+        a owl:Class ;
+        owl:intersectionOf (
+            :SetOfBells
+            [
+                a owl:Restriction ;
+                owl:onProperty :hasPlayMethod ;
+                owl:someValuesFrom :ElectricPlayMethod
+            ]
+        )
+    ] .
+
+:SetOfBellsPlayedManuallyAndElectrically a owl:Class ;
+    rdfs:label "Set of Bells Played Manually and Electrically" ;
+    owl:equivalentClass [
+        a owl:Class ;
+        owl:intersectionOf (
+            :SetOfBellsPlayedManually
+            :SetOfBellsPlayedElectrically
+        )
+    ] .

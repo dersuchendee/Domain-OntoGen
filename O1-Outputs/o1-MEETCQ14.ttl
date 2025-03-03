@@ -1,0 +1,65 @@
+```
+@prefix : <http://www.example.org/test#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+<http://www.example.org/test#> a owl:Ontology .
+
+:Person a owl:Class ;
+    rdfs:label "Person" .
+
+:Musician a owl:Class ;
+    rdfs:label "Musician" ;
+    rdfs:subClassOf :Person .
+
+:Patron a owl:Class ;
+    rdfs:label "Patron" ;
+    rdfs:subClassOf :Person ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :patronOf ;
+        owl:someValuesFrom :Musician
+    ] .
+
+:hasPowerOver a owl:ObjectProperty ;
+    rdfs:label "has power over" ;
+    rdfs:domain :Person ;
+    rdfs:range :Person ;
+    owl:inverseOf :isPoweredBy .
+
+:isPoweredBy a owl:ObjectProperty ;
+    rdfs:label "is powered by" ;
+    rdfs:domain :Person ;
+    rdfs:range :Person ;
+    owl:inverseOf :hasPowerOver .
+
+:patronOf a owl:ObjectProperty ;
+    rdfs:label "patron of" ;
+    rdfs:domain :Patron ;
+    rdfs:range :Musician ;
+    rdfs:subPropertyOf :hasPowerOver ;
+    owl:inverseOf :isPatronizedBy .
+
+:isPatronizedBy a owl:ObjectProperty ;
+    rdfs:label "is patronized by" ;
+    rdfs:domain :Musician ;
+    rdfs:range :Patron ;
+    owl:inverseOf :patronOf ;
+    rdfs:subPropertyOf :isPoweredBy .
+
+:supervises a owl:ObjectProperty ;
+    rdfs:label "supervises" ;
+    rdfs:domain :Person ;
+    rdfs:range :Person ;
+    rdfs:subPropertyOf :hasPowerOver ;
+    owl:inverseOf :isSupervisedBy .
+
+:isSupervisedBy a owl:ObjectProperty ;
+    rdfs:label "is supervised by" ;
+    rdfs:domain :Person ;
+    rdfs:range :Person ;
+    owl:inverseOf :supervises ;
+    rdfs:subPropertyOf :isPoweredBy .
+```

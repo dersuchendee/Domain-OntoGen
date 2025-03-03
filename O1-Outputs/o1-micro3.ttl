@@ -1,0 +1,53 @@
+```turtle
+@prefix : <http://www.example.org/test#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+<http://www.example.org/test#> a owl:Ontology .
+
+:Species a owl:Class ;
+    rdfs:label "Species" .
+
+:AquaticMicrobeSpecies a owl:Class ;
+    rdfs:label "Aquatic Microbe Species" ;
+    rdfs:subClassOf :Species ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :isFoundInEnvironment ;
+        owl:someValuesFrom [
+            a owl:Class ;
+            owl:intersectionOf (
+                :Environment
+                [
+                    a owl:Restriction ;
+                    owl:onProperty :hasChemicalCharacteristic ;
+                    owl:someValuesFrom :ChemicalCharacteristic
+                ]
+            )
+        ]
+    ] .
+
+:Environment a owl:Class ;
+    rdfs:label "Environment" ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasChemicalCharacteristic ;
+        owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+        owl:onClass :ChemicalCharacteristic
+    ] .
+
+:ChemicalCharacteristic a owl:Class ;
+    rdfs:label "Chemical Characteristic" .
+
+:isFoundInEnvironment a owl:ObjectProperty ;
+    rdfs:label "is found in environment" ;
+    rdfs:domain :Species ;
+    rdfs:range :Environment .
+
+:hasChemicalCharacteristic a owl:ObjectProperty ;
+    rdfs:label "has chemical characteristic" ;
+    rdfs:domain :Environment ;
+    rdfs:range :ChemicalCharacteristic .
+```

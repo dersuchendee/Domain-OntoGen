@@ -1,0 +1,50 @@
+O:
+```turtle
+@prefix : <http://www.example.org/test#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+<http://www.example.org/test#> a owl:Ontology .
+
+:Musician a owl:Class ;
+    rdfs:label "Musician" .
+
+:FemaleMusician a owl:Class ;
+    rdfs:label "Female Musician" ;
+    rdfs:subClassOf :Musician .
+
+:Event a owl:Class ;
+    rdfs:label "Event" .
+
+:Performance a owl:Class ;
+    rdfs:label "Performance" ;
+    rdfs:subClassOf :Event .
+
+:Location a owl:Class ;
+    rdfs:label "Location" .
+
+:hasPerformer a owl:ObjectProperty ;
+    rdfs:label "has performer" ;
+    rdfs:domain :Performance ;
+    rdfs:range :Musician ;
+    owl:inverseOf :hasPerformed .
+
+:hasPerformed a owl:ObjectProperty ;
+    rdfs:label "has performed" ;
+    rdfs:domain :Musician ;
+    rdfs:range :Performance ;
+    owl:inverseOf :hasPerformer .
+
+:takesPlaceAt a owl:ObjectProperty ;
+    rdfs:label "takes place at" ;
+    rdfs:domain :Performance ;
+    rdfs:range :Location .
+
+:performedAt a owl:ObjectProperty ;
+    rdfs:label "performed at" ;
+    rdfs:domain :Musician ;
+    rdfs:range :Location ;
+    owl:propertyChainAxiom ( :hasPerformed :takesPlaceAt ) .
+```

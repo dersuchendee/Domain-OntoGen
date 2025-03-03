@@ -1,0 +1,59 @@
+@prefix : <http://www.example.org/test#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+<http://www.example.org/test#> a owl:Ontology .
+
+:Flow a owl:Class ;
+    rdfs:label "Flow" ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasQualityObservation ;
+        owl:someValuesFrom :FlowQualityObservation
+    ] .
+
+:Quality a owl:Class ;
+    rdfs:label "Quality" .
+
+:FlowQualityObservation a owl:Class ;
+    rdfs:label "Flow Quality Observation" ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :isObservationOfFlow ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+        owl:onClass :Flow
+    ] ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasQuality ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+        owl:onClass :Quality
+    ] ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :observedAtTime ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+        owl:onDataRange xsd:dateTime
+    ] .
+
+:hasQualityObservation a owl:ObjectProperty ;
+    rdfs:label "hasQualityObservation" ;
+    rdfs:domain :Flow ;
+    rdfs:range :FlowQualityObservation .
+
+:isObservationOfFlow a owl:ObjectProperty ;
+    rdfs:label "isObservationOfFlow" ;
+    rdfs:domain :FlowQualityObservation ;
+    rdfs:range :Flow .
+
+:hasQuality a owl:ObjectProperty ;
+    rdfs:label "hasQuality" ;
+    rdfs:domain :FlowQualityObservation ;
+    rdfs:range :Quality .
+
+:observedAtTime a owl:DatatypeProperty ;
+    rdfs:label "observedAtTime" ;
+    rdfs:domain :FlowQualityObservation ;
+    rdfs:range xsd:dateTime .

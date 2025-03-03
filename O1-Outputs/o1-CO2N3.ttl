@@ -1,0 +1,50 @@
+```turtle
+@prefix : <http://www.example.org/test#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+<http://www.example.org/test#> a owl:Ontology .
+
+:Enzyme a owl:Class ;
+    rdfs:label "Enzyme" .
+
+:Rubisco a owl:Class ;
+    rdfs:label "Rubisco" ;
+    rdfs:subClassOf :Enzyme ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasRole ;
+        owl:someValuesFrom :CatalystRole
+    ] ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :catalyzesProcess ;
+        owl:someValuesFrom :CO2FixationProcess
+    ] .
+
+:Role a owl:Class ;
+    rdfs:label "Role" .
+
+:CatalystRole a owl:Class ;
+    rdfs:label "Catalyst Role" ;
+    rdfs:subClassOf :Role .
+
+:BiologicalProcess a owl:Class ;
+    rdfs:label "Biological Process" .
+
+:CO2FixationProcess a owl:Class ;
+    rdfs:label "CO2 Fixation Process" ;
+    rdfs:subClassOf :BiologicalProcess .
+
+:hasRole a owl:ObjectProperty ;
+    rdfs:label "has role" ;
+    rdfs:domain :Enzyme ;
+    rdfs:range :Role .
+
+:catalyzesProcess a owl:ObjectProperty ;
+    rdfs:label "catalyzes process" ;
+    rdfs:domain :Enzyme ;
+    rdfs:range :BiologicalProcess .
+```

@@ -1,0 +1,48 @@
+```turtle
+@prefix : <http://www.example.org/test#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+<http://www.example.org/test#> a owl:Ontology .
+
+:Musician a owl:Class ;
+    rdfs:label "Musician" ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasWorkingPeriod ;
+        owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+        owl:onClass :WorkingPeriod
+    ] .
+
+:WorkingPeriod a owl:Class ;
+    rdfs:label "Working Period" ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :startYear ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+        owl:onDataRange xsd:gYear
+    ] ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :endYear ;
+        owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+        owl:onDataRange xsd:gYear
+    ] .
+
+:hasWorkingPeriod a owl:ObjectProperty ;
+    rdfs:label "has working period" ;
+    rdfs:domain :Musician ;
+    rdfs:range :WorkingPeriod .
+
+:startYear a owl:DatatypeProperty ;
+    rdfs:label "start year" ;
+    rdfs:domain :WorkingPeriod ;
+    rdfs:range xsd:gYear .
+
+:endYear a owl:DatatypeProperty ;
+    rdfs:label "end year" ;
+    rdfs:domain :WorkingPeriod ;
+    rdfs:range xsd:gYear .
+```

@@ -1,0 +1,80 @@
+O:
+```turtle
+@prefix : <http://www.example.org/test#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+<http://www.example.org/test#> a owl:Ontology .
+
+:Event a owl:Class ;
+    rdfs:label "Event" ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasAttendance ;
+        owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+        owl:onClass :Attendance
+    ] .
+
+:Person a owl:Class ;
+    rdfs:label "Person" ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasProvenance ;
+        owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+        owl:onClass :Provenance
+    ] .
+
+:Provenance a owl:Class ;
+    rdfs:label "Provenance" .
+
+:Attendance a owl:Class ;
+    rdfs:label "Attendance" ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :attendedBy ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+        owl:onClass :Person
+    ] ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :attendedEvent ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+        owl:onClass :Event
+    ] ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasReason ;
+        owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+        owl:onClass :Reason
+    ] .
+
+:Reason a owl:Class ;
+    rdfs:label "Reason" .
+
+:hasAttendance a owl:ObjectProperty ;
+    rdfs:label "hasAttendance" ;
+    rdfs:domain :Event ;
+    rdfs:range :Attendance .
+
+:attendedBy a owl:ObjectProperty ;
+    rdfs:label "attendedBy" ;
+    rdfs:domain :Attendance ;
+    rdfs:range :Person .
+
+:attendedEvent a owl:ObjectProperty ;
+    rdfs:label "attendedEvent" ;
+    rdfs:domain :Attendance ;
+    rdfs:range :Event .
+
+:hasProvenance a owl:ObjectProperty ;
+    rdfs:label "hasProvenance" ;
+    rdfs:domain :Person ;
+    rdfs:range :Provenance .
+
+:hasReason a owl:ObjectProperty ;
+    rdfs:label "hasReason" ;
+    rdfs:domain :Attendance ;
+    rdfs:range :Reason .
+```

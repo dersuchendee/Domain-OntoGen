@@ -1,0 +1,37 @@
+```
+@prefix : <http://www.example.org/test#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+<http://www.example.org/test#> a owl:Ontology .
+
+:Action a owl:Class ;
+    rdfs:label "Action" ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasPotentialReboundEffect ;
+        owl:someValuesFrom :PotentialReboundEffect
+    ] .
+
+:Process a owl:Class ;
+    rdfs:label "Process" ;
+    rdfs:subClassOf :Action .
+
+:Effect a owl:Class ;
+    rdfs:label "Effect" .
+
+:ReboundEffect a owl:Class ;
+    rdfs:label "Rebound Effect" ;
+    rdfs:subClassOf :Effect .
+
+:PotentialReboundEffect a owl:Class ;
+    rdfs:label "Potential Rebound Effect" ;
+    rdfs:subClassOf :ReboundEffect .
+
+:hasPotentialReboundEffect a owl:ObjectProperty ;
+    rdfs:label "has Potential Rebound Effect" ;
+    rdfs:domain :Action ;
+    rdfs:range :PotentialReboundEffect .
+```

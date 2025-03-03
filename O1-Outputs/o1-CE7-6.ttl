@@ -1,0 +1,48 @@
+O:
+@prefix : <http://www.example.org/test#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+<http://www.example.org/test#> a owl:Ontology .
+
+:EnergyData a owl:Class ;
+    rdfs:label "Energy Data" ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasChange ;
+        owl:someValuesFrom :DataChange
+    ] ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasDetailedBreakdown ;
+        owl:someValuesFrom :DetailedBreakdown
+    ] .
+
+:DataChange a owl:Class ;
+    rdfs:label "Data Change" ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasTimestamp ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+        owl:onDataRange xsd:dateTime
+    ] .
+
+:DetailedBreakdown a owl:Class ;
+    rdfs:label "Detailed Breakdown" .
+
+:hasChange a owl:ObjectProperty ;
+    rdfs:label "has change" ;
+    rdfs:domain :EnergyData ;
+    rdfs:range :DataChange .
+
+:hasTimestamp a owl:DatatypeProperty ;
+    rdfs:label "has timestamp" ;
+    rdfs:domain :DataChange ;
+    rdfs:range xsd:dateTime .
+
+:hasDetailedBreakdown a owl:ObjectProperty ;
+    rdfs:label "has detailed breakdown" ;
+    rdfs:domain :EnergyData ;
+    rdfs:range :DetailedBreakdown .

@@ -1,0 +1,54 @@
+```turtle
+@prefix : <http://www.example.org/test#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+<http://www.example.org/test#> a owl:Ontology .
+
+:Process a owl:Class ;
+  rdfs:label "Process" .
+
+:Cycle a owl:Class ;
+  rdfs:label "Cycle" .
+
+:NitrogenCycle a owl:Class ;
+  rdfs:label "Nitrogen Cycle" ;
+  rdfs:subClassOf :Cycle .
+
+:Ecosystem a owl:Class ;
+  rdfs:label "Ecosystem" .
+
+:ForestEcosystem a owl:Class ;
+  rdfs:label "Forest Ecosystem" ;
+  rdfs:subClassOf :Ecosystem .
+
+:BeechForestEcosystem a owl:Class ;
+  rdfs:label "Beech Forest Ecosystem" ;
+  rdfs:subClassOf :ForestEcosystem .
+
+:involvedIn a owl:ObjectProperty ;
+  rdfs:label "involved in" ;
+  rdfs:domain :Process ;
+  rdfs:range :Cycle .
+
+:occursIn a owl:ObjectProperty ;
+  rdfs:label "occurs in" ;
+  rdfs:domain :Process ;
+  rdfs:range :Ecosystem .
+
+:MajorProcess a owl:Class ;
+  rdfs:label "Major Process" ;
+  rdfs:subClassOf :Process ;
+  rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty :involvedIn ;
+    owl:someValuesFrom :NitrogenCycle
+  ] ;
+  rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty :occursIn ;
+    owl:someValuesFrom :BeechForestEcosystem
+  ] .
+```

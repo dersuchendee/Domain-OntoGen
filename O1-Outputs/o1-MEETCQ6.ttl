@@ -1,0 +1,71 @@
+O:
+@prefix : <http://www.example.org/test#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+<http://www.example.org/test#> a owl:Ontology .
+
+### Classes
+:Event a owl:Class ;
+    rdfs:label "Event" ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasNature ;
+        owl:someValuesFrom :Nature
+    ] ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :involvesPerson ;
+        owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+        owl:onClass :Person
+    ] ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :occursAtTime ;
+        owl:someValuesFrom xsd:dateTime
+    ] ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :occursAtPlace ;
+        owl:someValuesFrom :Place
+    ] .
+
+:Nature a owl:Class ;
+    rdfs:label "Nature" .
+
+:Person a owl:Class ;
+    rdfs:label "Person" .
+
+:Musician a owl:Class ;
+    rdfs:label "Musician" ;
+    rdfs:subClassOf :Person .
+
+:Composer a owl:Class ;
+    rdfs:label "Composer" ;
+    rdfs:subClassOf :Person .
+
+:Place a owl:Class ;
+    rdfs:label "Place" .
+
+### Properties
+:hasNature a owl:ObjectProperty ;
+    rdfs:label "hasNature" ;
+    rdfs:domain :Event ;
+    rdfs:range :Nature .
+
+:involvesPerson a owl:ObjectProperty ;
+    rdfs:label "involvesPerson" ;
+    rdfs:domain :Event ;
+    rdfs:range :Person .
+
+:occursAtTime a owl:DatatypeProperty ;
+    rdfs:label "occursAtTime" ;
+    rdfs:domain :Event ;
+    rdfs:range xsd:dateTime .
+
+:occursAtPlace a owl:ObjectProperty ;
+    rdfs:label "occursAtPlace" ;
+    rdfs:domain :Event ;
+    rdfs:range :Place .

@@ -1,0 +1,72 @@
+```turtle
+@prefix : <http://www.example.org/test#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+<http://www.example.org/test#> a owl:Ontology .
+
+:Organ a owl:Class ;
+    rdfs:label "Organ" ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasOriginalPart ;
+        owl:someValuesFrom :OrganPart
+    ] ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasCurrentPart ;
+        owl:someValuesFrom :OrganPart
+    ] .
+
+:OrganPart a owl:Class ;
+    rdfs:label "Organ Part" ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :isOriginalPartOf ;
+        owl:someValuesFrom :Organ
+    ] ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :isCurrentlyPartOf ;
+        owl:someValuesFrom :Organ
+    ] ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :isLocatedIn ;
+        owl:someValuesFrom :Location
+    ] .
+
+:Location a owl:Class ;
+    rdfs:label "Location" .
+
+:hasOriginalPart a owl:ObjectProperty ;
+    rdfs:label "hasOriginalPart" ;
+    rdfs:domain :Organ ;
+    rdfs:range :OrganPart ;
+    owl:inverseOf :isOriginalPartOf .
+
+:isOriginalPartOf a owl:ObjectProperty ;
+    rdfs:label "isOriginalPartOf" ;
+    rdfs:domain :OrganPart ;
+    rdfs:range :Organ ;
+    owl:inverseOf :hasOriginalPart .
+
+:hasCurrentPart a owl:ObjectProperty ;
+    rdfs:label "hasCurrentPart" ;
+    rdfs:domain :Organ ;
+    rdfs:range :OrganPart ;
+    owl:inverseOf :isCurrentlyPartOf .
+
+:isCurrentlyPartOf a owl:ObjectProperty ;
+    rdfs:label "isCurrentlyPartOf" ;
+    rdfs:domain :OrganPart ;
+    rdfs:range :Organ ;
+    owl:inverseOf :hasCurrentPart .
+
+:isLocatedIn a owl:ObjectProperty ;
+    rdfs:label "isLocatedIn" ;
+    rdfs:domain :OrganPart ;
+    rdfs:range :Location .
+```

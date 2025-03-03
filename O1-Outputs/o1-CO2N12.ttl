@@ -1,0 +1,82 @@
+```
+@prefix : <http://www.example.org/test#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+<http://www.example.org/test#> a owl:Ontology .
+
+:Soil a owl:Class ;
+    rdfs:label "Soil" .
+
+:ForestSoil a owl:Class ;
+    rdfs:label "Forest Soil" ;
+    rdfs:subClassOf :Soil ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasSoilComposition ;
+        owl:someValuesFrom :SoilComposition
+    ] .
+
+:SoilComposition a owl:Class ;
+    rdfs:label "Soil Composition" .
+
+:ForestSoilComposition a owl:Class ;
+    rdfs:label "Forest Soil Composition" ;
+    rdfs:subClassOf :SoilComposition ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :isCompositionOf ;
+        owl:hasValue :ForestSoil
+    ] ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :playsRoleIn ;
+        owl:someValuesFrom :CO2FixationProcess
+    ] .
+
+:Process a owl:Class ;
+    rdfs:label "Process" .
+
+:CO2FixationProcess a owl:Class ;
+    rdfs:label "CO2 Fixation Process" ;
+    rdfs:subClassOf :Process ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :isPartOfCycle ;
+        owl:hasValue :CarbonCycle
+    ] .
+
+:CarbonCycle a owl:Class ;
+    rdfs:label "Carbon Cycle" ;
+    rdfs:subClassOf :Cycle .
+
+:NitrogenCycle a owl:Class ;
+    rdfs:label "Nitrogen Cycle" ;
+    rdfs:subClassOf :Cycle .
+
+:Cycle a owl:Class ;
+    rdfs:label "Cycle" .
+
+:playsRoleIn a owl:ObjectProperty ;
+    rdfs:label "plays role in" ;
+    rdfs:domain :SoilComposition ;
+    rdfs:range :Process .
+
+:hasSoilComposition a owl:ObjectProperty ;
+    rdfs:label "has soil composition" ;
+    rdfs:domain :Soil ;
+    rdfs:range :SoilComposition .
+
+:isCompositionOf a owl:ObjectProperty ;
+    rdfs:label "is composition of" ;
+    rdfs:domain :SoilComposition ;
+    rdfs:range :Soil ;
+    owl:inverseOf :hasSoilComposition .
+
+:isPartOfCycle a owl:ObjectProperty ;
+    rdfs:label "is part of cycle" ;
+    rdfs:domain :Process ;
+    rdfs:range :Cycle .
+```

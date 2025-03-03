@@ -1,0 +1,70 @@
+@prefix : <http://www.example.org/test#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+<http://www.example.org/test#> a owl:Ontology .
+
+:Organ a owl:Class ;
+    rdfs:label "Organ" ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasMovementEvent ;
+        owl:someValuesFrom :OrganMovementEvent
+    ] .
+
+:Location a owl:Class ;
+    rdfs:label "Location" .
+
+:OrganMovementEvent a owl:Class ;
+    rdfs:label "Organ Movement Event" ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :movesOrgan ;
+        owl:onClass :Organ ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+    ] ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :fromLocation ;
+        owl:onClass :Location ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+    ] ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :toLocation ;
+        owl:onClass :Location ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+    ] ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :atTime ;
+        owl:onDataRange xsd:dateTime ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+    ] .
+
+:hasMovementEvent a owl:ObjectProperty ;
+    rdfs:label "has Movement Event" ;
+    rdfs:domain :Organ ;
+    rdfs:range :OrganMovementEvent .
+
+:movesOrgan a owl:ObjectProperty ;
+    rdfs:label "moves Organ" ;
+    rdfs:domain :OrganMovementEvent ;
+    rdfs:range :Organ .
+
+:fromLocation a owl:ObjectProperty ;
+    rdfs:label "from Location" ;
+    rdfs:domain :OrganMovementEvent ;
+    rdfs:range :Location .
+
+:toLocation a owl:ObjectProperty ;
+    rdfs:label "to Location" ;
+    rdfs:domain :OrganMovementEvent ;
+    rdfs:range :Location .
+
+:atTime a owl:DatatypeProperty ;
+    rdfs:label "at Time" ;
+    rdfs:domain :OrganMovementEvent ;
+    rdfs:range xsd:dateTime .

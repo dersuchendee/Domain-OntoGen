@@ -1,0 +1,76 @@
+O:
+```turtle
+@prefix : <http://www.example.org/test#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+<http://www.example.org/test#> a owl:Ontology .
+
+:Organism a owl:Class ;
+    rdfs:label "Organism" .
+
+:Bacteria a owl:Class ;
+    rdfs:label "Bacteria" ;
+    rdfs:subClassOf :Organism .
+
+:DenitrifyingBacteria a owl:Class ;
+    rdfs:label "Denitrifying Bacteria" ;
+    rdfs:subClassOf :Bacteria ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :performs ;
+        owl:someValuesFrom :DenitrificationProcess
+    ] ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasRole ;
+        owl:someValuesFrom :DenitrifierRole
+    ] .
+
+:Process a owl:Class ;
+    rdfs:label "Process" .
+
+:DenitrificationProcess a owl:Class ;
+    rdfs:label "Denitrification Process" ;
+    rdfs:subClassOf :Process ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasPerformer ;
+        owl:someValuesFrom :DenitrifyingBacteria
+    ] .
+
+:Role a owl:Class ;
+    rdfs:label "Role" .
+
+:DenitrifierRole a owl:Class ;
+    rdfs:label "Denitrifier Role" ;
+    rdfs:subClassOf :Role ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :roleInProcess ;
+        owl:someValuesFrom :DenitrificationProcess
+    ] .
+
+:hasRole a owl:ObjectProperty ;
+    rdfs:label "has role" ;
+    rdfs:domain :Organism ;
+    rdfs:range :Role .
+
+:roleInProcess a owl:ObjectProperty ;
+    rdfs:label "role in process" ;
+    rdfs:domain :Role ;
+    rdfs:range :Process .
+
+:performs a owl:ObjectProperty ;
+    rdfs:label "performs" ;
+    rdfs:domain :Organism ;
+    rdfs:range :Process ;
+    owl:inverseOf :hasPerformer .
+
+:hasPerformer a owl:ObjectProperty ;
+    rdfs:label "has performer" ;
+    rdfs:domain :Process ;
+    rdfs:range :Organism .
+```

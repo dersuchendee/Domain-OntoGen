@@ -1,0 +1,81 @@
+O:
+```ttl
+@prefix : <http://www.example.org/test#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+<http://www.example.org/test#> a owl:Ontology .
+
+:Microbe a owl:Class ;
+    rdfs:label "Microbe" .
+
+:Habitat a owl:Class ;
+    rdfs:label "Habitat" .
+
+:MicrobeHabitat a owl:Class ;
+    rdfs:label "Microbe Habitat" ;
+    rdfs:subClassOf :Habitat .
+
+:Aquifer a owl:Class ;
+    rdfs:label "Aquifer" ;
+    rdfs:subClassOf :MicrobeHabitat .
+
+:AquaticFungus a owl:Class ;
+    rdfs:label "Aquatic Fungus" ;
+    rdfs:subClassOf :Microbe ,
+                    [ a owl:Restriction ;
+                      owl:onProperty :livesIn ;
+                      owl:someValuesFrom :Aquifer
+                    ] ,
+                    [ a owl:Restriction ;
+                      owl:onProperty :influencesAbundanceOf ;
+                      owl:someValuesFrom :Heterotroph
+                    ] ,
+                    [ a owl:Restriction ;
+                      owl:onProperty :influencesActivityOf ;
+                      owl:someValuesFrom :Heterotroph
+                    ] .
+
+:Heterotroph a owl:Class ;
+    rdfs:label "Heterotroph" ;
+    rdfs:subClassOf :Microbe ,
+                    [ a owl:Restriction ;
+                      owl:onProperty :livesIn ;
+                      owl:someValuesFrom :Aquifer
+                    ] ,
+                    [ a owl:Restriction ;
+                      owl:onProperty :hasAbundance ;
+                      owl:someValuesFrom xsd:float
+                    ] ,
+                    [ a owl:Restriction ;
+                      owl:onProperty :hasActivityLevel ;
+                      owl:someValuesFrom xsd:float
+                    ] .
+
+:livesIn a owl:ObjectProperty ;
+    rdfs:label "lives in" ;
+    rdfs:domain :Microbe ;
+    rdfs:range :Habitat .
+
+:influencesAbundanceOf a owl:ObjectProperty ;
+    rdfs:label "influences abundance of" ;
+    rdfs:domain :AquaticFungus ;
+    rdfs:range :Heterotroph .
+
+:influencesActivityOf a owl:ObjectProperty ;
+    rdfs:label "influences activity of" ;
+    rdfs:domain :AquaticFungus ;
+    rdfs:range :Heterotroph .
+
+:hasAbundance a owl:DatatypeProperty ;
+    rdfs:label "has abundance" ;
+    rdfs:domain :Heterotroph ;
+    rdfs:range xsd:float .
+
+:hasActivityLevel a owl:DatatypeProperty ;
+    rdfs:label "has activity level" ;
+    rdfs:domain :Heterotroph ;
+    rdfs:range xsd:float .
+```

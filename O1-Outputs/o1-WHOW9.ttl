@@ -1,0 +1,62 @@
+@prefix : <http://www.example.org/test#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+<http://www.example.org/test#> a owl:Ontology .
+
+:DiseaseCategory a owl:Class ;
+    rdfs:label "Disease Category" .
+
+:InfectiousDisease a owl:Class ;
+    rdfs:label "Infectious Disease" ;
+    rdfs:subClassOf :DiseaseCategory .
+
+:ChronicDisease a owl:Class ;
+    rdfs:label "Chronic Disease" ;
+    rdfs:subClassOf :DiseaseCategory .
+
+:GeneticDisease a owl:Class ;
+    rdfs:label "Genetic Disease" ;
+    rdfs:subClassOf :DiseaseCategory .
+
+:EnvironmentalDisease a owl:Class ;
+    rdfs:label "Environmental Disease" ;
+    rdfs:subClassOf :DiseaseCategory .
+
+:DeficiencyDisease a owl:Class ;
+    rdfs:label "Deficiency Disease" ;
+    rdfs:subClassOf :DiseaseCategory .
+
+:Disease a owl:Class ;
+    rdfs:label "Disease" ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasDiseaseCategory ;
+        owl:someValuesFrom :DiseaseCategory
+    ] .
+
+:hasDiseaseCategory a owl:ObjectProperty ;
+    rdfs:label "has disease category" ;
+    rdfs:domain :Disease ;
+    rdfs:range :DiseaseCategory .
+
+:HealthOutcome a owl:Class ;
+    rdfs:label "Health Outcome" .
+
+:Hospitalisation a owl:Class ;
+    rdfs:label "Hospitalisation" ;
+    rdfs:subClassOf :HealthOutcome .
+
+:EnvironmentalFactor a owl:Class ;
+    rdfs:label "Environmental Factor" .
+
+:WaterQuality a owl:Class ;
+    rdfs:label "Water Quality" ;
+    rdfs:subClassOf :EnvironmentalFactor .
+
+:influences a owl:ObjectProperty ;
+    rdfs:label "influences" ;
+    rdfs:domain :EnvironmentalFactor ;
+    rdfs:range :HealthOutcome .

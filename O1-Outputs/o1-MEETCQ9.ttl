@@ -1,0 +1,39 @@
+```
+@prefix : <http://www.example.org/test#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+<http://www.example.org/test#> a owl:Ontology .
+
+:Agent a owl:Class ;
+    rdfs:label "Agent" .
+
+:Person a owl:Class ;
+    rdfs:label "Person" ;
+    rdfs:subClassOf :Agent .
+
+:Organization a owl:Class ;
+    rdfs:label "Organization" ;
+    rdfs:subClassOf :Agent .
+
+:Event a owl:Class ;
+    rdfs:label "Event" ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :isSupportedByPaymentFrom ;
+        owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+        owl:onClass :Agent
+    ] .
+
+:isSupportedByPaymentFrom a owl:ObjectProperty ;
+    rdfs:label "is supported by payment from" ;
+    rdfs:domain :Event ;
+    rdfs:range :Agent .
+
+:paidToSupport a owl:ObjectProperty ;
+    rdfs:label "paid to support" ;
+    rdfs:domain :Agent ;
+    rdfs:range :Event ;
+    owl:inverseOf :isSupportedByPaymentFrom .
+```

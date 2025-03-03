@@ -1,0 +1,60 @@
+O: 
+@prefix : <http://www.example.org/test#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+<http://www.example.org/test#> a owl:Ontology .
+
+:ContaminatedSite a owl:Class ;
+    rdfs:label "Contaminated Site" ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasObservation ;
+        owl:someValuesFrom :ContaminationObservation
+    ] .
+
+:ContaminationObservation a owl:Class ;
+    rdfs:label "Contamination Observation" ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :isObservationOf ;
+        owl:onClass :ContaminatedSite ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+    ] ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :observedInArea ;
+        owl:onClass :GeographicalArea ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+    ] ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasObservationTime ;
+        owl:onDataRange xsd:dateTime ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+    ] .
+
+:GeographicalArea a owl:Class ;
+    rdfs:label "Geographical Area" .
+
+:hasObservation a owl:ObjectProperty ;
+    rdfs:label "has observation" ;
+    rdfs:domain :ContaminatedSite ;
+    rdfs:range :ContaminationObservation .
+
+:isObservationOf a owl:ObjectProperty ;
+    rdfs:label "is observation of" ;
+    rdfs:domain :ContaminationObservation ;
+    rdfs:range :ContaminatedSite .
+
+:observedInArea a owl:ObjectProperty ;
+    rdfs:label "observed in area" ;
+    rdfs:domain :ContaminationObservation ;
+    rdfs:range :GeographicalArea .
+
+:hasObservationTime a owl:DatatypeProperty ;
+    rdfs:label "has observation time" ;
+    rdfs:domain :ContaminationObservation ;
+    rdfs:range xsd:dateTime .

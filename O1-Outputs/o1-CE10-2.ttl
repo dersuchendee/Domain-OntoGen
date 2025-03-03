@@ -1,0 +1,194 @@
+```turtle
+@prefix : <http://www.example.org/test#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+<http://www.example.org/test#> a owl:Ontology .
+
+:Information a owl:Class ;
+  rdfs:label "Information" .
+
+:Capability a owl:Class ;
+  rdfs:label "Capability" .
+
+:ImplementationAction a owl:Class ;
+  rdfs:label "Implementation Action" ;
+  rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty :requiresInformation ;
+    owl:someValuesFrom :Information
+  ] .
+
+:requiresInformation a owl:ObjectProperty ;
+  rdfs:label "requiresInformation" ;
+  rdfs:domain :ImplementationAction ;
+  rdfs:range :Information .
+
+:Collaboration a owl:Class ;
+  rdfs:label "Collaboration" .
+
+:Process a owl:Class ;
+  rdfs:label "Process" .
+
+:CollaborateAndAlignProcesses a owl:Class ;
+  rdfs:label "Collaborate and Align Processes" ;
+  rdfs:subClassOf :ImplementationAction ;
+  rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty :requiresInformation ;
+    owl:someValuesFrom :Information
+  ] .
+
+:ShareInfrastructure a owl:Class ;
+  rdfs:label "Share Infrastructure" ;
+  rdfs:subClassOf :ImplementationAction ;
+  rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty :involvesInfrastructure ;
+    owl:someValuesFrom :Hardware
+  ] ;
+  rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty :involvesInfrastructure ;
+    owl:someValuesFrom :Software
+  ] ;
+  rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty :involvesFlow ;
+    owl:someValuesFrom :MaterialFlow
+  ] ;
+  rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty :involvesFlow ;
+    owl:someValuesFrom :EnergyFlow
+  ] .
+
+:involvesInfrastructure a owl:ObjectProperty ;
+  rdfs:label "involvesInfrastructure" ;
+  rdfs:domain :ImplementationAction ;
+  rdfs:range :Infrastructure .
+
+:Infrastructure a owl:Class ;
+  rdfs:label "Infrastructure" .
+
+:Hardware a owl:Class ;
+  rdfs:label "Hardware" ;
+  rdfs:subClassOf :Infrastructure .
+
+:Software a owl:Class ;
+  rdfs:label "Software" ;
+  rdfs:subClassOf :Infrastructure .
+
+:involvesFlow a owl:ObjectProperty ;
+  rdfs:label "involvesFlow" ;
+  rdfs:domain :ImplementationAction ;
+  rdfs:range :Flow .
+
+:Flow a owl:Class ;
+  rdfs:label "Flow" .
+
+:MaterialFlow a owl:Class ;
+  rdfs:label "Material Flow" ;
+  rdfs:subClassOf :Flow .
+
+:EnergyFlow a owl:Class ;
+  rdfs:label "Energy Flow" ;
+  rdfs:subClassOf :Flow .
+
+:CollaborateForEnergyRecovery a owl:Class ;
+  rdfs:label "Collaborate for Energy Recovery" ;
+  rdfs:subClassOf :ImplementationAction .
+
+:BringTogetherStakeholders a owl:Class ;
+  rdfs:label "Bring Together Stakeholders" ;
+  rdfs:subClassOf :ImplementationAction ;
+  rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty :involvesStakeholder ;
+    owl:minQualifiedCardinality "2"^^xsd:nonNegativeInteger ;
+    owl:onClass :EnergySectorStakeholder
+  ] .
+
+:involvesStakeholder a owl:ObjectProperty ;
+  rdfs:label "involvesStakeholder" ;
+  rdfs:domain :ImplementationAction ;
+  rdfs:range :Stakeholder .
+
+:Stakeholder a owl:Class ;
+  rdfs:label "Stakeholder" .
+
+:EnergySectorStakeholder a owl:Class ;
+  rdfs:label "Energy Sector Stakeholder" ;
+  rdfs:subClassOf :Stakeholder .
+
+:ShareInformationOnEnergyDemandAndSurplus a owl:Class ;
+  rdfs:label "Share Information on Energy Demand and Surplus" ;
+  rdfs:subClassOf :ImplementationAction ;
+  rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty :requiresInformation ;
+    owl:someValuesFrom :EnergyDemand
+  ] ;
+  rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty :requiresInformation ;
+    owl:someValuesFrom :EnergySurplus
+  ] .
+
+:EnergyDemand a owl:Class ;
+  rdfs:label "Energy Demand" ;
+  rdfs:subClassOf :Information .
+
+:EnergySurplus a owl:Class ;
+  rdfs:label "Energy Surplus" ;
+  rdfs:subClassOf :Information .
+
+:CollaborateForValueCoCreation a owl:Class ;
+  rdfs:label "Collaborate for Value Co-Creation" ;
+  rdfs:subClassOf :ImplementationAction ;
+  rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty :collaboratesFor ;
+    owl:someValuesFrom :ValueCoCreation
+  ] .
+
+:CollaborateForValueTransfer a owl:Class ;
+  rdfs:label "Collaborate for Value Transfer" ;
+  rdfs:subClassOf :ImplementationAction ;
+  rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty :collaboratesFor ;
+    owl:someValuesFrom :ValueTransfer
+  ] .
+
+:CollaborateForValueCapture a owl:Class ;
+  rdfs:label "Collaborate for Value Capture" ;
+  rdfs:subClassOf :ImplementationAction ;
+  rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty :collaboratesFor ;
+    owl:someValuesFrom :ValueCapture
+  ] .
+
+:collaboratesFor a owl:ObjectProperty ;
+  rdfs:label "collaboratesFor" ;
+  rdfs:domain :ImplementationAction ;
+  rdfs:range :ValueProcess .
+
+:ValueProcess a owl:Class ;
+  rdfs:label "Value Process" .
+
+:ValueCoCreation a owl:Class ;
+  rdfs:label "Value Co-Creation" ;
+  rdfs:subClassOf :ValueProcess .
+
+:ValueTransfer a owl:Class ;
+  rdfs:label "Value Transfer" ;
+  rdfs:subClassOf :ValueProcess .
+
+:ValueCapture a owl:Class ;
+  rdfs:label "Value Capture" ;
+  rdfs:subClassOf :ValueProcess .
+```

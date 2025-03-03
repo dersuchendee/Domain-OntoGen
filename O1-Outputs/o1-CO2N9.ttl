@@ -1,0 +1,76 @@
+@prefix : <http://www.example.org/test#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+<http://www.example.org/test#> a owl:Ontology .
+
+:Substance a owl:Class ;
+    rdfs:label "Substance" .
+
+:Carbon a owl:Class ;
+    rdfs:label "Carbon" ;
+    rdfs:subClassOf :Substance .
+
+:DissolvedCarbon a owl:Class ;
+    rdfs:label "Dissolved Carbon" ;
+    rdfs:subClassOf :Carbon .
+
+:EnvironmentalCompartment a owl:Class ;
+    rdfs:label "Environmental Compartment" .
+
+:Soil a owl:Class ;
+    rdfs:label "Soil" ;
+    rdfs:subClassOf :EnvironmentalCompartment .
+
+:Groundwater a owl:Class ;
+    rdfs:label "Groundwater" ;
+    rdfs:subClassOf :EnvironmentalCompartment .
+
+:TransportProcess a owl:Class ;
+    rdfs:label "Transport Process" ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :transportedSubstance ;
+        owl:someValuesFrom :Substance
+    ] ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :fromCompartment ;
+        owl:someValuesFrom :EnvironmentalCompartment
+    ] ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :toCompartment ;
+        owl:someValuesFrom :EnvironmentalCompartment
+    ] .
+
+:DissolvedCarbonTransportProcess a owl:Class ;
+    rdfs:label "Dissolved Carbon Transport Process" ;
+    rdfs:subClassOf :TransportProcess ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :transportedSubstance ;
+        owl:hasValue :DissolvedCarbon
+    ] .
+
+:transportedSubstance a owl:ObjectProperty ;
+    rdfs:label "transportedSubstance" ;
+    rdfs:domain :TransportProcess ;
+    rdfs:range :Substance .
+
+:fromCompartment a owl:ObjectProperty ;
+    rdfs:label "fromCompartment" ;
+    rdfs:domain :TransportProcess ;
+    rdfs:range :EnvironmentalCompartment .
+
+:toCompartment a owl:ObjectProperty ;
+    rdfs:label "toCompartment" ;
+    rdfs:domain :TransportProcess ;
+    rdfs:range :EnvironmentalCompartment .
+
+:presentIn a owl:ObjectProperty ;
+    rdfs:label "presentIn" ;
+    rdfs:domain :Substance ;
+    rdfs:range :EnvironmentalCompartment .

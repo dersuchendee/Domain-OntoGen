@@ -1,0 +1,62 @@
+O:
+```turtle
+@prefix : <http://www.example.org/test#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+<http://www.example.org/test#> a owl:Ontology .
+
+:Material a owl:Class ;
+    rdfs:label "Material" ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasOrigin ;
+        owl:someValuesFrom :Origin
+    ] ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :producedByProcess ;
+        owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+        owl:onClass :Process
+    ] .
+
+:Origin a owl:Class ;
+    rdfs:label "Origin" .
+
+:Process a owl:Class ;
+    rdfs:label "Process" ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :consumesMaterial ;
+        owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+        owl:onClass :Material
+    ] ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :producesMaterial ;
+        owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+        owl:onClass :Material
+    ] .
+
+:hasOrigin a owl:ObjectProperty ;
+    rdfs:label "hasOrigin" ;
+    rdfs:domain :Material ;
+    rdfs:range :Origin .
+
+:producedByProcess a owl:ObjectProperty ;
+    rdfs:label "producedByProcess" ;
+    rdfs:domain :Material ;
+    rdfs:range :Process .
+
+:consumesMaterial a owl:ObjectProperty ;
+    rdfs:label "consumesMaterial" ;
+    rdfs:domain :Process ;
+    rdfs:range :Material .
+
+:producesMaterial a owl:ObjectProperty ;
+    rdfs:label "producesMaterial" ;
+    rdfs:domain :Process ;
+    rdfs:range :Material .
+```

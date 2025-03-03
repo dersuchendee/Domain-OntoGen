@@ -1,0 +1,61 @@
+```turtle
+@prefix : <http://www.example.org/test#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+<http://www.example.org/test#> a owl:Ontology .
+
+:Composition a owl:Class ;
+    rdfs:label "Composition" ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :isInTuneFamily ;
+        owl:someValuesFrom :TuneFamily
+    ] ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasMeasureValue ;
+        owl:someValuesFrom :MeasureValue
+    ] .
+
+:TuneFamily a owl:Class ;
+    rdfs:label "Tune Family" .
+
+:Measure a owl:Class ;
+    rdfs:label "Measure" .
+
+:MeasureValue a owl:Class ;
+    rdfs:label "Measure Value" ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :isMeasureOf ;
+        owl:someValuesFrom :Measure
+    ] ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasValue ;
+        owl:someValuesFrom xsd:float
+    ] .
+
+:isInTuneFamily a owl:ObjectProperty ;
+    rdfs:label "is in tune family" ;
+    rdfs:domain :Composition ;
+    rdfs:range :TuneFamily .
+
+:hasMeasureValue a owl:ObjectProperty ;
+    rdfs:label "has measure value" ;
+    rdfs:domain :Composition ;
+    rdfs:range :MeasureValue .
+
+:isMeasureOf a owl:ObjectProperty ;
+    rdfs:label "is measure of" ;
+    rdfs:domain :MeasureValue ;
+    rdfs:range :Measure .
+
+:hasValue a owl:DatatypeProperty ;
+    rdfs:label "has value" ;
+    rdfs:domain :MeasureValue ;
+    rdfs:range xsd:float .
+```

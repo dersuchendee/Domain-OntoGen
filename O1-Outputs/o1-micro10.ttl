@@ -1,0 +1,63 @@
+```turtle
+@prefix : <http://www.example.org/test#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+<http://www.example.org/test#> a owl:Ontology .
+
+:MicrobialFunctionalGuild a owl:Class ;
+    rdfs:label "Microbial Functional Guild" ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :participatesIn ;
+        owl:someValuesFrom :Interaction
+    ] .
+
+:Autotroph a owl:Class ;
+    rdfs:label "Autotroph" ;
+    rdfs:subClassOf :MicrobialFunctionalGuild .
+
+:Heterotroph a owl:Class ;
+    rdfs:label "Heterotroph" ;
+    rdfs:subClassOf :MicrobialFunctionalGuild .
+
+:Aquifer a owl:Class ;
+    rdfs:label "Aquifer" .
+
+:NutrientPoorAquifer a owl:Class ;
+    rdfs:label "Nutrient Poor Aquifer" ;
+    rdfs:subClassOf :Aquifer .
+
+:Interaction a owl:Class ;
+    rdfs:label "Interaction" ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasParticipant ;
+        owl:minQualifiedCardinality "2"^^xsd:nonNegativeInteger ;
+        owl:onClass :MicrobialFunctionalGuild
+    ] ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :occursIn ;
+        owl:someValuesFrom :NutrientPoorAquifer
+    ] .
+
+:hasParticipant a owl:ObjectProperty ;
+    rdfs:label "hasParticipant" ;
+    rdfs:domain :Interaction ;
+    rdfs:range :MicrobialFunctionalGuild ;
+    owl:inverseOf :participatesIn .
+
+:participatesIn a owl:ObjectProperty ;
+    rdfs:label "participatesIn" ;
+    rdfs:domain :MicrobialFunctionalGuild ;
+    rdfs:range :Interaction .
+
+:occursIn a owl:ObjectProperty ;
+    rdfs:label "occursIn" ;
+    rdfs:domain :Interaction ;
+    rdfs:range :Aquifer .
+
+```

@@ -1,0 +1,35 @@
+@prefix : <http://www.example.org/test#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+<http://www.example.org/test#> a owl:Ontology .
+
+:Recording a owl:Class ;
+    rdfs:label "Recording" .
+
+:BellOrSetOfBells a owl:Class ;
+    rdfs:label "Bell or Set of Bells" .
+
+:Bell a owl:Class ;
+    rdfs:label "Bell" ;
+    rdfs:subClassOf :BellOrSetOfBells .
+
+:BellSet a owl:Class ;
+    rdfs:label "Bell Set" ;
+    rdfs:subClassOf :BellOrSetOfBells .
+
+:involvesBell a owl:ObjectProperty ;
+    rdfs:label "involves bell" ;
+    rdfs:domain :Recording ;
+    rdfs:range :BellOrSetOfBells .
+
+:RecordingInvolvingBell a owl:Class ;
+    rdfs:label "Recording involving bell or set of bells" ;
+    rdfs:subClassOf :Recording ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :involvesBell ;
+        owl:someValuesFrom :BellOrSetOfBells
+    ] .

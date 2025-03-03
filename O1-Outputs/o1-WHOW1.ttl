@@ -1,0 +1,56 @@
+```
+@prefix : <http://www.example.org/test#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+<http://www.example.org/test#> a owl:Ontology .
+
+:Agent a owl:Class ;
+    rdfs:label "Agent" .
+
+:Organization a owl:Class ;
+    rdfs:label "Organization" ;
+    rdfs:subClassOf :Agent .
+
+:Person a owl:Class ;
+    rdfs:label "Person" ;
+    rdfs:subClassOf :Agent .
+
+:Disease a owl:Class ;
+    rdfs:label "Disease" .
+
+:GeographicalArea a owl:Class ;
+    rdfs:label "Geographical Area" .
+
+:Hospitalization a owl:Class ;
+    rdfs:label "Hospitalization" ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasDisease ;
+        owl:someValuesFrom :Disease ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+    ] ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :occursIn ;
+        owl:someValuesFrom :GeographicalArea ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+    ] .
+
+:monitors a owl:ObjectProperty ;
+    rdfs:label "monitors" ;
+    rdfs:domain :Agent ;
+    rdfs:range :Hospitalization .
+
+:hasDisease a owl:ObjectProperty ;
+    rdfs:label "hasDisease" ;
+    rdfs:domain :Hospitalization ;
+    rdfs:range :Disease .
+
+:occursIn a owl:ObjectProperty ;
+    rdfs:label "occursIn" ;
+    rdfs:domain :Hospitalization ;
+    rdfs:range :GeographicalArea .
+```

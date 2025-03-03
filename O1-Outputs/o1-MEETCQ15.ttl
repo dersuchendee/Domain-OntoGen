@@ -1,0 +1,58 @@
+O:
+@prefix : <http://www.example.org/test#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+<http://www.example.org/test#> a owl:Ontology .
+
+:Musician a owl:Class ;
+    rdfs:label "Musician" ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :performedIn ;
+        owl:someValuesFrom :Performance
+    ] .
+
+:Performance a owl:Class ;
+    rdfs:label "Performance" ;
+    rdfs:subClassOf :Event ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasPerformer ;
+        owl:someValuesFrom :Musician
+    ] ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :tookPlaceAt ;
+        owl:someValuesFrom :Place
+    ] .
+
+:Event a owl:Class ;
+    rdfs:label "Event" .
+
+:Place a owl:Class ;
+    rdfs:label "Place" .
+
+:performedIn a owl:ObjectProperty ;
+    rdfs:label "performed in" ;
+    rdfs:domain :Musician ;
+    rdfs:range :Performance ;
+    owl:inverseOf :hasPerformer .
+
+:hasPerformer a owl:ObjectProperty ;
+    rdfs:label "has performer" ;
+    rdfs:domain :Performance ;
+    rdfs:range :Musician ;
+    owl:inverseOf :performedIn .
+
+:tookPlaceAt a owl:ObjectProperty ;
+    rdfs:label "took place at" ;
+    rdfs:domain :Event ;
+    rdfs:range :Place .
+
+:hasDate a owl:DatatypeProperty ;
+    rdfs:label "has date" ;
+    rdfs:domain :Event ;
+    rdfs:range xsd:date .

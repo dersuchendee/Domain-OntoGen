@@ -1,0 +1,64 @@
+```turtle
+@prefix : <http://www.example.org/test#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+<http://www.example.org/test#> a owl:Ontology .
+
+:Factor a owl:Class ;
+    rdfs:label "Factor" .
+
+:Process a owl:Class ;
+    rdfs:label "Process" .
+
+:CarbonNitrogenRatio a owl:Class ;
+    rdfs:label "Carbon-Nitrogen Ratio" ;
+    rdfs:subClassOf :Factor .
+
+:EnergyMetabolism a owl:Class ;
+    rdfs:label "Energy Metabolism" ;
+    rdfs:subClassOf :Process ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :affectedBy ;
+        owl:someValuesFrom :CarbonNitrogenRatio
+    ] ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :occursIn ;
+        owl:someValuesFrom :MicrobialCommunityInCNCycling
+    ] .
+
+:CarbonAndNitrogenCycling a owl:Class ;
+    rdfs:label "Carbon and Nitrogen Cycling" ;
+    rdfs:subClassOf :Process .
+
+:MicrobialCommunity a owl:Class ;
+    rdfs:label "Microbial Community" ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :involvedInProcess ;
+        owl:someValuesFrom :CarbonAndNitrogenCycling
+    ] .
+
+:MicrobialCommunityInCNCycling a owl:Class ;
+    rdfs:label "Microbial Community Involved in Carbon and Nitrogen Cycling" ;
+    rdfs:subClassOf :MicrobialCommunity .
+
+:affectedBy a owl:ObjectProperty ;
+    rdfs:label "affected by" ;
+    rdfs:domain :Process ;
+    rdfs:range :Factor .
+
+:occursIn a owl:ObjectProperty ;
+    rdfs:label "occurs in" ;
+    rdfs:domain :Process ;
+    rdfs:range :MicrobialCommunity .
+
+:involvedInProcess a owl:ObjectProperty ;
+    rdfs:label "involved in process" ;
+    rdfs:domain :MicrobialCommunity ;
+    rdfs:range :Process .
+```

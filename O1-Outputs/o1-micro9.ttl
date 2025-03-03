@@ -1,0 +1,43 @@
+O:
+@prefix : <http://www.example.org/test#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+<http://www.example.org/test#> a owl:Ontology .
+
+:MicrobialFunctionalGuild a owl:Class ;
+    rdfs:label "Microbial Functional Guild" .
+
+:AquiferEcosystem a owl:Class ;
+    rdfs:label "Aquifer Ecosystem" .
+
+:Observation a owl:Class ;
+    rdfs:label "Observation" .
+
+:MicrobialPresenceObservation a owl:Class ;
+    rdfs:label "Microbial Presence Observation" ;
+    rdfs:subClassOf :Observation ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :isObservationOf ;
+        owl:onClass :AquiferEcosystem ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+    ] ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasObservedGuild ;
+        owl:onClass :MicrobialFunctionalGuild ;
+        owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger
+    ] .
+
+:isObservationOf a owl:ObjectProperty ;
+    rdfs:label "isObservationOf" ;
+    rdfs:domain :Observation ;
+    rdfs:range :AquiferEcosystem .
+
+:hasObservedGuild a owl:ObjectProperty ;
+    rdfs:label "hasObservedGuild" ;
+    rdfs:domain :MicrobialPresenceObservation ;
+    rdfs:range :MicrobialFunctionalGuild .

@@ -1,0 +1,30 @@
+O:
+@prefix : <http://www.example.org/test#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+<http://www.example.org/test#> a owl:Ontology .
+
+:Event a owl:Class ;
+    rdfs:label "Event" ;
+    owl:equivalentClass [
+        a owl:Class ;
+        owl:unionOf ( :Celebration :Festival :PrivateEvent )
+    ] .
+
+:Celebration a owl:Class ;
+    rdfs:label "Celebration" ;
+    rdfs:subClassOf :Event ;
+    owl:disjointWith :Festival , :PrivateEvent .
+
+:Festival a owl:Class ;
+    rdfs:label "Festival" ;
+    rdfs:subClassOf :Event ;
+    owl:disjointWith :Celebration , :PrivateEvent .
+
+:PrivateEvent a owl:Class ;
+    rdfs:label "Private Event" ;
+    rdfs:subClassOf :Event ;
+    owl:disjointWith :Celebration , :Festival .

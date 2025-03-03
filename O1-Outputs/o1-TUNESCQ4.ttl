@@ -1,0 +1,71 @@
+```
+@prefix : <http://www.example.org/test#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+<http://www.example.org/test#> a owl:Ontology .
+
+:Composition a owl:Class ;
+    rdfs:label "Composition" ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasVariantRelationship ;
+        owl:someValuesFrom :VariantRelationship
+    ] .
+
+:TuneFamily a owl:Class ;
+    rdfs:label "Tune Family" ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :isPartOfVariantRelationship ;
+        owl:someValuesFrom :VariantRelationship
+    ] .
+
+:VariantRelationship a owl:Class ;
+    rdfs:label "Variant Relationship" ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :involvesComposition ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+        owl:onClass :Composition
+    ] ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :involvesTuneFamily ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+        owl:onClass :TuneFamily
+    ] ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasLevelOfConfidence ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+        owl:onDataRange xsd:float
+    ] .
+
+:hasVariantRelationship a owl:ObjectProperty ;
+    rdfs:label "has Variant Relationship" ;
+    rdfs:domain :Composition ;
+    rdfs:range :VariantRelationship .
+
+:isPartOfVariantRelationship a owl:ObjectProperty ;
+    rdfs:label "is Part of Variant Relationship" ;
+    rdfs:domain :TuneFamily ;
+    rdfs:range :VariantRelationship .
+
+:involvesComposition a owl:ObjectProperty ;
+    rdfs:label "involves Composition" ;
+    rdfs:domain :VariantRelationship ;
+    rdfs:range :Composition .
+
+:involvesTuneFamily a owl:ObjectProperty ;
+    rdfs:label "involves Tune Family" ;
+    rdfs:domain :VariantRelationship ;
+    rdfs:range :TuneFamily .
+
+:hasLevelOfConfidence a owl:DatatypeProperty ;
+    rdfs:label "has Level of Confidence" ;
+    rdfs:domain :VariantRelationship ;
+    rdfs:range xsd:float .
+```

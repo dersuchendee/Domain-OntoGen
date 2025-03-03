@@ -1,0 +1,41 @@
+```turtle
+@prefix : <http://www.example.org/test#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+<http://www.example.org/test#> a owl:Ontology .
+
+:Organ a owl:Class ;
+    rdfs:label "Organ" ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :builtBy ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+        owl:onClass :OrganBuilder
+    ] ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :renovatedBy ;
+        owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+        owl:onClass :Person
+    ] .
+
+:OrganBuilder a owl:Class ;
+    rdfs:label "Organ Builder" ;
+    rdfs:subClassOf :Person .
+
+:Person a owl:Class ;
+    rdfs:label "Person" .
+
+:builtBy a owl:ObjectProperty ;
+    rdfs:label "built by" ;
+    rdfs:domain :Organ ;
+    rdfs:range :OrganBuilder .
+
+:renovatedBy a owl:ObjectProperty ;
+    rdfs:label "renovated by" ;
+    rdfs:domain :Organ ;
+    rdfs:range :Person .
+```

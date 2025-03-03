@@ -1,0 +1,54 @@
+@prefix : <http://www.example.org/test#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+<http://www.example.org/test#> a owl:Ontology .
+
+:Water a owl:Class ;
+  rdfs:label "Water" ;
+  rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty :hasChemicalMeasurement ;
+    owl:someValuesFrom :ChemicalMeasurement
+  ] .
+
+:ChemicalMeasurement a owl:Class ;
+  rdfs:label "Chemical Measurement" ;
+  rdfs:subClassOf :Measurement ;
+  rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty :hasUnitOfMeasure ;
+    owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+    owl:onClass :UnitOfMeasure
+  ] ;
+  rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty :isMeasurementOf ;
+    owl:someValuesFrom :ChemicalSubstance
+  ] .
+
+:Measurement a owl:Class ;
+  rdfs:label "Measurement" .
+
+:UnitOfMeasure a owl:Class ;
+  rdfs:label "Unit of Measure" .
+
+:ChemicalSubstance a owl:Class ;
+  rdfs:label "Chemical Substance" .
+
+:hasChemicalMeasurement a owl:ObjectProperty ;
+  rdfs:label "has Chemical Measurement" ;
+  rdfs:domain :Water ;
+  rdfs:range :ChemicalMeasurement .
+
+:hasUnitOfMeasure a owl:ObjectProperty ;
+  rdfs:label "has Unit of Measure" ;
+  rdfs:domain :Measurement ;
+  rdfs:range :UnitOfMeasure .
+
+:isMeasurementOf a owl:ObjectProperty ;
+  rdfs:label "is Measurement Of" ;
+  rdfs:domain :Measurement ;
+  rdfs:range :ChemicalSubstance .

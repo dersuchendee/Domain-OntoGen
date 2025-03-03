@@ -1,0 +1,54 @@
+```ttl
+@prefix : <http://www.example.org/test#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+<http://www.example.org/test#> a owl:Ontology .
+
+:EnvironmentalCondition a owl:Class ;
+    rdfs:label "Environmental Condition" ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :influences ;
+        owl:someValuesFrom :CO2Fixation
+    ] .
+
+:SoilMoisture a owl:Class ;
+    rdfs:label "Soil Moisture" ;
+    rdfs:subClassOf :EnvironmentalCondition .
+
+:pH a owl:Class ;
+    rdfs:label "pH" ;
+    rdfs:subClassOf :EnvironmentalCondition .
+
+:CO2Fixation a owl:Class ;
+    rdfs:label "CO2 Fixation" ;
+    rdfs:subClassOf :BiogeochemicalProcess ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :occursIn ;
+        owl:someValuesFrom :GroundwaterEcosystem
+    ] .
+
+:GroundwaterEcosystem a owl:Class ;
+    rdfs:label "Groundwater Ecosystem" ;
+    rdfs:subClassOf :Ecosystem .
+
+:BiogeochemicalProcess a owl:Class ;
+    rdfs:label "Biogeochemical Process" .
+
+:Ecosystem a owl:Class ;
+    rdfs:label "Ecosystem" .
+
+:influences a owl:ObjectProperty ;
+    rdfs:label "influences" ;
+    rdfs:domain :EnvironmentalCondition ;
+    rdfs:range :BiogeochemicalProcess .
+
+:occursIn a owl:ObjectProperty ;
+    rdfs:label "occurs in" ;
+    rdfs:domain :BiogeochemicalProcess ;
+    rdfs:range :Ecosystem .
+```

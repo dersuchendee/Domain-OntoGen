@@ -1,0 +1,73 @@
+```turtle
+@prefix : <http://www.example.org/test#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+<http://www.example.org/test#> a owl:Ontology .
+
+:Meeting a owl:Class ;
+    rdfs:label "Meeting" ;
+    rdfs:subClassOf 
+        [ a owl:Restriction ;
+          owl:onProperty :hasTime ;
+          owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+          owl:onDataRange xsd:dateTime
+        ] ,
+        [ a owl:Restriction ;
+          owl:onProperty :hasPlace ;
+          owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+          owl:onClass :Place
+        ] ,
+        [ a owl:Restriction ;
+          owl:onProperty :hasParticipant ;
+          owl:minQualifiedCardinality "2"^^xsd:nonNegativeInteger ;
+          owl:onClass :Person
+        ] ,
+        [ a owl:Restriction ;
+          owl:onProperty :hasContext ;
+          owl:someValuesFrom :Context
+        ] ,
+        [ a owl:Restriction ;
+          owl:onProperty :hasSource ;
+          owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+          owl:onClass :Source
+        ] .
+
+:hasTime a owl:DatatypeProperty ;
+    rdfs:label "hasTime" ;
+    rdfs:domain :Meeting ;
+    rdfs:range xsd:dateTime .
+
+:hasPlace a owl:ObjectProperty ;
+    rdfs:label "hasPlace" ;
+    rdfs:domain :Meeting ;
+    rdfs:range :Place .
+
+:hasParticipant a owl:ObjectProperty ;
+    rdfs:label "hasParticipant" ;
+    rdfs:domain :Meeting ;
+    rdfs:range :Person .
+
+:hasContext a owl:ObjectProperty ;
+    rdfs:label "hasContext" ;
+    rdfs:domain :Meeting ;
+    rdfs:range :Context .
+
+:hasSource a owl:ObjectProperty ;
+    rdfs:label "hasSource" ;
+    rdfs:domain :Meeting ;
+    rdfs:range :Source .
+
+:Person a owl:Class ;
+    rdfs:label "Person" .
+
+:Place a owl:Class ;
+    rdfs:label "Place" .
+
+:Context a owl:Class ;
+    rdfs:label "Context" .
+
+:Source a owl:Class ;
+    rdfs:label "Source" .
+```

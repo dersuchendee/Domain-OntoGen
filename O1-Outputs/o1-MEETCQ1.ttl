@@ -1,0 +1,52 @@
+```turtle
+@prefix : <http://www.example.org/test#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+<http://www.example.org/test#> a owl:Ontology .
+
+:Musician a owl:Class ;
+    rdfs:label "Musician" ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :participatedIn ;
+        owl:someValuesFrom :VisitEvent
+    ] .
+
+:VisitEvent a owl:Class ;
+    rdfs:label "Visit Event" ;
+    rdfs:subClassOf :Event ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :occursAt ;
+        owl:someValuesFrom :Place
+    ] ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasParticipant ;
+        owl:someValuesFrom :Musician
+    ] .
+
+:Event a owl:Class ;
+    rdfs:label "Event" .
+
+:Place a owl:Class ;
+    rdfs:label "Place" .
+
+:participatedIn a owl:ObjectProperty ;
+    rdfs:label "participated in" ;
+    rdfs:domain :Musician ;
+    rdfs:range :Event .
+
+:hasParticipant a owl:ObjectProperty ;
+    rdfs:label "has participant" ;
+    owl:inverseOf :participatedIn ;
+    rdfs:domain :Event ;
+    rdfs:range :Musician .
+
+:occursAt a owl:ObjectProperty ;
+    rdfs:label "occurs at" ;
+    rdfs:domain :Event ;
+    rdfs:range :Place .
+```

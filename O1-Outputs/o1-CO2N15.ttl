@@ -1,0 +1,74 @@
+O:
+```turtle
+@prefix : <http://www.example.org/test#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+<http://www.example.org/test#> a owl:Ontology .
+
+:Observation a owl:Class ;
+    rdfs:label "Observation" .
+
+:Phenomenon a owl:Class ;
+    rdfs:label "Phenomenon" .
+
+:NitrogenLeaching a owl:Class ;
+    rdfs:label "Nitrogen Leaching" ;
+    rdfs:subClassOf :Phenomenon .
+
+:SoilType a owl:Class ;
+    rdfs:label "Soil Type" .
+
+:Ecosystem a owl:Class ;
+    rdfs:label "Ecosystem" .
+
+:ForestEcosystem a owl:Class ;
+    rdfs:label "Forest Ecosystem" ;
+    rdfs:subClassOf :Ecosystem .
+
+:NitrogenLeachingObservation a owl:Class ;
+    rdfs:label "Nitrogen Leaching Observation" ;
+    rdfs:subClassOf :Observation ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :occursIn ;
+        owl:someValuesFrom :ForestEcosystem
+    ] ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasSoilType ;
+        owl:someValuesFrom :SoilType
+    ] ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :isObservationOf ;
+        owl:hasValue :NitrogenLeaching
+    ] ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasNitrogenLeachingRate ;
+        owl:someValuesFrom xsd:float
+    ] .
+
+:hasSoilType a owl:ObjectProperty ;
+    rdfs:label "has Soil Type" ;
+    rdfs:domain :NitrogenLeachingObservation ;
+    rdfs:range :SoilType .
+
+:occursIn a owl:ObjectProperty ;
+    rdfs:label "occurs In" ;
+    rdfs:domain :Observation ;
+    rdfs:range :Ecosystem .
+
+:isObservationOf a owl:ObjectProperty ;
+    rdfs:label "is Observation Of" ;
+    rdfs:domain :Observation ;
+    rdfs:range :Phenomenon .
+
+:hasNitrogenLeachingRate a owl:DatatypeProperty ;
+    rdfs:label "has Nitrogen Leaching Rate" ;
+    rdfs:domain :NitrogenLeachingObservation ;
+    rdfs:range xsd:float .
+```

@@ -1,0 +1,162 @@
+```turtle
+@prefix : <http://www.example.org/test#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+<http://www.example.org/test#> a owl:Ontology .
+
+:Process a owl:Class ;
+    rdfs:label "Process" ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasEfficiency ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+        owl:onDataRange xsd:float
+    ] ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasCapacity ;
+        owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+        owl:onClass :Capacity
+    ] .
+
+:Capacity a owl:Class ;
+    rdfs:label "Capacity" ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasImplementationAction ;
+        owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+        owl:onClass :ImplementationAction
+    ] .
+
+:CapacityToDevelopNewConfigurations a owl:Class ;
+    rdfs:label "Capacity to Develop New Configurations" ;
+    rdfs:subClassOf :Capacity ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasImplementationAction ;
+        owl:someValuesFrom :UnderstandingMaterialCharacteristics
+    ] ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasImplementationAction ;
+        owl:someValuesFrom :CollectingAndProcessingEnergyData
+    ] ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasImplementationAction ;
+        owl:someValuesFrom :SimulatingProcessToIdentifyEfficiencyPotential
+    ] ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasImplementationAction ;
+        owl:someValuesFrom :DefiningValueTypes
+    ] ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasImplementationAction ;
+        owl:someValuesFrom :UnderstandingNeedsAndWants
+    ] .
+
+:ImplementationAction a owl:Class ;
+    rdfs:label "Implementation Action" .
+
+:UnderstandingMaterialCharacteristics a owl:Class ;
+    rdfs:label "Understanding Material Characteristics" ;
+    rdfs:subClassOf :ImplementationAction ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :understandsMaterial ;
+        owl:someValuesFrom :MaterialCharacteristic
+    ] .
+
+:CollectingAndProcessingEnergyData a owl:Class ;
+    rdfs:label "Collecting and Processing Energy Data" ;
+    rdfs:subClassOf :ImplementationAction ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :collectsEnergyData ;
+        owl:someValuesFrom :EnergyData
+    ] .
+
+:SimulatingProcessToIdentifyEfficiencyPotential a owl:Class ;
+    rdfs:label "Simulating Process to Identify Efficiency Potential" ;
+    rdfs:subClassOf :ImplementationAction ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :simulatesProcess ;
+        owl:someValuesFrom :Process
+    ] .
+
+:DefiningValueTypes a owl:Class ;
+    rdfs:label "Defining Value Types" ;
+    rdfs:subClassOf :ImplementationAction ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :definesValueType ;
+        owl:someValuesFrom :ValueType
+    ] .
+
+:UnderstandingNeedsAndWants a owl:Class ;
+    rdfs:label "Understanding Needs and Wants" ;
+    rdfs:subClassOf :ImplementationAction ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :understandsNeedsAndWants ;
+        owl:someValuesFrom :NeedsAndWants
+    ] .
+
+:MaterialCharacteristic a owl:Class ;
+    rdfs:label "Material Characteristic" .
+
+:EnergyData a owl:Class ;
+    rdfs:label "Energy Data" .
+
+:ValueType a owl:Class ;
+    rdfs:label "Value Type" .
+
+:NeedsAndWants a owl:Class ;
+    rdfs:label "Needs and Wants" .
+
+:hasEfficiency a owl:DatatypeProperty ;
+    rdfs:label "has Efficiency" ;
+    rdfs:domain :Process ;
+    rdfs:range xsd:float .
+
+:hasCapacity a owl:ObjectProperty ;
+    rdfs:label "has Capacity" ;
+    rdfs:domain :Process ;
+    rdfs:range :Capacity .
+
+:hasImplementationAction a owl:ObjectProperty ;
+    rdfs:label "has Implementation Action" ;
+    rdfs:domain :Capacity ;
+    rdfs:range :ImplementationAction .
+
+:understandsMaterial a owl:ObjectProperty ;
+    rdfs:label "understands Material" ;
+    rdfs:domain :UnderstandingMaterialCharacteristics ;
+    rdfs:range :MaterialCharacteristic .
+
+:collectsEnergyData a owl:ObjectProperty ;
+    rdfs:label "collects Energy Data" ;
+    rdfs:domain :CollectingAndProcessingEnergyData ;
+    rdfs:range :EnergyData .
+
+:simulatesProcess a owl:ObjectProperty ;
+    rdfs:label "simulates Process" ;
+    rdfs:domain :SimulatingProcessToIdentifyEfficiencyPotential ;
+    rdfs:range :Process .
+
+:definesValueType a owl:ObjectProperty ;
+    rdfs:label "defines Value Type" ;
+    rdfs:domain :DefiningValueTypes ;
+    rdfs:range :ValueType .
+
+:understandsNeedsAndWants a owl:ObjectProperty ;
+    rdfs:label "understands Needs and Wants" ;
+    rdfs:domain :UnderstandingNeedsAndWants ;
+    rdfs:range :NeedsAndWants .
+```

@@ -1,0 +1,56 @@
+```turtle
+@prefix : <http://www.example.org/test#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+<http://www.example.org/test#> a owl:Ontology .
+
+##########################
+# Classes
+##########################
+
+:ChemicalParameter a owl:Class ;
+    rdfs:label "Chemical Parameter" .
+
+:AquiferFungus a owl:Class ;
+    rdfs:label "Aquifer Fungus" ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasAssociatedChemicalParameter ;
+        owl:someValuesFrom :ChemicalParameter
+    ] .
+
+:MicrobeHabitat a owl:Class ;
+    rdfs:label "Microbe Habitat" ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasOrganism ;
+        owl:someValuesFrom :AquiferFungus
+    ] ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasChemicalParameter ;
+        owl:someValuesFrom :ChemicalParameter
+    ] .
+
+##########################
+# Object Properties
+##########################
+
+:hasAssociatedChemicalParameter a owl:ObjectProperty ;
+    rdfs:label "has associated chemical parameter" ;
+    rdfs:domain :AquiferFungus ;
+    rdfs:range :ChemicalParameter .
+
+:hasOrganism a owl:ObjectProperty ;
+    rdfs:label "has organism" ;
+    rdfs:domain :MicrobeHabitat ;
+    rdfs:range :AquiferFungus .
+
+:hasChemicalParameter a owl:ObjectProperty ;
+    rdfs:label "has chemical parameter" ;
+    rdfs:domain :MicrobeHabitat ;
+    rdfs:range :ChemicalParameter .
+```

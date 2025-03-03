@@ -1,0 +1,39 @@
+```turtle
+@prefix : <http://www.example.org/test#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+<http://www.example.org/test#> a owl:Ontology .
+
+:CarbonFixationProcess a owl:Class ;
+    rdfs:label "Carbon Fixation Process" ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :occursIn ;
+        owl:someValuesFrom :Soil
+    ] .
+
+:FormOfCarbonFixation a owl:Class ;
+    rdfs:label "Form of Carbon Fixation" ;
+    rdfs:subClassOf :CarbonFixationProcess ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :occursIn ;
+        owl:someValuesFrom :ForestSoil
+    ] .
+
+:Soil a owl:Class ;
+    rdfs:label "Soil" .
+
+:ForestSoil a owl:Class ;
+    rdfs:label "Forest Soil" ;
+    rdfs:subClassOf :Soil .
+
+:occursIn a owl:ObjectProperty ;
+    rdfs:label "occurs in" ;
+    rdfs:domain :CarbonFixationProcess ;
+    rdfs:range :Soil .
+
+```

@@ -1,0 +1,50 @@
+O:
+```turtle
+@prefix : <http://www.example.org/test#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+<http://www.example.org/test#> a owl:Ontology .
+
+:Organ a owl:Class ;
+    rdfs:label "Organ" ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasOriginalLocation ;
+        owl:onClass :Place ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+    ] .
+
+:Place a owl:Class ;
+    rdfs:label "Place" .
+
+:Church a owl:Class ;
+    rdfs:label "Church" ;
+    rdfs:subClassOf :Place .
+
+:hasOriginalLocation a owl:ObjectProperty ;
+    rdfs:label "hasOriginalLocation" ;
+    rdfs:domain :Organ ;
+    rdfs:range :Place ;
+    owl:inverseOf :isOriginalLocationOf .
+
+:isOriginalLocationOf a owl:ObjectProperty ;
+    rdfs:label "isOriginalLocationOf" ;
+    rdfs:domain :Place ;
+    rdfs:range :Organ ;
+    owl:inverseOf :hasOriginalLocation .
+
+:hasCurrentLocation a owl:ObjectProperty ;
+    rdfs:label "hasCurrentLocation" ;
+    rdfs:domain :Organ ;
+    rdfs:range :Place ;
+    owl:inverseOf :isCurrentLocationOf .
+
+:isCurrentLocationOf a owl:ObjectProperty ;
+    rdfs:label "isCurrentLocationOf" ;
+    rdfs:domain :Place ;
+    rdfs:range :Organ ;
+    owl:inverseOf :hasCurrentLocation .
+```

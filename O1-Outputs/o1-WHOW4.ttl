@@ -1,0 +1,29 @@
+```ttl
+@prefix : <http://www.example.org/test#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+<http://www.example.org/test#> a owl:Ontology .
+
+:Parameter a owl:Class ;
+    rdfs:label "Parameter" .
+
+:WaterBody a owl:Class ;
+    rdfs:label "Water Body" .
+
+:WaterQualityParameter a owl:Class ;
+    rdfs:label "Water Quality Parameter" ;
+    rdfs:subClassOf :Parameter ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :representsQualityOf ;
+        owl:someValuesFrom :WaterBody
+    ] .
+
+:representsQualityOf a owl:ObjectProperty ;
+    rdfs:label "represents quality of" ;
+    rdfs:domain :Parameter ;
+    rdfs:range :WaterBody .
+```

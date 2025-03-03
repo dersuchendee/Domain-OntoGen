@@ -1,0 +1,57 @@
+O:
+```turtle
+@prefix : <http://www.example.org/test#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+<http://www.example.org/test#> a owl:Ontology .
+
+:ExternalFactor a owl:Class ;
+    rdfs:label "External Factor" .
+
+:SystemBarrier a owl:Class ;
+    rdfs:label "System Barrier" ;
+    rdfs:subClassOf :ExternalFactor .
+
+:MacroLevelEnergyInfrastructure a owl:Class ;
+    rdfs:label "Macro Level Energy Infrastructure" ;
+    rdfs:subClassOf :ExternalFactor .
+
+:Legislation a owl:Class ;
+    rdfs:label "Legislation" ;
+    rdfs:subClassOf :ExternalFactor .
+
+:AffectedEntity a owl:Class ;
+    rdfs:label "Affected Entity" ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :isAffectedBy ;
+        owl:someValuesFrom :ExternalFactor
+    ] .
+
+:Process a owl:Class ;
+    rdfs:label "Process" ;
+    rdfs:subClassOf :AffectedEntity .
+
+:Actor a owl:Class ;
+    rdfs:label "Actor" ;
+    rdfs:subClassOf :AffectedEntity .
+
+:ValueNetwork a owl:Class ;
+    rdfs:label "Value Network" ;
+    rdfs:subClassOf :AffectedEntity .
+
+:affects a owl:ObjectProperty ;
+    rdfs:label "affects" ;
+    rdfs:domain :ExternalFactor ;
+    rdfs:range :AffectedEntity ;
+    owl:inverseOf :isAffectedBy .
+
+:isAffectedBy a owl:ObjectProperty ;
+    rdfs:label "is affected by" ;
+    rdfs:domain :AffectedEntity ;
+    rdfs:range :ExternalFactor ;
+    owl:inverseOf :affects .
+```

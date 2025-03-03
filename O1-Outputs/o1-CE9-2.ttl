@@ -1,0 +1,38 @@
+@prefix : <http://www.example.org/test#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+<http://www.example.org/test#> a owl:Ontology .
+
+:EnergyFlow a owl:Class ;
+    rdfs:label "Energy Flow" ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasData ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+        owl:onClass :Data
+    ] ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :atTime ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+        owl:onClass :TimePoint
+    ] .
+
+:Data a owl:Class ;
+    rdfs:label "Data" .
+
+:TimePoint a owl:Class ;
+    rdfs:label "Time Point" .
+
+:hasData a owl:ObjectProperty ;
+    rdfs:label "hasData" ;
+    rdfs:domain :EnergyFlow ;
+    rdfs:range :Data .
+
+:atTime a owl:ObjectProperty ;
+    rdfs:label "atTime" ;
+    rdfs:domain :EnergyFlow ;
+    rdfs:range :TimePoint .

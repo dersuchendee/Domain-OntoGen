@@ -1,0 +1,63 @@
+```turtle
+@prefix : <http://www.example.org/test#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+<http://www.example.org/test#> a owl:Ontology .
+
+:Event a owl:Class ;
+    rdfs:label "Event" .
+
+:ReligiousEvent a owl:Class ;
+    rdfs:label "Religious Event" ;
+    rdfs:subClassOf :Event .
+
+:SecularEvent a owl:Class ;
+    rdfs:label "Secular Event" ;
+    rdfs:subClassOf :Event .
+
+:ReligiousEvent owl:disjointWith :SecularEvent .
+
+:Person a owl:Class ;
+    rdfs:label "Person" .
+
+:Musician a owl:Class ;
+    rdfs:label "Musician" ;
+    rdfs:subClassOf :Person .
+
+:hasParticipant a owl:ObjectProperty ;
+    rdfs:label "has participant" ;
+    rdfs:domain :Event ;
+    rdfs:range :Person .
+
+:hasTime a owl:DatatypeProperty ;
+    rdfs:label "has time" ;
+    rdfs:domain :Event ;
+    rdfs:range xsd:dateTime .
+
+:hasPlace a owl:ObjectProperty ;
+    rdfs:label "has place" ;
+    rdfs:domain :Event ;
+    rdfs:range :Place .
+
+:Place a owl:Class ;
+    rdfs:label "Place" .
+
+:Source a owl:Class ;
+    rdfs:label "Source" .
+
+:isLinkedToSource a owl:ObjectProperty ;
+    rdfs:label "is linked to source" ;
+    rdfs:domain :Event ;
+    rdfs:range :Source .
+
+:Annotation a owl:Class ;
+    rdfs:label "Annotation" .
+
+:hasAnnotation a owl:ObjectProperty ;
+    rdfs:label "has annotation" ;
+    rdfs:domain :Event ;
+    rdfs:range :Annotation .
+```

@@ -1,0 +1,43 @@
+O: 
+```turtle
+@prefix : <http://www.example.org/test#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+<http://www.example.org/test#> a owl:Ontology .
+
+:Species a owl:Class ;
+    rdfs:label "Species" .
+
+:RareSpecies a owl:Class ;
+    rdfs:label "Rare Species" ;
+    rdfs:subClassOf :Species ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :performsFunction ;
+        owl:someValuesFrom :EcologicalFunction
+    ] ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :isMemberOfCommunity ;
+        owl:someValuesFrom :MicrobialCommunity
+    ] .
+
+:EcologicalFunction a owl:Class ;
+    rdfs:label "Ecological Function" .
+
+:MicrobialCommunity a owl:Class ;
+    rdfs:label "Microbial Community" .
+
+:performsFunction a owl:ObjectProperty ;
+    rdfs:label "performs function" ;
+    rdfs:domain :Species ;
+    rdfs:range :EcologicalFunction .
+
+:isMemberOfCommunity a owl:ObjectProperty ;
+    rdfs:label "is member of community" ;
+    rdfs:domain :Species ;
+    rdfs:range :MicrobialCommunity .
+```

@@ -1,0 +1,69 @@
+```turtle
+@prefix : <http://www.example.org/test#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+<http://www.example.org/test#> a owl:Ontology .
+
+:MicrobialCommunity a owl:Class ;
+    rdfs:label "Microbial Community" .
+
+:KeyMicrobialCommunity a owl:Class ;
+    rdfs:label "Key Microbial Community" ;
+    rdfs:subClassOf :MicrobialCommunity ;
+    owl:equivalentClass [
+        a owl:Class ;
+        owl:intersectionOf (
+            :MicrobialCommunity
+            [
+                a owl:Restriction ;
+                owl:onProperty :involvedIn ;
+                owl:someValuesFrom [
+                    a owl:Class ;
+                    owl:intersectionOf (
+                        :CO2FixationProcess
+                        [
+                            a owl:Restriction ;
+                            owl:onProperty :occursIn ;
+                            owl:someValuesFrom :GroundwaterEcosystem
+                        ]
+                    )
+                ]
+            ]
+        )
+    ] .
+
+:BiologicalProcess a owl:Class ;
+    rdfs:label "Biological Process" .
+
+:CarbonCycle a owl:Class ;
+    rdfs:label "Carbon Cycle" ;
+    rdfs:subClassOf :BiologicalProcess .
+
+:NitrogenCycle a owl:Class ;
+    rdfs:label "Nitrogen Cycle" ;
+    rdfs:subClassOf :BiologicalProcess .
+
+:CO2FixationProcess a owl:Class ;
+    rdfs:label "CO2 Fixation Process" ;
+    rdfs:subClassOf :CarbonCycle .
+
+:Ecosystem a owl:Class ;
+    rdfs:label "Ecosystem" .
+
+:GroundwaterEcosystem a owl:Class ;
+    rdfs:label "Groundwater Ecosystem" ;
+    rdfs:subClassOf :Ecosystem .
+
+:involvedIn a owl:ObjectProperty ;
+    rdfs:label "involved in" ;
+    rdfs:domain :MicrobialCommunity ;
+    rdfs:range :BiologicalProcess .
+
+:occursIn a owl:ObjectProperty ;
+    rdfs:label "occurs in" ;
+    rdfs:domain :BiologicalProcess ;
+    rdfs:range :Ecosystem .
+```

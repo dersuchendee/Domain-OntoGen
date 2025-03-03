@@ -1,0 +1,107 @@
+```turtle
+@prefix : <http://www.example.org/test#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+<http://www.example.org/test#> a owl:Ontology .
+
+:EnergyComponent a owl:Class ;
+    rdfs:label "Energy Component" .
+
+:Energy a owl:Class ;
+    rdfs:label "Energy" ;
+    rdfs:subClassOf :EnergyComponent .
+
+:Exergy a owl:Class ;
+    rdfs:label "Exergy" ;
+    rdfs:subClassOf :EnergyComponent ,
+        [ a owl:Restriction ;
+            owl:onProperty :partOf ;
+            owl:someValuesFrom :Energy
+        ] .
+
+:Anergy a owl:Class ;
+    rdfs:label "Anergy" ;
+    rdfs:subClassOf :EnergyComponent ,
+        [ a owl:Restriction ;
+            owl:onProperty :partOf ;
+            owl:someValuesFrom :Energy
+        ] .
+
+:partOf a owl:ObjectProperty , owl:TransitiveProperty ;
+    rdfs:label "partOf" ;
+    rdfs:domain :EnergyComponent ;
+    rdfs:range :EnergyComponent .
+
+:hasEnergyComponent a owl:ObjectProperty ;
+    rdfs:label "hasEnergyComponent" ;
+    rdfs:domain :System ;
+    rdfs:range :EnergyComponent .
+
+:System a owl:Class ;
+    rdfs:label "System" ;
+    rdfs:subClassOf
+        [ a owl:Restriction ;
+            owl:onProperty :hasEnergyComponent ;
+            owl:someValuesFrom :EnergyComponent
+        ] .
+
+:ValueForm a owl:Class ;
+    rdfs:label "Value Form" .
+
+:EconomicValue a owl:Class ;
+    rdfs:label "Economic Value" ;
+    rdfs:subClassOf :ValueForm .
+
+:EnvironmentalValue a owl:Class ;
+    rdfs:label "Environmental Value" ;
+    rdfs:subClassOf :ValueForm .
+
+:SocialValue a owl:Class ;
+    rdfs:label "Social Value" ;
+    rdfs:subClassOf :ValueForm .
+
+:hasValueForm a owl:ObjectProperty ;
+    rdfs:label "hasValueForm" ;
+    rdfs:domain :System ;
+    rdfs:range :ValueForm .
+
+:System rdfs:subClassOf
+        [ a owl:Restriction ;
+            owl:onProperty :hasValueForm ;
+            owl:someValuesFrom :ValueForm
+        ] .
+
+:Process a owl:Class ;
+    rdfs:label "Process" .
+
+:Actor a owl:Class ;
+    rdfs:label "Actor" .
+
+:hasProcess a owl:ObjectProperty ;
+    rdfs:label "hasProcess" ;
+    rdfs:domain :System ;
+    rdfs:range :Process .
+
+:hasActor a owl:ObjectProperty ;
+    rdfs:label "hasActor" ;
+    rdfs:domain :System ;
+    rdfs:range :Actor .
+
+:System rdfs:subClassOf
+        [ a owl:Restriction ;
+            owl:onProperty :hasProcess ;
+            owl:someValuesFrom :Process
+        ] ,
+        [ a owl:Restriction ;
+            owl:onProperty :hasActor ;
+            owl:someValuesFrom :Actor
+        ] .
+
+:interrelatesWith a owl:ObjectProperty ;
+    rdfs:label "interrelatesWith" ;
+    rdfs:domain :Process ;
+    rdfs:range :Actor .
+```

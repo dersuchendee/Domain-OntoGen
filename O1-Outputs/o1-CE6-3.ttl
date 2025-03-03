@@ -1,0 +1,43 @@
+```
+@prefix : <http://www.example.org/test#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+<http://www.example.org/test#> a owl:Ontology .
+
+:EnergyInfrastructure a owl:Class ;
+    rdfs:label "Energy Infrastructure" ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasAvailabilityStatus ;
+        owl:someValuesFrom :AvailabilityStatus
+    ] .
+
+:hasAvailabilityStatus a owl:ObjectProperty ;
+    rdfs:label "has Availability Status" ;
+    rdfs:domain :EnergyInfrastructure ;
+    rdfs:range :AvailabilityStatus .
+
+:AvailabilityStatus a owl:Class ;
+    rdfs:label "Availability Status" ;
+    owl:disjointUnionOf ( :Available :Unavailable ) .
+
+:Available a owl:Class ;
+    rdfs:label "Available" ;
+    rdfs:subClassOf :AvailabilityStatus .
+
+:Unavailable a owl:Class ;
+    rdfs:label "Unavailable" ;
+    rdfs:subClassOf :AvailabilityStatus .
+
+:AvailableEnergyInfrastructure a owl:Class ;
+    rdfs:label "Available Energy Infrastructure" ;
+    rdfs:subClassOf
+        :EnergyInfrastructure ,
+        [ a owl:Restriction ;
+          owl:onProperty :hasAvailabilityStatus ;
+          owl:hasValue :Available
+        ] .
+```

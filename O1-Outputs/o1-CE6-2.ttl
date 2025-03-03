@@ -1,0 +1,50 @@
+```turtle
+@prefix : <http://www.example.org/test#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+<http://www.example.org/test#> a owl:Ontology .
+
+:Entity a owl:Class ;
+    rdfs:label "Entity" ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :isAffectedByLegalCondition ;
+        owl:someValuesFrom :LegalCondition
+    ] ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :isAffectedByLegislation ;
+        owl:someValuesFrom :Legislation
+    ] .
+
+:Actor a owl:Class ;
+    rdfs:label "Actor" ;
+    rdfs:subClassOf :Entity .
+
+:Object a owl:Class ;
+    rdfs:label "Object" ;
+    rdfs:subClassOf :Entity .
+
+:Process a owl:Class ;
+    rdfs:label "Process" ;
+    rdfs:subClassOf :Entity .
+
+:LegalCondition a owl:Class ;
+    rdfs:label "Legal Condition" .
+
+:Legislation a owl:Class ;
+    rdfs:label "Legislation" .
+
+:isAffectedByLegalCondition a owl:ObjectProperty ;
+    rdfs:label "isAffectedByLegalCondition" ;
+    rdfs:domain :Entity ;
+    rdfs:range :LegalCondition .
+
+:isAffectedByLegislation a owl:ObjectProperty ;
+    rdfs:label "isAffectedByLegislation" ;
+    rdfs:domain :Entity ;
+    rdfs:range :Legislation .
+```

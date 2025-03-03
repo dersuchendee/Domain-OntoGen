@@ -1,0 +1,38 @@
+```turtle
+@prefix : <http://www.example.org/test#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+<http://www.example.org/test#> a owl:Ontology .
+
+:ChemicalMeasurement a owl:Class ;
+    rdfs:label "Chemical Measurement" ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasConcentrationValue ;
+        owl:someValuesFrom xsd:float
+    ] ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :inMedium ;
+        owl:someValuesFrom :Water
+    ] .
+
+:hasConcentrationValue a owl:DatatypeProperty ;
+    rdfs:label "has concentration value" ;
+    rdfs:domain :ChemicalMeasurement ;
+    rdfs:range xsd:float .
+
+:inMedium a owl:ObjectProperty ;
+    rdfs:label "in medium" ;
+    rdfs:domain :ChemicalMeasurement ;
+    rdfs:range :EnvironmentalMedium .
+
+:Water a owl:Class ;
+    rdfs:label "Water" ;
+    rdfs:subClassOf :EnvironmentalMedium .
+
+:EnvironmentalMedium a owl:Class ;
+    rdfs:label "Environmental Medium" .
+```

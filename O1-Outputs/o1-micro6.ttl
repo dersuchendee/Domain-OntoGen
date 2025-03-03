@@ -1,0 +1,40 @@
+```turtle
+@prefix : <http://www.example.org/test#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+<http://www.example.org/test#> a owl:Ontology .
+
+:Habitat a owl:Class ;
+    rdfs:label "Habitat" ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasMicrobialCommunityComposition ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+        owl:onClass :MicrobialCommunityComposition
+    ] ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasFungalCommunityComposition ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+        owl:onClass :FungalCommunityComposition
+    ] .
+
+:MicrobialCommunityComposition a owl:Class ;
+    rdfs:label "Microbial Community Composition" .
+
+:FungalCommunityComposition a owl:Class ;
+    rdfs:label "Fungal Community Composition" .
+
+:hasMicrobialCommunityComposition a owl:ObjectProperty ;
+    rdfs:label "has microbial community composition" ;
+    rdfs:domain :Habitat ;
+    rdfs:range :MicrobialCommunityComposition .
+
+:hasFungalCommunityComposition a owl:ObjectProperty ;
+    rdfs:label "has fungal community composition" ;
+    rdfs:domain :Habitat ;
+    rdfs:range :FungalCommunityComposition .
+```

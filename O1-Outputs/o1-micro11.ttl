@@ -1,0 +1,63 @@
+```turtle
+@prefix : <http://www.example.org/test#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+<http://www.example.org/test#> a owl:Ontology .
+
+:Species a owl:Class ;
+  rdfs:label "Species" ;
+  rdfs:subClassOf 
+    [ a owl:Restriction ;
+      owl:onProperty :isFoundIn ;
+      owl:someValuesFrom :Habitat 
+    ],
+    [ a owl:Restriction ;
+      owl:onProperty :hasCharacteristic ;
+      owl:someValuesFrom :Characteristic 
+    ],
+    [ a owl:Restriction ;
+      owl:onProperty :rarityStatus ;
+      owl:someValuesFrom xsd:string 
+    ] .
+
+:RareSpecies a owl:Class ;
+  rdfs:label "Rare Species" ;
+  owl:equivalentClass 
+    [ a owl:Class ;
+      owl:intersectionOf 
+        ( :Species 
+          [ a owl:Restriction ;
+            owl:onProperty :rarityStatus ;
+            owl:hasValue "rare"^^xsd:string 
+          ] 
+        ) 
+    ] .
+
+:Characteristic a owl:Class ;
+  rdfs:label "Characteristic" .
+
+:Habitat a owl:Class ;
+  rdfs:label "Habitat" .
+
+:Aquifer a owl:Class ;
+  rdfs:label "Aquifer" ;
+  rdfs:subClassOf :Habitat .
+
+:isFoundIn a owl:ObjectProperty ;
+  rdfs:label "is found in" ;
+  rdfs:domain :Species ;
+  rdfs:range :Habitat .
+
+:hasCharacteristic a owl:ObjectProperty ;
+  rdfs:label "has characteristic" ;
+  rdfs:domain :Species ;
+  rdfs:range :Characteristic .
+
+:rarityStatus a owl:DatatypeProperty ;
+  rdfs:label "rarity status" ;
+  rdfs:domain :Species ;
+  rdfs:range xsd:string .
+```

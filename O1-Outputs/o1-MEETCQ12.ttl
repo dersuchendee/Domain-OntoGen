@@ -1,0 +1,76 @@
+```turtle
+@prefix : <http://www.example.org/test#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+<http://www.example.org/test#> a owl:Ontology .
+
+:Person a owl:Class ;
+    rdfs:label "Person" ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :participatesIn ;
+        owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+        owl:onClass :Event
+    ] ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :isInvitedTo ;
+        owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+        owl:onClass :Event
+    ] .
+
+:Event a owl:Class ;
+    rdfs:label "Event" ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasParticipant ;
+        owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+        owl:onClass :Person
+    ] .
+
+:Meeting a owl:Class ;
+    rdfs:label "Meeting" ;
+    rdfs:subClassOf :Event ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :isAccidental ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+        owl:onDataRange xsd:boolean
+    ] ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasParticipant ;
+        owl:minQualifiedCardinality "2"^^xsd:nonNegativeInteger ;
+        owl:onClass :Person
+    ] .
+
+:participatesIn a owl:ObjectProperty ;
+    rdfs:label "participatesIn" ;
+    rdfs:domain :Person ;
+    rdfs:range :Event .
+
+:hasParticipant a owl:ObjectProperty ;
+    rdfs:label "hasParticipant" ;
+    rdfs:domain :Event ;
+    rdfs:range :Person ;
+    owl:inverseOf :participatesIn .
+
+:isInvitedTo a owl:ObjectProperty ;
+    rdfs:label "isInvitedTo" ;
+    rdfs:domain :Person ;
+    rdfs:range :Event .
+
+:hasInvitee a owl:ObjectProperty ;
+    rdfs:label "hasInvitee" ;
+    rdfs:domain :Event ;
+    rdfs:range :Person ;
+    owl:inverseOf :isInvitedTo .
+
+:isAccidental a owl:DatatypeProperty ;
+    rdfs:label "isAccidental" ;
+    rdfs:domain :Meeting ;
+    rdfs:range xsd:boolean .
+```

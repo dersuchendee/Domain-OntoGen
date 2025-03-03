@@ -1,0 +1,81 @@
+```turtle
+@prefix : <http://www.example.org/test#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+<http://www.example.org/test#> a owl:Ontology .
+
+:WaterBody a owl:Class ;
+    rdfs:label "Water Body" ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasObservation ;
+        owl:someValuesFrom :ChemicalSubstanceObservation
+    ] .
+
+:ChemicalSubstance a owl:Class ;
+    rdfs:label "Chemical Substance" .
+
+:Observation a owl:Class ;
+    rdfs:label "Observation" .
+
+:ChemicalSubstanceObservation a owl:Class ;
+    rdfs:label "Chemical Substance Observation" ;
+    rdfs:subClassOf :Observation ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :isObservationOfWaterBody ;
+        owl:onClass :WaterBody ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+    ] ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :isObservationOfChemicalSubstance ;
+        owl:onClass :ChemicalSubstance ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+    ] ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasMeasurementTime ;
+        owl:onDataRange xsd:dateTime ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+    ] ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasLevelValue ;
+        owl:onDataRange xsd:float ;
+        owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger
+    ] .
+
+:hasObservation a owl:ObjectProperty ;
+    rdfs:label "hasObservation" ;
+    rdfs:domain :WaterBody ;
+    rdfs:range :Observation .
+
+:isObservationOf a owl:ObjectProperty ;
+    rdfs:label "isObservationOf" .
+
+:isObservationOfWaterBody a owl:ObjectProperty ;
+    rdfs:label "isObservationOfWaterBody" ;
+    rdfs:subPropertyOf :isObservationOf ;
+    rdfs:domain :Observation ;
+    rdfs:range :WaterBody .
+
+:isObservationOfChemicalSubstance a owl:ObjectProperty ;
+    rdfs:label "isObservationOfChemicalSubstance" ;
+    rdfs:subPropertyOf :isObservationOf ;
+    rdfs:domain :Observation ;
+    rdfs:range :ChemicalSubstance .
+
+:hasMeasurementTime a owl:DatatypeProperty ;
+    rdfs:label "hasMeasurementTime" ;
+    rdfs:domain :Observation ;
+    rdfs:range xsd:dateTime .
+
+:hasLevelValue a owl:DatatypeProperty ;
+    rdfs:label "hasLevelValue" ;
+    rdfs:domain :Observation ;
+    rdfs:range xsd:float .
+```

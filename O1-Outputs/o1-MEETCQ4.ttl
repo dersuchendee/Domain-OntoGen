@@ -1,0 +1,90 @@
+```
+@prefix : <http://www.example.org/test#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+<http://www.example.org/test#> a owl:Ontology .
+
+:Person a owl:Class ;
+    rdfs:label "Person" .
+
+:Musician a owl:Class ;
+    rdfs:label "Musician" ;
+    rdfs:subClassOf :Person .
+
+:Performer a owl:Class ;
+    rdfs:label "Performer" ;
+    rdfs:subClassOf :Person .
+
+:Event a owl:Class ;
+    rdfs:label "Event" .
+
+:MeetingEvent a owl:Class ;
+    rdfs:label "Meeting Event" ;
+    rdfs:subClassOf :Event ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasParticipant ;
+        owl:minQualifiedCardinality "2"^^xsd:nonNegativeInteger ;
+        owl:onClass :Person
+    ] ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasParticipant ;
+        owl:someValuesFrom :Musician
+    ] ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasParticipant ;
+        owl:someValuesFrom :Performer
+    ] ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :atTime ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+        owl:onDataRange xsd:dateTime
+    ] ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :atPlace ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+        owl:onClass :Place
+    ] ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasReason ;
+        owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+        owl:onDataRange xsd:string
+    ] .
+
+:Place a owl:Class ;
+    rdfs:label "Place" .
+
+:hasParticipant a owl:ObjectProperty ;
+    rdfs:label "has participant" ;
+    rdfs:domain :Event ;
+    rdfs:range :Person ;
+    owl:inverseOf :participatesIn .
+
+:participatesIn a owl:ObjectProperty ;
+    rdfs:label "participates in" ;
+    rdfs:domain :Person ;
+    rdfs:range :Event .
+
+:atTime a owl:DatatypeProperty ;
+    rdfs:label "at time" ;
+    rdfs:domain :Event ;
+    rdfs:range xsd:dateTime .
+
+:atPlace a owl:ObjectProperty ;
+    rdfs:label "at place" ;
+    rdfs:domain :Event ;
+    rdfs:range :Place .
+
+:hasReason a owl:DatatypeProperty ;
+    rdfs:label "has reason" ;
+    rdfs:domain :Event ;
+    rdfs:range xsd:string .
+```

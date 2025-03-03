@@ -1,0 +1,74 @@
+O:
+@prefix : <http://www.example.org/test#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+<http://www.example.org/test#> a owl:Ontology .
+
+# Classes
+:ForestEcosystem a owl:Class ;
+    rdfs:label "Forest Ecosystem" ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :affects ;
+        owl:someValuesFrom :BiogeochemicalProcess
+    ] .
+
+:BeechForest a owl:Class ;
+    rdfs:label "Beech Forest" ;
+    rdfs:subClassOf :ForestEcosystem ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :affects ;
+        owl:someValuesFrom [
+            a owl:Class ;
+            owl:unionOf ( :CarbonCycling :NitrogenCycling )
+        ]
+    ] ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasNearbyGroundwaterSystem ;
+        owl:someValuesFrom :GroundwaterSystem
+    ] .
+
+:BiogeochemicalProcess a owl:Class ;
+    rdfs:label "Biogeochemical Process" .
+
+:CarbonCycling a owl:Class ;
+    rdfs:label "Carbon Cycling" ;
+    rdfs:subClassOf :BiogeochemicalProcess ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :occursIn ;
+        owl:someValuesFrom :GroundwaterSystem
+    ] .
+
+:NitrogenCycling a owl:Class ;
+    rdfs:label "Nitrogen Cycling" ;
+    rdfs:subClassOf :BiogeochemicalProcess ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :occursIn ;
+        owl:someValuesFrom :GroundwaterSystem
+    ] .
+
+:GroundwaterSystem a owl:Class ;
+    rdfs:label "Groundwater System" .
+
+# Object Properties
+:affects a owl:ObjectProperty ;
+    rdfs:label "affects" ;
+    rdfs:domain :ForestEcosystem ;
+    rdfs:range :BiogeochemicalProcess .
+
+:occursIn a owl:ObjectProperty ;
+    rdfs:label "occursIn" ;
+    rdfs:domain :BiogeochemicalProcess ;
+    rdfs:range :GroundwaterSystem .
+
+:hasNearbyGroundwaterSystem a owl:ObjectProperty ;
+    rdfs:label "hasNearbyGroundwaterSystem" ;
+    rdfs:domain :ForestEcosystem ;
+    rdfs:range :GroundwaterSystem .

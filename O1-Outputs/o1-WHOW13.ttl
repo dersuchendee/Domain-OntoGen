@@ -1,0 +1,57 @@
+@prefix : <http://www.example.org/test#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+<http://www.example.org/test#> a owl:Ontology .
+
+:MonitoringPoint a owl:Class ;
+    rdfs:label "Monitoring Point" ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasMeasurement ;
+        owl:someValuesFrom :Measurement
+    ] .
+
+:PhysicalParameter a owl:Class ;
+    rdfs:label "Physical Parameter" .
+
+:Measurement a owl:Class ;
+    rdfs:label "Measurement" ;
+    rdfs:subClassOf 
+        [ a owl:Restriction ;
+          owl:onProperty :measuresParameter ;
+          owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+          owl:onClass :PhysicalParameter 
+        ] ,
+        [ a owl:Restriction ;
+          owl:onProperty :hasValue ;
+          owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+          owl:onDataRange xsd:float 
+        ] ,
+        [ a owl:Restriction ;
+          owl:onProperty :hasTime ;
+          owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+          owl:onDataRange xsd:dateTime 
+        ] .
+
+:hasMeasurement a owl:ObjectProperty ;
+    rdfs:label "hasMeasurement" ;
+    rdfs:domain :MonitoringPoint ;
+    rdfs:range :Measurement .
+
+:measuresParameter a owl:ObjectProperty ;
+    rdfs:label "measuresParameter" ;
+    rdfs:domain :Measurement ;
+    rdfs:range :PhysicalParameter .
+
+:hasValue a owl:DatatypeProperty ;
+    rdfs:label "hasValue" ;
+    rdfs:domain :Measurement ;
+    rdfs:range xsd:float .
+
+:hasTime a owl:DatatypeProperty ;
+    rdfs:label "hasTime" ;
+    rdfs:domain :Measurement ;
+    rdfs:range xsd:dateTime .

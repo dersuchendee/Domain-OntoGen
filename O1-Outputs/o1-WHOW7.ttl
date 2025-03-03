@@ -1,0 +1,56 @@
+```
+@prefix : <http://www.example.org/test#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+<http://www.example.org/test#> a owl:Ontology .
+
+# Classes
+
+:Hospital a owl:Class ;
+    rdfs:label "Hospital" ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasAdmission ;
+        owl:someValuesFrom :Admission
+    ] .
+
+:Admission a owl:Class ;
+    rdfs:label "Admission" ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :isAdmissionOf ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+        owl:onClass :Hospital
+    ] ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasDiagnosisCode ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+        owl:onClass :DiagnosisCode
+    ] .
+
+:DiagnosisCode a owl:Class ;
+    rdfs:label "Diagnosis Code" .
+
+# Object Properties
+
+:hasAdmission a owl:ObjectProperty ;
+    rdfs:label "has admission" ;
+    rdfs:domain :Hospital ;
+    rdfs:range :Admission ;
+    owl:inverseOf :isAdmissionOf .
+
+:isAdmissionOf a owl:ObjectProperty ;
+    rdfs:label "is admission of" ;
+    rdfs:domain :Admission ;
+    rdfs:range :Hospital .
+
+:hasDiagnosisCode a owl:ObjectProperty ;
+    rdfs:label "has diagnosis code" ;
+    rdfs:domain :Admission ;
+    rdfs:range :DiagnosisCode .
+
+```

@@ -1,0 +1,55 @@
+```turtle
+@prefix : <http://www.example.org/test#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+<http://www.example.org/test#> a owl:Ontology .
+
+:Observation a owl:Class ;
+    rdfs:label "Observation" .
+
+:HospitalisationRateObservation a owl:Class ;
+    rdfs:label "Hospitalisation Rate Observation" ;
+    rdfs:subClassOf :Observation ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :isObservationOf ;
+        owl:onClass :HospitalisationRate ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+    ] ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :isRelatedToDisease ;
+        owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+        owl:onClass :Disease
+    ] ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasRegistrationDate ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+        owl:onDataRange xsd:date
+    ] .
+
+:HospitalisationRate a owl:Class ;
+    rdfs:label "Hospitalisation Rate" .
+
+:Disease a owl:Class ;
+    rdfs:label "Disease" .
+
+:isObservationOf a owl:ObjectProperty ;
+    rdfs:label "isObservationOf" ;
+    rdfs:domain :HospitalisationRateObservation ;
+    rdfs:range :HospitalisationRate .
+
+:isRelatedToDisease a owl:ObjectProperty ;
+    rdfs:label "isRelatedToDisease" ;
+    rdfs:domain :HospitalisationRateObservation ;
+    rdfs:range :Disease .
+
+:hasRegistrationDate a owl:DatatypeProperty ;
+    rdfs:label "hasRegistrationDate" ;
+    rdfs:domain :HospitalisationRateObservation ;
+    rdfs:range xsd:date .
+```

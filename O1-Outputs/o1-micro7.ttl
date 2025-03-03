@@ -1,0 +1,64 @@
+```turtle
+@prefix : <http://www.example.org/test#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+<http://www.example.org/test#> a owl:Ontology .
+
+:Microbe a owl:Class ;
+    rdfs:label "Microbe" .
+
+:Fungi a owl:Class ;
+    rdfs:label "Fungi" ;
+    rdfs:subClassOf :Microbe ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :occupiesHabitat ;
+        owl:someValuesFrom :Aquifer
+    ] ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :playsRoleIn ;
+        owl:someValuesFrom :BiogeochemicalCycleInAquifer
+    ] .
+
+:Habitat a owl:Class ;
+    rdfs:label "Habitat" .
+
+:Aquifer a owl:Class ;
+    rdfs:label "Aquifer" ;
+    rdfs:subClassOf :Habitat .
+
+:Process a owl:Class ;
+    rdfs:label "Process" .
+
+:BiogeochemicalCycle a owl:Class ;
+    rdfs:label "Biogeochemical Cycle" ;
+    rdfs:subClassOf :Process .
+
+:BiogeochemicalCycleInAquifer a owl:Class ;
+    rdfs:label "Biogeochemical Cycle in Aquifer" ;
+    rdfs:subClassOf :BiogeochemicalCycle ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :occursInHabitat ;
+        owl:someValuesFrom :Aquifer
+    ] .
+
+:occupiesHabitat a owl:ObjectProperty ;
+    rdfs:label "occupies habitat" ;
+    rdfs:domain :Microbe ;
+    rdfs:range :Habitat .
+
+:occursInHabitat a owl:ObjectProperty ;
+    rdfs:label "occurs in habitat" ;
+    rdfs:domain :Process ;
+    rdfs:range :Habitat .
+
+:playsRoleIn a owl:ObjectProperty ;
+    rdfs:label "plays role in" ;
+    rdfs:domain :Microbe ;
+    rdfs:range :Process .
+```

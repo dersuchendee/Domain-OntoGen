@@ -1,0 +1,74 @@
+O:
+```turtle
+@prefix : <http://www.example.org/test#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+<http://www.example.org/test#> a owl:Ontology .
+
+:Bell a owl:Class ;
+    rdfs:label "Bell" ;
+    rdfs:subClassOf
+        [ a owl:Restriction ;
+          owl:onProperty :hasWeight ;
+          owl:someValuesFrom xsd:decimal
+        ] ,
+        [ a owl:Restriction ;
+          owl:onProperty :hasHeight ;
+          owl:someValuesFrom xsd:decimal
+        ] ,
+        [ a owl:Restriction ;
+          owl:onProperty :hasDiameter ;
+          owl:someValuesFrom xsd:decimal
+        ] ,
+        [ a owl:Restriction ;
+          owl:onProperty :hasThickness ;
+          owl:someValuesFrom xsd:decimal
+        ] ,
+        [ a owl:Restriction ;
+          owl:onProperty :madeOfMaterial ;
+          owl:someValuesFrom :Material
+        ] ,
+        [ a owl:Restriction ;
+          owl:onProperty :hasMountingSystem ;
+          owl:someValuesFrom :MountingSystem
+        ] .
+
+:hasWeight a owl:DatatypeProperty ;
+    rdfs:label "hasWeight" ;
+    rdfs:domain :Bell ;
+    rdfs:range xsd:decimal .
+
+:hasHeight a owl:DatatypeProperty ;
+    rdfs:label "hasHeight" ;
+    rdfs:domain :Bell ;
+    rdfs:range xsd:decimal .
+
+:hasDiameter a owl:DatatypeProperty ;
+    rdfs:label "hasDiameter" ;
+    rdfs:domain :Bell ;
+    rdfs:range xsd:decimal .
+
+:hasThickness a owl:DatatypeProperty ;
+    rdfs:label "hasThickness" ;
+    rdfs:domain :Bell ;
+    rdfs:range xsd:decimal .
+
+:madeOfMaterial a owl:ObjectProperty ;
+    rdfs:label "madeOfMaterial" ;
+    rdfs:domain :Bell ;
+    rdfs:range :Material .
+
+:Material a owl:Class ;
+    rdfs:label "Material" .
+
+:hasMountingSystem a owl:ObjectProperty ;
+    rdfs:label "hasMountingSystem" ;
+    rdfs:domain :Bell ;
+    rdfs:range :MountingSystem .
+
+:MountingSystem a owl:Class ;
+    rdfs:label "Mounting System" .
+```

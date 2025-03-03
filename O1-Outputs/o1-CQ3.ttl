@@ -1,0 +1,48 @@
+O:
+@prefix : <http://www.example.org/test#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+<http://www.example.org/test#> a owl:Ontology .
+
+:Organ a owl:Class ;
+    rdfs:label "Organ" ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasPart ;
+        owl:someValuesFrom :OrganPart
+    ] .
+
+:OrganPart a owl:Class ;
+    rdfs:label "Organ Part" ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :isPartOf ;
+        owl:onClass :Organ ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+    ] ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :isOriginal ;
+        owl:onDataRange xsd:boolean ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+    ] .
+
+:hasPart a owl:ObjectProperty ;
+    rdfs:label "hasPart" ;
+    rdfs:domain :Organ ;
+    rdfs:range :OrganPart ;
+    owl:inverseOf :isPartOf .
+
+:isPartOf a owl:ObjectProperty ;
+    rdfs:label "isPartOf" ;
+    rdfs:domain :OrganPart ;
+    rdfs:range :Organ ;
+    owl:inverseOf :hasPart .
+
+:isOriginal a owl:DatatypeProperty ;
+    rdfs:label "isOriginal" ;
+    rdfs:domain :OrganPart ;
+    rdfs:range xsd:boolean .

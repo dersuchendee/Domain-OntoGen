@@ -1,0 +1,74 @@
+O:
+```turtle
+@prefix : <http://www.example.org/test#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+<http://www.example.org/test#> a owl:Ontology .
+
+:Area a owl:Class ;
+    rdfs:label "Area" ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasMeasurement ;
+        owl:someValuesFrom :Measurement
+    ] ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasChemicalMeasurement ;
+        owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+        owl:onClass :ChemicalMeasurement
+    ] ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasPhysicalMeasurement ;
+        owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+        owl:onClass :PhysicalMeasurement
+    ] .
+
+:Measurement a owl:Class ;
+    rdfs:label "Measurement" ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :measuredAt ;
+        owl:someValuesFrom :Area
+    ] .
+
+:ChemicalMeasurement a owl:Class ;
+    rdfs:label "Chemical Measurement" ;
+    rdfs:subClassOf :Measurement .
+
+:PhysicalMeasurement a owl:Class ;
+    rdfs:label "Physical Measurement" ;
+    rdfs:subClassOf :Measurement .
+
+:hasMeasurement a owl:ObjectProperty ;
+    rdfs:label "hasMeasurement" ;
+    rdfs:domain :Area ;
+    rdfs:range :Measurement ;
+    owl:inverseOf :measuredAt .
+
+:measuredAt a owl:ObjectProperty ;
+    rdfs:label "measuredAt" ;
+    rdfs:domain :Measurement ;
+    rdfs:range :Area .
+
+:hasChemicalMeasurement a owl:ObjectProperty ;
+    rdfs:label "hasChemicalMeasurement" ;
+    rdfs:subPropertyOf :hasMeasurement ;
+    rdfs:domain :Area ;
+    rdfs:range :ChemicalMeasurement .
+
+:hasPhysicalMeasurement a owl:ObjectProperty ;
+    rdfs:label "hasPhysicalMeasurement" ;
+    rdfs:subPropertyOf :hasMeasurement ;
+    rdfs:domain :Area ;
+    rdfs:range :PhysicalMeasurement .
+
+:measurementValue a owl:DatatypeProperty ;
+    rdfs:label "measurementValue" ;
+    rdfs:domain :Measurement ;
+    rdfs:range xsd:double .
+```

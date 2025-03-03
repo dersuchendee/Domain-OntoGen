@@ -1,0 +1,56 @@
+```turtle
+@prefix : <http://www.example.org/test#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+<http://www.example.org/test#> a owl:Ontology .
+
+:Place a owl:Class ;
+    rdfs:label "Place" ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasSound ;
+        owl:someValuesFrom :Sound
+    ] .
+
+:Sound a owl:Class ;
+    rdfs:label "Sound" ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :isCurrentlyPerformed ;
+        owl:hasValue true^^xsd:boolean
+    ] ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasMeans ;
+        owl:someValuesFrom :MeansOfPerformance
+    ] .
+
+:MeansOfPerformance a owl:Class ;
+    rdfs:label "Means of Performance" .
+
+:ManualPerformance a owl:Class ;
+    rdfs:label "Manual Performance" ;
+    rdfs:subClassOf :MeansOfPerformance .
+
+:ElectricPerformance a owl:Class ;
+    rdfs:label "Electric Performance" ;
+    rdfs:subClassOf :MeansOfPerformance .
+
+:hasSound a owl:ObjectProperty ;
+    rdfs:label "hasSound" ;
+    rdfs:domain :Place ;
+    rdfs:range :Sound .
+
+:hasMeans a owl:ObjectProperty ;
+    rdfs:label "hasMeans" ;
+    rdfs:domain :Sound ;
+    rdfs:range :MeansOfPerformance .
+
+:isCurrentlyPerformed a owl:DatatypeProperty ;
+    rdfs:label "isCurrentlyPerformed" ;
+    rdfs:domain :Sound ;
+    rdfs:range xsd:boolean .
+```

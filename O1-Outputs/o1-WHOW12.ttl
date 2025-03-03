@@ -1,0 +1,60 @@
+O:
+```turtle
+@prefix : <http://www.example.org/test#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+<http://www.example.org/test#> a owl:Ontology .
+
+:MonitoringSite a owl:Class ;
+    rdfs:label "Monitoring Site" ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasObservation ;
+        owl:someValuesFrom :WaterQualityObservation
+    ] .
+
+:WaterQualityObservation a owl:Class ;
+    rdfs:label "Water Quality Observation" ;
+    rdfs:subClassOf :Observation ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :isObservationOf ;
+        owl:onClass :MonitoringSite ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+    ] ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :observesParameter ;
+        owl:onClass :WaterQualityParameter ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+    ] ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :recordedAtTime ;
+        owl:onDataRange xsd:dateTime ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+    ] .
+
+:WaterQualityParameter a owl:Class ;
+    rdfs:label "Water Quality Parameter" .
+
+:Observation a owl:Class ;
+    rdfs:label "Observation" .
+
+:hasObservation a owl:ObjectProperty .
+
+:isObservationOf a owl:ObjectProperty .
+
+:observesParameter a owl:ObjectProperty ;
+    rdfs:label "observesParameter" ;
+    rdfs:domain :Observation ;
+    rdfs:range :WaterQualityParameter .
+
+:recordedAtTime a owl:DatatypeProperty ;
+    rdfs:label "recordedAtTime" ;
+    rdfs:domain :Observation ;
+    rdfs:range xsd:dateTime .
+```

@@ -1,0 +1,71 @@
+```
+@prefix : <http://www.example.org/test#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+<http://www.example.org/test#> a owl:Ontology .
+
+:Carbon a owl:Class ;
+    rdfs:label "Carbon" .
+
+:Water a owl:Class ;
+    rdfs:label "Water" .
+
+:DissolvedCarbon a owl:Class ;
+    rdfs:label "Dissolved Carbon" ;
+    rdfs:subClassOf :Carbon ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :isDissolvedIn ;
+        owl:someValuesFrom :Water
+    ] ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :affects ;
+        owl:someValuesFrom :CarbonCyclingInKarstSystem
+    ] .
+
+:BiogeochemicalCycling a owl:Class ;
+    rdfs:label "Biogeochemical Cycling" .
+
+:CarbonCycling a owl:Class ;
+    rdfs:label "Carbon Cycling" ;
+    rdfs:subClassOf :BiogeochemicalCycling .
+
+:NitrogenCycling a owl:Class ;
+    rdfs:label "Nitrogen Cycling" ;
+    rdfs:subClassOf :BiogeochemicalCycling .
+
+:System a owl:Class ;
+    rdfs:label "System" .
+
+:KarstSystem a owl:Class ;
+    rdfs:label "Karst System" ;
+    rdfs:subClassOf :System .
+
+:CarbonCyclingInKarstSystem a owl:Class ;
+    rdfs:label "Carbon Cycling in Karst System" ;
+    rdfs:subClassOf :CarbonCycling ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :occursIn ;
+        owl:someValuesFrom :KarstSystem
+    ] .
+
+:isDissolvedIn a owl:ObjectProperty ;
+    rdfs:label "is dissolved in" ;
+    rdfs:domain :Carbon ;
+    rdfs:range :Water .
+
+:occursIn a owl:ObjectProperty ;
+    rdfs:label "occurs in" ;
+    rdfs:domain :BiogeochemicalCycling ;
+    rdfs:range :System .
+
+:affects a owl:ObjectProperty ;
+    rdfs:label "affects" ;
+    rdfs:domain :DissolvedCarbon ;
+    rdfs:range :CarbonCyclingInKarstSystem .
+```

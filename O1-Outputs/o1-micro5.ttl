@@ -1,0 +1,72 @@
+O:
+@prefix : <http://www.example.org/test#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+<http://www.example.org/test#> a owl:Ontology .
+
+:Microbe a owl:Class ;
+    rdfs:label "Microbe" .
+
+:Fungus a owl:Class ;
+    rdfs:label "Fungus" .
+
+:Habitat a owl:Class ;
+    rdfs:label "Habitat" .
+
+:AquaticHabitat a owl:Class ;
+    rdfs:label "Aquatic Habitat" ;
+    rdfs:subClassOf :Habitat .
+
+:hasHabitat a owl:ObjectProperty ;
+    rdfs:label "has habitat" ;
+    rdfs:domain :Microbe ;
+    rdfs:range :Habitat .
+
+:AquaticMicrobe a owl:Class ;
+    rdfs:label "Aquatic Microbe" ;
+    owl:equivalentClass [
+        a owl:Class ;
+        owl:intersectionOf (
+            :Microbe
+            [ a owl:Restriction ;
+              owl:onProperty :hasHabitat ;
+              owl:someValuesFrom :AquaticHabitat
+            ]
+        )
+    ] .
+
+:AquaticFungus a owl:Class ;
+    rdfs:label "Aquatic Fungus" ;
+    owl:equivalentClass [
+        a owl:Class ;
+        owl:intersectionOf (
+            :Fungus
+            [ a owl:Restriction ;
+              owl:onProperty :hasHabitat ;
+              owl:someValuesFrom :AquaticHabitat
+            ]
+        )
+    ] .
+
+:Cyanobacteria a owl:Class ;
+    rdfs:label "Cyanobacteria" ;
+    rdfs:subClassOf :AquaticMicrobe .
+
+:Algae a owl:Class ;
+    rdfs:label "Algae" ;
+    rdfs:subClassOf :AquaticMicrobe .
+
+:Protozoa a owl:Class ;
+    rdfs:label "Protozoa" ;
+    rdfs:subClassOf :AquaticMicrobe .
+
+:WaterMolds a owl:Class ;
+    rdfs:label "Water Molds" ;
+    rdfs:subClassOf :AquaticFungus .
+
+:Yeasts a owl:Class ;
+    rdfs:label "Yeasts" ;
+    rdfs:subClassOf :AquaticFungus .

@@ -1,0 +1,54 @@
+```turtle
+@prefix : <http://www.example.org/test#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+<http://www.example.org/test#> a owl:Ontology .
+
+:CO2FixationPathway a owl:Class ;
+    rdfs:label "CO2 Fixation Pathway" ;
+    rdfs:subClassOf :BiochemicalProcess .
+
+:PrimaryCO2FixationPathway a owl:Class ;
+    rdfs:label "Primary CO2 Fixation Pathway" ;
+    rdfs:subClassOf :CO2FixationPathway .
+
+:ForestEcosystem a owl:Class ;
+    rdfs:label "Forest Ecosystem" ;
+    rdfs:subClassOf :Ecosystem ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasCO2FixationPathway ;
+        owl:someValuesFrom :CO2FixationPathway
+    ] .
+
+:BeechForest a owl:Class ;
+    rdfs:label "Beech Forest" ;
+    rdfs:subClassOf :ForestEcosystem ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasCO2FixationPathway ;
+        owl:someValuesFrom :PrimaryCO2FixationPathway
+    ] .
+
+:BiochemicalProcess a owl:Class ;
+    rdfs:label "Biochemical Process" .
+
+:Ecosystem a owl:Class ;
+    rdfs:label "Ecosystem" .
+
+:hasCO2FixationPathway a owl:ObjectProperty ;
+    rdfs:label "has CO2 Fixation Pathway" ;
+    rdfs:domain :Ecosystem ;
+    rdfs:range :CO2FixationPathway .
+
+:CarbonCycle a owl:Class ;
+    rdfs:label "Carbon Cycle" ;
+    rdfs:subClassOf :BiochemicalProcess .
+
+:NitrogenCycle a owl:Class ;
+    rdfs:label "Nitrogen Cycle" ;
+    rdfs:subClassOf :BiochemicalProcess .
+```

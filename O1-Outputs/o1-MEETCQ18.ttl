@@ -1,0 +1,64 @@
+```
+@prefix : <http://www.example.org/test#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+<http://www.example.org/test#> a owl:Ontology .
+
+:Person a owl:Class ;
+    rdfs:label "Person" .
+
+:Composer a owl:Class ;
+    rdfs:label "Composer" ;
+    rdfs:subClassOf :Person ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasPatron ;
+        owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+        owl:onClass :Patron
+    ] ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :worksForInstitution ;
+        owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+        owl:onClass :Institution
+    ] ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :collaboratedWith ;
+        owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+        owl:onClass :Composer
+    ] .
+
+:Patron a owl:Class ;
+    rdfs:label "Patron" ;
+    rdfs:subClassOf :Person .
+
+:Institution a owl:Class ;
+    rdfs:label "Institution" .
+
+:MusicalEvent a owl:Class ;
+    rdfs:label "Musical Event" .
+
+:hasPatron a owl:ObjectProperty ;
+    rdfs:label "has patron" ;
+    rdfs:domain :Composer ;
+    rdfs:range :Patron .
+
+:worksForInstitution a owl:ObjectProperty ;
+    rdfs:label "works for institution" ;
+    rdfs:domain :Composer ;
+    rdfs:range :Institution .
+
+:collaboratedWith a owl:ObjectProperty , owl:SymmetricProperty ;
+    rdfs:label "collaborated with" ;
+    rdfs:domain :Composer ;
+    rdfs:range :Composer .
+
+:participatedInEvent a owl:ObjectProperty ;
+    rdfs:label "participated in event" ;
+    rdfs:domain :Person ;
+    rdfs:range :MusicalEvent .
+```

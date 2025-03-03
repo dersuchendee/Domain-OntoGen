@@ -1,0 +1,52 @@
+```turtle
+@prefix : <http://www.example.org/test#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+<http://www.example.org/test#> a owl:Ontology .
+
+:MicrobeSpecies a owl:Class ;
+    rdfs:label "Microbe Species" .
+
+:AquiferMicrobeSpecies a owl:Class ;
+    rdfs:label "Aquifer Microbe Species" ;
+    rdfs:subClassOf :MicrobeSpecies ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :inhabits ;
+        owl:someValuesFrom :Aquifer
+    ] ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :eats ;
+        owl:onClass :AquiferMicrobeSpecies ;
+        owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger
+    ] ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :isEatenBy ;
+        owl:onClass :AquiferMicrobeSpecies ;
+        owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger
+    ] .
+
+:Aquifer a owl:Class ;
+    rdfs:label "Aquifer" .
+
+:inhabits a owl:ObjectProperty ;
+    rdfs:label "inhabits" ;
+    rdfs:domain :MicrobeSpecies ;
+    rdfs:range :Aquifer .
+
+:eats a owl:ObjectProperty ;
+    rdfs:label "eats" ;
+    rdfs:domain :MicrobeSpecies ;
+    rdfs:range :MicrobeSpecies .
+
+:isEatenBy a owl:ObjectProperty ;
+    rdfs:label "is eaten by" ;
+    owl:inverseOf :eats ;
+    rdfs:domain :MicrobeSpecies ;
+    rdfs:range :MicrobeSpecies .
+```

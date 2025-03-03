@@ -1,0 +1,120 @@
+```
+@prefix : <http://www.example.org/test#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+<http://www.example.org/test#> a owl:Ontology .
+
+:ImplementationAction a owl:Class ;
+    rdfs:label "Implementation Action" ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasEffect ;
+        owl:someValuesFrom :Effect
+    ] .
+
+:Effect a owl:Class ;
+    rdfs:label "Effect" ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :affectsFactor ;
+        owl:someValuesFrom :ExternalFactor
+    ] .
+
+:ExternalFactor a owl:Class ;
+    rdfs:label "External Factor" .
+
+:SocialFactor a owl:Class ;
+    rdfs:label "Social Factor" ;
+    rdfs:subClassOf :ExternalFactor .
+
+:EnvironmentalFactor a owl:Class ;
+    rdfs:label "Environmental Factor" ;
+    rdfs:subClassOf :ExternalFactor .
+
+:hasEffect a owl:ObjectProperty ;
+    rdfs:label "hasEffect" ;
+    rdfs:domain :ImplementationAction ;
+    rdfs:range :Effect .
+
+:affectsFactor a owl:ObjectProperty ;
+    rdfs:label "affectsFactor" ;
+    rdfs:domain :Effect ;
+    rdfs:range :ExternalFactor .
+
+:EffectOnExternalFactors a owl:Class ;
+    rdfs:label "Effect on External Factors" ;
+    rdfs:subClassOf :Effect ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :affectsFactor ;
+        owl:someValuesFrom :ExternalFactor
+    ] .
+
+:AnalyseFeasibilityResourceExchange a owl:Class ;
+    rdfs:label "Analyse Feasibility of Resource Exchange" ;
+    rdfs:subClassOf :ImplementationAction .
+
+:RecordMaterialSpecifications a owl:Class ;
+    rdfs:label "Record Material Specifications and Activities" ;
+    rdfs:subClassOf :ImplementationAction .
+
+:UnderstandConnectionFlows a owl:Class ;
+    rdfs:label "Understand Connection of Quality and Quantity of Flows" ;
+    rdfs:subClassOf :ImplementationAction .
+
+:IncorporateDataFromVariousSources a owl:Class ;
+    rdfs:label "Incorporate Data from Various Sources" ;
+    rdfs:subClassOf :ImplementationAction .
+
+:VisuallyCaptureProcesses a owl:Class ;
+    rdfs:label "Visually Capture Processes" ;
+    rdfs:subClassOf :ImplementationAction .
+
+:TraceMaterialsToOrigin a owl:Class ;
+    rdfs:label "Trace Materials Back to Origin to Evaluate Energy Consumption" ;
+    rdfs:subClassOf :ImplementationAction .
+
+:IdentifyEnergyRequirementsReboundEffects a owl:Class ;
+    rdfs:label "Identify Energy Requirements of Rebound Effects from Material Flows" ;
+    rdfs:subClassOf :ImplementationAction .
+
+:ConsiderAlternativesForEfficiency a owl:Class ;
+    rdfs:label "Consider Alternatives for Achieving Efficiency" ;
+    rdfs:subClassOf :ImplementationAction .
+
+:ForecastEnergyDemandAndSupply a owl:Class ;
+    rdfs:label "Forecast Energy Demand and Supply and Assess Technical Feasibility" ;
+    rdfs:subClassOf :ImplementationAction .
+
+:EvaluateEconomicFeasibilityStrategies a owl:Class ;
+    rdfs:label "Evaluate Economic Feasibility of Material and Energy Strategies" ;
+    rdfs:subClassOf :ImplementationAction .
+
+:AccountForSocialEnvironmentalExternalities a owl:Class ;
+    rdfs:label "Account for Social and Environmental Externalities" ;
+    rdfs:subClassOf :ImplementationAction ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasEffect ;
+        owl:someValuesFrom :EffectOnExternalFactors
+    ] .
+
+:DevelopHolisticValueProposition a owl:Class ;
+    rdfs:label "Develop Holistic Value Proposition" ;
+    rdfs:subClassOf :ImplementationAction .
+
+:IdentifyActivitiesForValueCreation a owl:Class ;
+    rdfs:label "Identify Activities for Value Creation, Capture, and Delivery" ;
+    rdfs:subClassOf :ImplementationAction .
+
+:DevelopCoreObjectives a owl:Class ;
+    rdfs:label "Develop Core Objectives" ;
+    rdfs:subClassOf :ImplementationAction .
+
+:UnderstandValueCreatedDestroyedMissed a owl:Class ;
+    rdfs:label "Understand Value Created, Value Destroyed, Value Missed" ;
+    rdfs:subClassOf :ImplementationAction .
+```

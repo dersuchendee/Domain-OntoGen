@@ -1,0 +1,52 @@
+<#Code>
+
+@prefix : <http://www.example.org/test#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+<http://www.example.org/test#> a owl:Ontology .
+
+# Classes
+
+:MicrobialFunctionalGuild a owl:Class ;
+    rdfs:label "Microbial Functional Guild" ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :isInvolvedIn ;
+        owl:someValuesFrom [
+            a owl:Class ;
+            owl:intersectionOf (
+                :Autolithoautotrophy
+                [ a owl:Restriction ;
+                  owl:onProperty :occursInHabitat ;
+                  owl:someValuesFrom :Habitat
+                ]
+            )
+        ]
+    ] .
+
+:Process a owl:Class ;
+    rdfs:label "Process" .
+
+:Autolithoautotrophy a owl:Class ;
+    rdfs:label "Autolithoautotrophy" ;
+    rdfs:subClassOf :Process .
+
+:Habitat a owl:Class ;
+    rdfs:label "Habitat" .
+
+# Properties
+
+:isInvolvedIn a owl:ObjectProperty ;
+    rdfs:label "is involved in" ;
+    rdfs:domain :MicrobialFunctionalGuild ;
+    rdfs:range :Process .
+
+:occursInHabitat a owl:ObjectProperty ;
+    rdfs:label "occurs in habitat" ;
+    rdfs:domain :Process ;
+    rdfs:range :Habitat .
+
+</#Code>

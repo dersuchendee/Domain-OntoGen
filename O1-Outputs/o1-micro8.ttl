@@ -1,0 +1,55 @@
+```
+@prefix : <http://www.example.org/test#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+<http://www.example.org/test#> a owl:Ontology .
+
+:Microbe a owl:Class ;
+    rdfs:label "Microbe" .
+
+:AquiferMicrobe a owl:Class ;
+    rdfs:label "Aquifer Microbe" ;
+    rdfs:subClassOf :Microbe .
+
+:AquiferEnvironment a owl:Class ;
+    rdfs:label "Aquifer Environment" .
+
+:MicrobeOccurrence a owl:Class ;
+    rdfs:label "Microbe Occurrence" ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasMicrobe ;
+        owl:onClass :AquiferMicrobe ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+    ] ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :inEnvironment ;
+        owl:onClass :AquiferEnvironment ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+    ] ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasAbundance ;
+        owl:onDataRange xsd:float ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+    ] .
+
+:hasMicrobe a owl:ObjectProperty ;
+    rdfs:label "has Microbe" ;
+    rdfs:domain :MicrobeOccurrence ;
+    rdfs:range :AquiferMicrobe .
+
+:inEnvironment a owl:ObjectProperty ;
+    rdfs:label "in Environment" ;
+    rdfs:domain :MicrobeOccurrence ;
+    rdfs:range :AquiferEnvironment .
+
+:hasAbundance a owl:DatatypeProperty ;
+    rdfs:label "has Abundance" ;
+    rdfs:domain :MicrobeOccurrence ;
+    rdfs:range xsd:float .
+```

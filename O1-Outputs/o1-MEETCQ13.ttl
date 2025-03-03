@@ -1,0 +1,87 @@
+O:
+@prefix : <http://www.example.org/test#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+<http://www.example.org/test#> a owl:Ontology .
+
+:Participant a owl:Class ;
+    rdfs:label "Participant" ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasRelationWith ;
+        owl:someValuesFrom :Participant
+    ] ,
+    [
+        a owl:Restriction ;
+        owl:onProperty :participatedIn ;
+        owl:someValuesFrom :Event
+    ] .
+
+:Event a owl:Class ;
+    rdfs:label "Event" ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :occursAtTime ;
+        owl:someValuesFrom :Time
+    ] ,
+    [
+        a owl:Restriction ;
+        owl:onProperty :occursAtPlace ;
+        owl:someValuesFrom :Place
+    ] .
+
+:Time a owl:Class ;
+    rdfs:label "Time" .
+
+:Place a owl:Class ;
+    rdfs:label "Place" .
+
+:hasRelationWith a owl:ObjectProperty ;
+    rdfs:label "hasRelationWith" ;
+    rdfs:domain :Participant ;
+    rdfs:range :Participant .
+
+:collaboratedWith a owl:ObjectProperty ;
+    rdfs:label "collaboratedWith" ;
+    rdfs:subPropertyOf :hasRelationWith ;
+    owl:SymmetricProperty ;
+    rdfs:domain :Participant ;
+    rdfs:range :Participant .
+
+:influencedBy a owl:ObjectProperty ;
+    rdfs:label "influencedBy" ;
+    rdfs:subPropertyOf :hasRelationWith ;
+    rdfs:domain :Participant ;
+    rdfs:range :Participant .
+
+:influenced a owl:ObjectProperty ;
+    rdfs:label "influenced" ;
+    rdfs:inverseOf :influencedBy ;
+    rdfs:subPropertyOf :hasRelationWith ;
+    rdfs:domain :Participant ;
+    rdfs:range :Participant .
+
+:metAtEvent a owl:ObjectProperty ;
+    rdfs:label "metAtEvent" ;
+    rdfs:subPropertyOf :hasRelationWith ;
+    owl:SymmetricProperty ;
+    rdfs:domain :Participant ;
+    rdfs:range :Participant ;
+    owl:propertyChainAxiom ( :participatedIn ^:participatedIn ) .
+
+:participatedIn a owl:ObjectProperty ;
+    rdfs:label "participatedIn" ;
+    rdfs:domain :Participant ;
+    rdfs:range :Event .
+
+:occursAtTime a owl:ObjectProperty ;
+    rdfs:label "occursAtTime" ;
+    rdfs:domain :Event ;
+    rdfs:range :Time .
+
+:occursAtPlace a owl:ObjectProperty ;
+    rdfs:label "occursAtPlace" ;
+    rdfs:domain :Event ;
+    rdfs:range :Place .

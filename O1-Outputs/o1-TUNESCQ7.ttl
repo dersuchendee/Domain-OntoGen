@@ -1,0 +1,50 @@
+O:
+@prefix : <http://www.example.org/test#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+<http://www.example.org/test#> a owl:Ontology .
+
+:TuneFamily a owl:Class ;
+    rdfs:label "Tune Family" .
+
+:SimilarityMeasure a owl:Class ;
+    rdfs:label "Similarity Measure" .
+
+:SimilarityRelation a owl:Class ;
+    rdfs:label "Similarity Relation" ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasSourceTuneFamily ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+        owl:onClass :TuneFamily
+    ] ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasTargetTuneFamily ;
+        owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+        owl:onClass :TuneFamily
+    ] ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasSimilarityMeasure ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+        owl:onClass :SimilarityMeasure
+    ] .
+
+:hasSourceTuneFamily a owl:ObjectProperty ;
+    rdfs:label "has Source Tune Family" ;
+    rdfs:domain :SimilarityRelation ;
+    rdfs:range :TuneFamily .
+
+:hasTargetTuneFamily a owl:ObjectProperty ;
+    rdfs:label "has Target Tune Family" ;
+    rdfs:domain :SimilarityRelation ;
+    rdfs:range :TuneFamily .
+
+:hasSimilarityMeasure a owl:ObjectProperty ;
+    rdfs:label "has Similarity Measure" ;
+    rdfs:domain :SimilarityRelation ;
+    rdfs:range :SimilarityMeasure .
