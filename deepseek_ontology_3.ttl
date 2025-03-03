@@ -1,0 +1,74 @@
+@prefix : <http://www.example.org/test#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+<http://www.example.org/test#> a owl:Ontology .
+
+:Flow a owl:Class ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasMeasurement ;
+        owl:someValuesFrom :FlowMeasurement
+    ] .
+
+:FlowMeasurement a owl:Class ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :isMeasurementOf ;
+        owl:onClass :Flow ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+    ] ,
+    [
+        a owl:Restriction ;
+        owl:onProperty :hasQuantityValue ;
+        owl:onDataRange xsd:decimal ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+    ] ,
+    [
+        a owl:Restriction ;
+        owl:onProperty :hasUnit ;
+        owl:someValuesFrom :Unit ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+    ] ,
+    [
+        a owl:Restriction ;
+        owl:onProperty :hasTime ;
+        owl:onDataRange xsd:dateTime ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+    ] ,
+    [
+        a owl:Restriction ;
+        owl:onProperty :hasQuality ;
+        owl:someValuesFrom :Quality ;
+        owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger
+    ] .
+
+:Unit a owl:Class .
+:Quality a owl:Class .
+
+:hasMeasurement a owl:ObjectProperty ;
+    rdfs:domain :Flow ;
+    rdfs:range :FlowMeasurement .
+
+:isMeasurementOf a owl:ObjectProperty ;
+    rdfs:domain :FlowMeasurement ;
+    rdfs:range :Flow ;
+    owl:inverseOf :hasMeasurement .
+
+:hasQuantityValue a owl:DatatypeProperty ;
+    rdfs:domain :FlowMeasurement ;
+    rdfs:range xsd:decimal .
+
+:hasUnit a owl:ObjectProperty ;
+    rdfs:domain :FlowMeasurement ;
+    rdfs:range :Unit .
+
+:hasTime a owl:DatatypeProperty ;
+    rdfs:domain :FlowMeasurement ;
+    rdfs:range xsd:dateTime .
+
+:hasQuality a owl:ObjectProperty ;
+    rdfs:domain :FlowMeasurement ;
+    rdfs:range :Quality .
