@@ -1,0 +1,94 @@
+@prefix : <http://www.example.org/test#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+<http://www.example.org/test#> a owl:Ontology .
+
+:Material a owl:Class ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasOrigin ;
+        owl:onClass :Source ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+    ] ,
+    [
+        a owl:Restriction ;
+        owl:onProperty :undergoesProcess ;
+        owl:someValuesFrom :Process
+    ] .
+
+:Process a owl:Class ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasNextProcess ;
+        owl:onClass :Process ;
+        owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger
+    ] .
+
+:Source a owl:Class .
+
+:MaterialSpecification a owl:Class .
+
+:Flow a owl:Class ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasQuality ;
+        owl:onDataRange xsd:string ;
+        owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger
+    ] ,
+    [
+        a owl:Restriction ;
+        owl:onProperty :hasQuantity ;
+        owl:onDataRange xsd:decimal ;
+        owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger
+    ] .
+
+:EnergyRequirement a owl:Class .
+
+:ReboundEffect a owl:Class .
+
+:EconomicFeasibility a owl:Class .
+
+:hasOrigin a owl:ObjectProperty ;
+    rdfs:domain :Material ;
+    rdfs:range :Source .
+
+:undergoesProcess a owl:ObjectProperty ;
+    rdfs:domain :Material ;
+    rdfs:range :Process .
+
+:hasNextProcess a owl:ObjectProperty ;
+    rdfs:domain :Process ;
+    rdfs:range :Process .
+
+:hasSpecification a owl:ObjectProperty ;
+    rdfs:domain :Material ;
+    rdfs:range :MaterialSpecification .
+
+:hasInput a owl:ObjectProperty ;
+    rdfs:domain :Process ;
+    rdfs:range :Flow .
+
+:hasOutput a owl:ObjectProperty ;
+    rdfs:domain :Process ;
+    rdfs:range :Flow .
+
+:hasQuality a owl:DatatypeProperty ;
+    rdfs:domain :Flow .
+
+:hasQuantity a owl:DatatypeProperty ;
+    rdfs:domain :Flow .
+
+:hasEnergyRequirement a owl:ObjectProperty ;
+    rdfs:domain :Process ;
+    rdfs:range :EnergyRequirement .
+
+:hasReboundEffect a owl:ObjectProperty ;
+    rdfs:domain :Process ;
+    rdfs:range :ReboundEffect .
+
+:hasEconomicFeasibility a owl:ObjectProperty ;
+    rdfs:domain :Process ;
+    rdfs:range :EconomicFeasibility .
