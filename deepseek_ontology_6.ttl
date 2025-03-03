@@ -1,0 +1,38 @@
+@prefix : <http://www.example.org/test#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+<http://www.example.org/test#> a owl:Ontology .
+
+:MaterialFlow a owl:Class ;
+    rdfs:label "Material Flow" ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasReboundEffect ;
+        owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+        owl:onClass :ReboundEffect
+    ] .
+
+:ReboundEffect a owl:Class ;
+    rdfs:label "Rebound Effect" ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasAddedEnergyRequirement ;
+        owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+        owl:onClass :EnergyRequirement
+    ] .
+
+:EnergyRequirement a owl:Class ;
+    rdfs:label "Energy Requirement" .
+
+:hasReboundEffect a owl:ObjectProperty ;
+    rdfs:label "has rebound effect" ;
+    rdfs:domain :MaterialFlow ;
+    rdfs:range :ReboundEffect .
+
+:hasAddedEnergyRequirement a owl:ObjectProperty ;
+    rdfs:label "has added energy requirement" ;
+    rdfs:domain :ReboundEffect ;
+    rdfs:range :EnergyRequirement .
