@@ -1,0 +1,75 @@
+@prefix : <http://www.example.org/test#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+<http://www.example.org/test#> a owl:Ontology .
+
+:Organ a owl:Class ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasDisposition ;
+        owl:someValuesFrom :Disposition
+    ] ,
+    [
+        a owl:Restriction ;
+        owl:onProperty :isBuiltBy ;
+        owl:onClass :OrganBuilder ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+    ] ,
+    [
+        a owl:Restriction ;
+        owl:onProperty :isPartOf ;
+        owl:onClass :Church ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+    ] .
+
+:Disposition a owl:Class ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasDate ;
+        owl:onDataRange xsd:date ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+    ] ,
+    [
+        a owl:Restriction ;
+        owl:onProperty :hasBaseStop ;
+        owl:onClass :BaseStop ;
+        owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger
+    ] .
+
+:Church a owl:Class ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasConstructionYear ;
+        owl:onDataRange xsd:gYear ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+    ] .
+
+:OrganBuilder a owl:Class .
+:BaseStop a owl:Class .
+
+:hasDisposition a owl:ObjectProperty ;
+    rdfs:domain :Organ ;
+    rdfs:range :Disposition .
+
+:hasDate a owl:DatatypeProperty ;
+    rdfs:domain :Disposition ;
+    rdfs:range xsd:date .
+
+:hasBaseStop a owl:ObjectProperty ;
+    rdfs:domain :Disposition ;
+    rdfs:range :BaseStop .
+
+:isBuiltBy a owl:ObjectProperty ;
+    rdfs:domain :Organ ;
+    rdfs:range :OrganBuilder .
+
+:isPartOf a owl:ObjectProperty ;
+    rdfs:domain :Organ ;
+    rdfs:range :Church .
+
+:hasConstructionYear a owl:DatatypeProperty ;
+    rdfs:domain :Church ;
+    rdfs:range xsd:gYear .
