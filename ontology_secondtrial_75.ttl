@@ -1,0 +1,36 @@
+@prefix : <http://www.example.org/test#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+<http://www.example.org/test#> a owl:Ontology .
+
+:Ecosystem a owl:Class ;
+    rdfs:label "Ecosystem" .
+
+:BeechForestEcosystem a owl:Class ;
+    rdfs:label "Beech Forest Ecosystem" ;
+    rdfs:subClassOf :Ecosystem ,
+        [ a owl:Restriction ;
+          owl:onProperty :hasMajorProcess ;
+          owl:someValuesFrom :NitrogenCycleProcess ] .
+
+:NitrogenCycle a owl:Class ;
+    rdfs:label "Nitrogen Cycle" .
+
+:NitrogenCycleProcess a owl:Class ;
+    rdfs:label "Nitrogen Cycle Process" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+                      owl:onProperty :isPartOf ;
+                      owl:hasValue :NitrogenCycle ] .
+
+:hasMajorProcess a owl:ObjectProperty ;
+    rdfs:label "has major process" ;
+    rdfs:domain :Ecosystem ;
+    rdfs:range :NitrogenCycleProcess .
+
+:isPartOf a owl:ObjectProperty ;
+    rdfs:label "is part of" ;
+    rdfs:domain :NitrogenCycleProcess ;
+    rdfs:range :NitrogenCycle .
