@@ -1,0 +1,36 @@
+@prefix : <http://www.example.org/test#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+<http://www.example.org/test#> a owl:Ontology .
+
+:ForestSoilComposition a owl:Class ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :playsRoleIn ;
+        owl:someValuesFrom :CO2FixationProcess
+    ] .
+
+:CO2FixationProcess a owl:Class ;
+    rdfs:subClassOf :CarbonCycling .
+
+:CarbonCycling a owl:Class ;
+    rdfs:subClassOf :CyclingProcess .
+
+:NitrogenCycling a owl:Class ;
+    rdfs:subClassOf :CyclingProcess .
+
+:CyclingProcess a owl:Class .
+
+:Role a owl:Class .
+
+:playsRoleIn a owl:ObjectProperty ;
+    rdfs:domain :ForestSoilComposition ;
+    rdfs:range :CO2FixationProcess ;
+    rdfs:subPropertyOf :associatedWithRole .
+
+:associatedWithRole a owl:ObjectProperty ;
+    rdfs:domain :CO2FixationProcess ;
+    rdfs:range :Role .
