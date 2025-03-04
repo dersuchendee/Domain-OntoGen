@@ -1,0 +1,51 @@
+@prefix : <http://www.example.org/test#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+<http://www.example.org/test#> a owl:Ontology .
+
+:NutrientCycle a owl:Class ;
+    rdfs:label "Nutrient Cycle" .
+
+:NitrogenCycle a owl:Class ;
+    rdfs:subClassOf :NutrientCycle ;
+    rdfs:label "Nitrogen Cycle" .
+
+:CarbonCycle a owl:Class ;
+    rdfs:subClassOf :NutrientCycle ;
+    rdfs:label "Carbon Cycle" .
+
+:NitrogenLeaching a owl:Class ;
+    rdfs:subClassOf :NitrogenCycle ,
+                    [ a owl:Restriction ;
+                      owl:onProperty :occursIn ;
+                      owl:someValuesFrom :ForestEcosystem
+                    ] ,
+                    [ a owl:Restriction ;
+                      owl:onProperty :hasSoilType ;
+                      owl:someValuesFrom :SoilType
+                    ] ;
+    rdfs:label "Nitrogen Leaching" .
+
+:SoilType a owl:Class ;
+    rdfs:label "Soil Type" .
+
+:ForestEcosystem a owl:Class ;
+    rdfs:label "Forest Ecosystem" .
+
+:occursIn a owl:ObjectProperty ;
+    rdfs:domain :NitrogenLeaching ;
+    rdfs:range :ForestEcosystem ;
+    rdfs:label "occurs in" .
+
+:hasSoilType a owl:ObjectProperty ;
+    rdfs:domain :NitrogenLeaching ;
+    rdfs:range :SoilType ;
+    rdfs:label "has soil type" .
+
+:hasLeachingRate a owl:DatatypeProperty ;
+    rdfs:domain :NitrogenLeaching ;
+    rdfs:range xsd:decimal ;
+    rdfs:label "has leaching rate" .
