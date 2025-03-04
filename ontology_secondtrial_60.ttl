@@ -1,0 +1,57 @@
+@prefix : <http://www.example.org/test#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+<http://www.example.org/test#> a owl:Ontology .
+
+:MicrobeHabitat a owl:Class ;
+    rdfs:label "Microbe Habitat" .
+
+:Aquifer a owl:Class ;
+    rdfs:subClassOf :MicrobeHabitat ;
+    rdfs:label "Aquifer" .
+
+:MicrobialFunctionalGuild a owl:Class ;
+    rdfs:label "Microbial Functional Guild" .
+
+:Autotroph a owl:Class ;
+    rdfs:subClassOf :MicrobialFunctionalGuild ;
+    rdfs:label "Autotroph" .
+
+:Heterotroph a owl:Class ;
+    rdfs:subClassOf :MicrobialFunctionalGuild ;
+    rdfs:label "Heterotroph" .
+
+:Interaction a owl:Class ;
+    rdfs:label "Interaction" ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasParticipant ;
+        owl:minQualifiedCardinality "2"^^xsd:nonNegativeInteger ;
+        owl:onClass :MicrobialFunctionalGuild
+    ] , [
+        a owl:Restriction ;
+        owl:onProperty :occursIn ;
+        owl:someValuesFrom :MicrobeHabitat
+    ] .
+
+:InteractionType a owl:Class ;
+    rdfs:label "Interaction Type" .
+
+:occursIn a owl:ObjectProperty ;
+    rdfs:domain :Interaction ;
+    rdfs:range :MicrobeHabitat .
+
+:hasParticipant a owl:ObjectProperty ;
+    rdfs:domain :Interaction ;
+    rdfs:range :MicrobialFunctionalGuild .
+
+:hasInteractionType a owl:ObjectProperty ;
+    rdfs:domain :Interaction ;
+    rdfs:range :InteractionType .
+
+:hasNutrientLevel a owl:DatatypeProperty ;
+    rdfs:domain :MicrobeHabitat ;
+    rdfs:range xsd:string .
