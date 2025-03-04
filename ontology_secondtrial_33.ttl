@@ -1,0 +1,55 @@
+@prefix : <http://www.example.org/test#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+<http://www.example.org/test#> a owl:Ontology .
+
+:Person a owl:Class ;
+    rdfs:label "Person" .
+
+:Event a owl:Class ;
+    rdfs:label "Event" ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasParticipant ;
+        owl:someValuesFrom :Person ;
+        owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger
+    ] .
+
+:TravelEvent a owl:Class ;
+    rdfs:label "Travel Event" ;
+    rdfs:subClassOf :Event ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasDestination ;
+        owl:onClass :Place ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+    ] .
+
+:Place a owl:Class ;
+    rdfs:label "Place" .
+
+:TravelMethod a owl:Class ;
+    rdfs:label "Travel Method" .
+
+:hasParticipant a owl:ObjectProperty ;
+    rdfs:label "has participant" ;
+    rdfs:domain :Event ;
+    rdfs:range :Person .
+
+:hasDestination a owl:ObjectProperty ;
+    rdfs:label "has destination" ;
+    rdfs:domain :TravelEvent ;
+    rdfs:range :Place .
+
+:hasTravelMethod a owl:ObjectProperty ;
+    rdfs:label "has travel method" ;
+    rdfs:domain :TravelEvent ;
+    rdfs:range :TravelMethod .
+
+:hasDate a owl:DatatypeProperty ;
+    rdfs:label "has date" ;
+    rdfs:domain :Event ;
+    rdfs:range xsd:date .
