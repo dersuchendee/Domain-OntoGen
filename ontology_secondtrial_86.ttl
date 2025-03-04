@@ -1,0 +1,44 @@
+@prefix : <http://www.example.org/test#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+<http://www.example.org/test#> a owl:Ontology .
+
+:ChemicalLevelRecording a owl:Class ;
+    rdfs:subClassOf :Observation ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasRecordingDate ;
+        owl:onDataRange xsd:dateTime ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+    ] ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :recordsChemical ;
+        owl:onClass :ChemicalSubstance ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+    ] ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :recordedIn ;
+        owl:onClass :WaterBody ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+    ] .
+
+:ChemicalSubstance a owl:Class .
+:WaterBody a owl:Class .
+:Observation a owl:Class .
+
+:hasRecordingDate a owl:DatatypeProperty ;
+    rdfs:domain :ChemicalLevelRecording ;
+    rdfs:range xsd:dateTime .
+
+:recordsChemical a owl:ObjectProperty ;
+    rdfs:domain :ChemicalLevelRecording ;
+    rdfs:range :ChemicalSubstance .
+
+:recordedIn a owl:ObjectProperty ;
+    rdfs:domain :ChemicalLevelRecording ;
+    rdfs:range :WaterBody .
