@@ -1,0 +1,84 @@
+@prefix : <http://www.example.org/test#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+<http://www.example.org/test#> a owl:Ontology .
+
+:Species a owl:Class ;
+    rdfs:label "Species" .
+
+:Aquifer a owl:Class ;
+    rdfs:label "Aquifer" .
+
+:SpeciesAquiferCharacteristic a owl:Class ;
+    rdfs:label "Species Aquifer Characteristic" ;
+    rdfs:subClassOf :Observation ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasSpecies ;
+        owl:onClass :Species ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+    ] ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :locatedInAquifer ;
+        owl:onClass :Aquifer ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+    ] ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasConservationStatus ;
+        owl:onClass :ConservationStatus ;
+        owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger
+    ] ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasHabitatType ;
+        owl:onClass :HabitatType ;
+        owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger
+    ] ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasPopulationTrend ;
+        owl:onClass :PopulationTrend ;
+        owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger
+    ] .
+
+:ConservationStatus a owl:Class ;
+    rdfs:label "Conservation Status" .
+
+:HabitatType a owl:Class ;
+    rdfs:label "Habitat Type" .
+
+:PopulationTrend a owl:Class ;
+    rdfs:label "Population Trend" .
+
+:hasSpecies a owl:ObjectProperty ;
+    rdfs:label "has species" ;
+    rdfs:domain :SpeciesAquiferCharacteristic ;
+    rdfs:range :Species .
+
+:locatedInAquifer a owl:ObjectProperty ;
+    rdfs:label "located in aquifer" ;
+    rdfs:domain :SpeciesAquiferCharacteristic ;
+    rdfs:range :Aquifer .
+
+:hasConservationStatus a owl:ObjectProperty ;
+    rdfs:label "has conservation status" ;
+    rdfs:domain :SpeciesAquiferCharacteristic ;
+    rdfs:range :ConservationStatus .
+
+:hasHabitatType a owl:ObjectProperty ;
+    rdfs:label "has habitat type" ;
+    rdfs:domain :SpeciesAquiferCharacteristic ;
+    rdfs:range :HabitatType .
+
+:hasPopulationTrend a owl:ObjectProperty ;
+    rdfs:label "has population trend" ;
+    rdfs:domain :SpeciesAquiferCharacteristic ;
+    rdfs:range :PopulationTrend .
+
+:Observation a owl:Class ;
+    rdfs:label "Observation" .
