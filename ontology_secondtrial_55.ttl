@@ -1,0 +1,50 @@
+@prefix : <http://www.example.org/test#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+<http://www.example.org/test#> a owl:Ontology .
+
+:MicrobialOrganism a owl:Class ;
+    rdfs:label "Microbial Organism" .
+
+:AquaticMicrobe a owl:Class ;
+    rdfs:label "Aquatic Microbe" ;
+    rdfs:subClassOf :MicrobialOrganism .
+
+:AquaticFungi a owl:Class ;
+    rdfs:label "Aquatic Fungi" ;
+    rdfs:subClassOf :MicrobialOrganism .
+
+:Bacteria a owl:Class ;
+    rdfs:label "Bacteria" ;
+    rdfs:subClassOf :AquaticMicrobe .
+
+:Archaea a owl:Class ;
+    rdfs:label "Archaea" ;
+    rdfs:subClassOf :AquaticMicrobe .
+
+:Protist a owl:Class ;
+    rdfs:label "Protist" ;
+    rdfs:subClassOf :AquaticMicrobe .
+
+:Ascomycetes a owl:Class ;
+    rdfs:label "Ascomycetes" ;
+    rdfs:subClassOf :AquaticFungi .
+
+:Basidiomycetes a owl:Class ;
+    rdfs:label "Basidiomycetes" ;
+    rdfs:subClassOf :AquaticFungi .
+
+:Chytridiomycota a owl:Class ;
+    rdfs:label "Chytridiomycota" ;
+    rdfs:subClassOf :AquaticFungi .
+
+:MicrobeHabitat a owl:Class ;
+    rdfs:label "Microbe Habitat" .
+
+:inhabits a owl:ObjectProperty ;
+    rdfs:label "inhabits" ;
+    rdfs:domain :AquaticMicrobe ;
+    rdfs:range :MicrobeHabitat .
