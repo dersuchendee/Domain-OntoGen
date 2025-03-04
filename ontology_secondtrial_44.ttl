@@ -1,0 +1,96 @@
+@prefix : <http://www.example.org/test#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+<http://www.example.org/test#> a owl:Ontology .
+
+:Organ a owl:Class ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasPart ;
+        owl:someValuesFrom :OrganPart
+    ] .
+
+:OrganPart a owl:Class .
+
+:OriginalPart a owl:Class ;
+    rdfs:subClassOf :OrganPart ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :originalPartOf ;
+        owl:onClass :Organ ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+    ] ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :currentLocation ;
+        owl:onClass :Location ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+    ] .
+
+:Location a owl:Class .
+
+:Church a owl:Class ;
+    rdfs:subClassOf :Location ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :constructionYear ;
+        owl:someValuesFrom xsd:int
+    ] .
+
+:ChurchArchive a owl:Class ;
+    rdfs:subClassOf :Location .
+
+:OrganBuilder a owl:Class .
+
+:Restoration a owl:Class .
+
+:Disposition a owl:Class .
+
+:BaseStop a owl:Class .
+
+:originalPartOf a owl:ObjectProperty ;
+    rdfs:domain :OriginalPart ;
+    rdfs:range :Organ .
+
+:currentLocation a owl:ObjectProperty ;
+    rdfs:domain :OrganPart ;
+    rdfs:range :Location .
+
+:locatedIn a owl:ObjectProperty ;
+    rdfs:domain :Organ ;
+    rdfs:range :Church .
+
+:hasRestoration a owl:ObjectProperty ;
+    rdfs:domain :Organ ;
+    rdfs:range :Restoration .
+
+:changedPart a owl:ObjectProperty ;
+    rdfs:domain :Restoration ;
+    rdfs:range :OrganPart .
+
+:builtBy a owl:ObjectProperty ;
+    rdfs:domain :Organ ;
+    rdfs:range :OrganBuilder .
+
+:hasDisposition a owl:ObjectProperty ;
+    rdfs:domain :Organ ;
+    rdfs:range :Disposition .
+
+:hasBaseStop a owl:ObjectProperty ;
+    rdfs:domain :Disposition ;
+    rdfs:range :BaseStop .
+
+:productionYear a owl:DatatypeProperty ;
+    rdfs:domain :Organ ;
+    rdfs:range xsd:int .
+
+:constructionYear a owl:DatatypeProperty ;
+    rdfs:domain :Church ;
+    rdfs:range xsd:int .
+
+:hasPart a owl:ObjectProperty ;
+    rdfs:domain :Organ ;
+    rdfs:range :OrganPart .
