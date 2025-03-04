@@ -1,0 +1,46 @@
+@prefix : <http://www.example.org/test#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+<http://www.example.org/test#> a owl:Ontology .
+
+:Hospital a owl:Class ;
+    rdfs:label "Hospital" .
+
+:DiseaseCategory a owl:Class ;
+    rdfs:label "Disease Category" .
+
+:HospitalStatistic a owl:Class ;
+    rdfs:label "Hospital Statistic" ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasAverageLengthOfStay ;
+        owl:onDataRange xsd:decimal ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+    ] ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :forDiseaseCategory ;
+        owl:onClass :DiseaseCategory ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+    ] ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :recordedBy ;
+        owl:onClass :Hospital ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+    ] .
+
+:hasAverageLengthOfStay a owl:DatatypeProperty ;
+    rdfs:domain :HospitalStatistic ;
+    rdfs:range xsd:decimal .
+
+:forDiseaseCategory a owl:ObjectProperty ;
+    rdfs:domain :HospitalStatistic ;
+    rdfs:range :DiseaseCategory .
+
+:recordedBy a owl:ObjectProperty ;
+    rdfs:domain :HospitalStatistic ;
+    rdfs:range :Hospital .
