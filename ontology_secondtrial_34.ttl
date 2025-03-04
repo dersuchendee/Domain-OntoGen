@@ -1,0 +1,67 @@
+@prefix : <http://www.example.org/test#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+<http://www.example.org/test#> a owl:Ontology .
+
+:Event a owl:Class ;
+    rdfs:label "Event" .
+
+:MeetingEvent a owl:Class ;
+    rdfs:label "Meeting Event" ;
+    rdfs:subClassOf :Event ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :isAccidental ;
+        owl:someValuesFrom xsd:boolean
+    ] .
+
+:Person a owl:Class ;
+    rdfs:label "Person" .
+
+:Participation a owl:Class ;
+    rdfs:label "Participation" ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :involvesPerson ;
+        owl:someValuesFrom :Person ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+    ] ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :involvesEvent ;
+        owl:someValuesFrom :Event ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+    ] ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasInvited ;
+        owl:someValuesFrom xsd:boolean
+    ] .
+
+:isAccidental a owl:DatatypeProperty ;
+    rdfs:label "is accidental" ;
+    rdfs:domain :MeetingEvent ;
+    rdfs:range xsd:boolean .
+
+:hasInvited a owl:DatatypeProperty ;
+    rdfs:label "has invited" ;
+    rdfs:domain :Participation ;
+    rdfs:range xsd:boolean .
+
+:involvesPerson a owl:ObjectProperty ;
+    rdfs:label "involves person" ;
+    rdfs:domain :Participation ;
+    rdfs:range :Person .
+
+:involvesEvent a owl:ObjectProperty ;
+    rdfs:label "involves event" ;
+    rdfs:domain :Participation ;
+    rdfs:range :Event .
+
+:hasParticipation a owl:ObjectProperty ;
+    rdfs:label "has participation" ;
+    rdfs:domain :Event ;
+    rdfs:range :Participation .
