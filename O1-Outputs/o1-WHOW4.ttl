@@ -1,0 +1,96 @@
+
+@prefix : <http://www.example.org/test#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+<http://www.example.org/test#> a owl:Ontology .
+
+### Classes
+
+:Agent a owl:Class ;
+    rdfs:label "Agent" ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :records ;
+        owl:someValuesFrom :Observation
+    ] .
+
+:Observation a owl:Class ;
+    rdfs:label "Observation" ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :isRecordedBy ;
+        owl:someValuesFrom :Agent
+    ] .
+
+:MicrobiologicalSubstance a owl:Class ;
+    rdfs:label "Microbiological Substance" .
+
+:SurfaceWater a owl:Class ;
+    rdfs:label "Surface Water" .
+
+:MicrobiologicalSubstanceAmountObservation a owl:Class ;
+    rdfs:label "Microbiological Substance Amount Observation" ;
+    rdfs:subClassOf :Observation ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :observesSubstance ;
+        owl:onClass :MicrobiologicalSubstance ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+    ] ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :inWaterBody ;
+        owl:onClass :SurfaceWater ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+    ] ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :atTime ;
+        owl:onDataRange xsd:dateTime ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+    ] ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasAmount ;
+        owl:onDataRange xsd:decimal ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+    ] .
+
+### Object Properties
+
+:records a owl:ObjectProperty ;
+    rdfs:label "records" ;
+    owl:inverseOf :isRecordedBy ;
+    rdfs:domain :Agent ;
+    rdfs:range :Observation .
+
+:isRecordedBy a owl:ObjectProperty ;
+    rdfs:label "is recorded by" ;
+    owl:inverseOf :records ;
+    rdfs:domain :Observation ;
+    rdfs:range :Agent .
+
+:observesSubstance a owl:ObjectProperty ;
+    rdfs:label "observes substance" ;
+    rdfs:domain :Observation ;
+    rdfs:range :MicrobiologicalSubstance .
+
+:inWaterBody a owl:ObjectProperty ;
+    rdfs:label "in water body" ;
+    rdfs:domain :Observation ;
+    rdfs:range :SurfaceWater .
+
+### Data Properties
+
+:atTime a owl:DatatypeProperty ;
+    rdfs:label "at time" ;
+    rdfs:domain :Observation ;
+    rdfs:range xsd:dateTime .
+
+:hasAmount a owl:DatatypeProperty ;
+    rdfs:label "has amount" ;
+    rdfs:domain :Observation ;
+    rdfs:range xsd:decimal .
