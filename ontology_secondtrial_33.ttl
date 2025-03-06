@@ -6,50 +6,62 @@
 
 <http://www.example.org/test#> a owl:Ontology .
 
-:Person a owl:Class ;
-    rdfs:label "Person" .
-
 :Event a owl:Class ;
     rdfs:label "Event" ;
     rdfs:subClassOf [
         a owl:Restriction ;
-        owl:onProperty :hasParticipant ;
-        owl:someValuesFrom :Person ;
-        owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger
+        owl:onProperty :hasAttendee ;
+        owl:someValuesFrom :Attendee
     ] .
 
-:TravelEvent a owl:Class ;
-    rdfs:label "Travel Event" ;
-    rdfs:subClassOf :Event ;
+:Attendee a owl:Class ;
+    rdfs:label "Attendee" ;
     rdfs:subClassOf [
         a owl:Restriction ;
-        owl:onProperty :hasDestination ;
-        owl:onClass :Place ;
+        owl:onProperty :hasProvenance ;
+        owl:someValuesFrom :Provenance
+    ] .
+
+:Provenance a owl:Class ;
+    rdfs:label "Provenance" ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :documentedBy ;
+        owl:onClass :Source ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+    ] ,
+    [
+        a owl:Restriction ;
+        owl:onProperty :hasReason ;
+        owl:onDataRange xsd:string ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+    ] ,
+    [
+        a owl:Restriction ;
+        owl:onProperty :hasMechanism ;
+        owl:onDataRange xsd:string ;
         owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
     ] .
 
-:Place a owl:Class ;
-    rdfs:label "Place" .
+:Source a owl:Class ;
+    rdfs:label "Source" .
 
-:TravelMethod a owl:Class ;
-    rdfs:label "Travel Method" .
-
-:hasParticipant a owl:ObjectProperty ;
-    rdfs:label "has participant" ;
+:hasAttendee a owl:ObjectProperty ;
     rdfs:domain :Event ;
-    rdfs:range :Person .
+    rdfs:range :Attendee .
 
-:hasDestination a owl:ObjectProperty ;
-    rdfs:label "has destination" ;
-    rdfs:domain :TravelEvent ;
-    rdfs:range :Place .
+:hasProvenance a owl:ObjectProperty ;
+    rdfs:domain :Attendee ;
+    rdfs:range :Provenance .
 
-:hasTravelMethod a owl:ObjectProperty ;
-    rdfs:label "has travel method" ;
-    rdfs:domain :TravelEvent ;
-    rdfs:range :TravelMethod .
+:documentedBy a owl:ObjectProperty ;
+    rdfs:domain :Provenance ;
+    rdfs:range :Source .
 
-:hasDate a owl:DatatypeProperty ;
-    rdfs:label "has date" ;
-    rdfs:domain :Event ;
-    rdfs:range xsd:date .
+:hasReason a owl:DatatypeProperty ;
+    rdfs:domain :Provenance ;
+    rdfs:range xsd:string .
+
+:hasMechanism a owl:DatatypeProperty ;
+    rdfs:domain :Provenance ;
+    rdfs:range xsd:string .
