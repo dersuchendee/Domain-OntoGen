@@ -1,0 +1,44 @@
+@prefix : <http://www.example.org/test#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+<http://www.example.org/test#> a owl:Ontology .
+
+:Event a owl:Class ;
+    rdfs:label "Event" .
+
+:Payment a owl:Class ;
+    rdfs:label "Payment" ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :supportsEvent ;
+        owl:someValuesFrom :Event
+    ] ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasPayer ;
+        owl:someValuesFrom :Payer
+    ] .
+
+:Payer a owl:Class ;
+    rdfs:label "Payer" .
+
+:Person a owl:Class ;
+    rdfs:subClassOf :Payer ;
+    rdfs:label "Person" .
+
+:Organization a owl:Class ;
+    rdfs:subClassOf :Payer ;
+    rdfs:label "Organization" .
+
+:hasPayer a owl:ObjectProperty ;
+    rdfs:domain :Payment ;
+    rdfs:range :Payer ;
+    rdfs:label "hasPayer" .
+
+:supportsEvent a owl:ObjectProperty ;
+    rdfs:domain :Payment ;
+    rdfs:range :Event ;
+    rdfs:label "supportsEvent" .
