@@ -1,0 +1,100 @@
+@prefix : <http://www.example.org/test#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+<http://www.example.org/test#> a owl:Ontology .
+
+:Church a owl:Class ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasName ;
+        owl:onDataRange xsd:string ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+    ] ,
+    [
+        a owl:Restriction ;
+        owl:onProperty :hasBellTower ;
+        owl:someValuesFrom :BellTower
+    ] .
+
+:BellTower a owl:Class ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasBell ;
+        owl:someValuesFrom :Bell
+    ] ,
+    [
+        a owl:Restriction ;
+        owl:onProperty :hasSoundPractice ;
+        owl:someValuesFrom :SoundPractice
+    ] .
+
+:Bell a owl:Class ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasWeight ;
+        owl:onDataRange xsd:decimal ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+    ] ,
+    [
+        a owl:Restriction ;
+        owl:onProperty :hasMountingSystem ;
+        owl:onClass :MountingSystem ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+    ] ,
+    [
+        a owl:Restriction ;
+        owl:onProperty :madeOf ;
+        owl:onClass :Material ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+    ] .
+
+:SoundPractice a owl:Class ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasMethod ;
+        owl:someValuesFrom :Method
+    ] .
+
+:Method a owl:Class .
+:Manual a owl:Class ;
+    rdfs:subClassOf :Method .
+:Electric a owl:Class ;
+    rdfs:subClassOf :Method .
+
+:hasBellTower a owl:ObjectProperty ;
+    rdfs:domain :Church ;
+    rdfs:range :BellTower .
+
+:hasBell a owl:ObjectProperty ;
+    rdfs:domain :BellTower ;
+    rdfs:range :Bell .
+
+:hasWeight a owl:DatatypeProperty ;
+    rdfs:domain :Bell ;
+    rdfs:range xsd:decimal .
+
+:hasMountingSystem a owl:ObjectProperty ;
+    rdfs:domain :Bell ;
+    rdfs:range :MountingSystem .
+
+:madeOf a owl:ObjectProperty ;
+    rdfs:domain :Bell ;
+    rdfs:range :Material .
+
+:hasSoundPractice a owl:ObjectProperty ;
+    rdfs:domain :BellTower ;
+    rdfs:range :SoundPractice .
+
+:hasMethod a owl:ObjectProperty ;
+    rdfs:domain :SoundPractice ;
+    rdfs:range :Method .
+
+:hasName a owl:DatatypeProperty ;
+    rdfs:domain :Church ;
+    rdfs:range xsd:string .
+
+:MountingSystem a owl:Class .
+:Material a owl:Class .
