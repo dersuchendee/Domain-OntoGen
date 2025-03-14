@@ -4,7 +4,7 @@ Folders contain LLM generated ontologies and the excel file contains CQs and sto
 
 ## Prompt used for ontology generation:
 ```python
-<instruction>
+"""<instruction>
 You are a helpful assistant designed to generate ontologies. You receive a Competency Question (CQ) and an Ontology Story (OS). \n
 Based on CQ, which is a requirement for the ontology, and OS, which tells you what the context of the ontology is, your task is generating one ontology (O). The goal is to generate O that models the CQ properly. This means there is a way to write a SPARQL query to extract the answer to this CQ in O.  \n
 Use the following prefixes: \n
@@ -210,5 +210,5 @@ O:
 CQ: {CQ}
 OS: {OS}
 O: 
-
+"""
 ```
