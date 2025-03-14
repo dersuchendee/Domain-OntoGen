@@ -1,0 +1,77 @@
+@prefix : <http://www.example.org/test#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+<http://www.example.org/test#> a owl:Ontology .
+
+:System a owl:Class ;
+    rdfs:label "System" ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasEnergyComponent ;
+        owl:someValuesFrom :EnergyComponent
+    ] ,
+    [
+        a owl:Restriction ;
+        owl:onProperty :hasPart ;
+        owl:someValuesFrom :Process
+    ] ,
+    [
+        a owl:Restriction ;
+        owl:onProperty :hasPart ;
+        owl:someValuesFrom :Actor
+    ] .
+
+:EnergyComponent a owl:Class ;
+    rdfs:label "Energy Component" .
+
+:Exergy a owl:Class ;
+    rdfs:subClassOf :EnergyComponent .
+
+:Anergy a owl:Class ;
+    rdfs:subClassOf :EnergyComponent .
+
+:Process a owl:Class .
+
+:Actor a owl:Class .
+
+:UnderstandingAbility a owl:Class ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :understandsEnergyComponent ;
+        owl:someValuesFrom :EnergyComponent
+    ] ,
+    [
+        a owl:Restriction ;
+        owl:onProperty :understandsValueForm ;
+        owl:someValuesFrom :ValueForm
+    ] .
+
+:ValueForm a owl:Class .
+
+:EconomicValue a owl:Class ;
+    rdfs:subClassOf :ValueForm .
+
+:EnvironmentalValue a owl:Class ;
+    rdfs:subClassOf :ValueForm .
+
+:SocialValue a owl:Class ;
+    rdfs:subClassOf :ValueForm .
+
+:hasEnergyComponent a owl:ObjectProperty ;
+    rdfs:domain :System ;
+    rdfs:range :EnergyComponent .
+
+:hasPart a owl:ObjectProperty ;
+    rdfs:domain :System ;
+    rdfs:range [ a owl:Class ; owl:unionOf (:Process :Actor) ] .
+
+:understandsEnergyComponent a owl:ObjectProperty ;
+    rdfs:domain :UnderstandingAbility ;
+    rdfs:range :EnergyComponent .
+
+:understandsValueForm a owl:ObjectProperty ;
+    rdfs:domain :UnderstandingAbility ;
+    rdfs:range :ValueForm .

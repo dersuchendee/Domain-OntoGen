@@ -1,0 +1,66 @@
+@prefix : <http://www.example.org/test#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+<http://www.example.org/test#> a owl:Ontology .
+
+:EnergyInfrastructure a owl:Class ;
+    rdfs:label "Energy Infrastructure" ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasLevel ;
+        owl:onClass :Level ;
+        owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger
+    ] ,
+    [
+        a owl:Restriction ;
+        owl:onProperty :governedBy ;
+        owl:onClass :Legislature ;
+        owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger
+    ] ,
+    [
+        a owl:Restriction ;
+        owl:onProperty :hasBarrier ;
+        owl:onClass :SystemBarrier ;
+        owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger
+    ] ,
+    [
+        a owl:Restriction ;
+        owl:onProperty :influencedBy ;
+        owl:onClass :ExternalFactor ;
+        owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger
+    ] .
+
+:SystemBarrier a owl:Class ;
+    rdfs:label "System Barrier" .
+
+:ExternalFactor a owl:Class ;
+    rdfs:label "External Factor" .
+
+:Legislature a owl:Class ;
+    rdfs:label "Legislature" .
+
+:Level a owl:Class ;
+    rdfs:label "Level" .
+
+:hasLevel a owl:ObjectProperty ;
+    rdfs:label "hasLevel" ;
+    rdfs:domain :EnergyInfrastructure ;
+    rdfs:range :Level .
+
+:governedBy a owl:ObjectProperty ;
+    rdfs:label "governedBy" ;
+    rdfs:domain :EnergyInfrastructure ;
+    rdfs:range :Legislature .
+
+:hasBarrier a owl:ObjectProperty ;
+    rdfs:label "hasBarrier" ;
+    rdfs:domain :EnergyInfrastructure ;
+    rdfs:range :SystemBarrier .
+
+:influencedBy a owl:ObjectProperty ;
+    rdfs:label "influencedBy" ;
+    rdfs:domain :EnergyInfrastructure ;
+    rdfs:range :ExternalFactor .

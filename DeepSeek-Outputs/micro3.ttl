@@ -1,0 +1,49 @@
+@prefix : <http://www.example.org/test#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+<http://www.example.org/test#> a owl:Ontology .
+
+:Species a owl:Class .
+
+:AquaticMicrobe a owl:Class ;
+    rdfs:subClassOf :Species .
+
+:Environment a owl:Class ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasChemicalCharacteristic ;
+        owl:someValuesFrom :ChemicalCharacteristic
+    ] .
+
+:ChemicalCharacteristic a owl:Class ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasType ;
+        owl:someValuesFrom xsd:string ;
+        owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger
+    ] ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasValue ;
+        owl:someValuesFrom xsd:float ;
+        owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger
+    ] .
+
+:isFoundIn a owl:ObjectProperty ;
+    rdfs:domain :Species ;
+    rdfs:range :Environment .
+
+:hasChemicalCharacteristic a owl:ObjectProperty ;
+    rdfs:domain :Environment ;
+    rdfs:range :ChemicalCharacteristic .
+
+:hasType a owl:DatatypeProperty ;
+    rdfs:domain :ChemicalCharacteristic ;
+    rdfs:range xsd:string .
+
+:hasValue a owl:DatatypeProperty ;
+    rdfs:domain :ChemicalCharacteristic ;
+    rdfs:range xsd:float .

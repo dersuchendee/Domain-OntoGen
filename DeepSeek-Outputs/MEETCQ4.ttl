@@ -1,0 +1,83 @@
+@prefix : <http://www.example.org/test#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+<http://www.example.org/test#> a owl:Ontology .
+
+:Person a owl:Class ;
+    rdfs:label "Person" .
+
+:Musician a owl:Class ;
+    rdfs:label "Musician" ;
+    rdfs:subClassOf :Person .
+
+:Performer a owl:Class ;
+    rdfs:label "Performer" ;
+    rdfs:subClassOf :Person .
+
+:Event a owl:Class ;
+    rdfs:label "Event" .
+
+:Meeting a owl:Class ;
+    rdfs:label "Meeting" ;
+    rdfs:subClassOf :Event ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasParticipant ;
+        owl:minQualifiedCardinality "2"^^xsd:nonNegativeInteger ;
+        owl:onClass :Person
+    ] ,
+    [
+        a owl:Restriction ;
+        owl:onProperty :hasLocation ;
+        owl:someValuesFrom :Location ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger 
+    ] ,
+    [
+        a owl:Restriction ;
+        owl:onProperty :hasTime ;
+        owl:onDataRange xsd:date ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger 
+    ] ,
+    [
+        a owl:Restriction ;
+        owl:onProperty :hasReason ;
+        owl:someValuesFrom :Reason ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger 
+    ] .
+
+:Location a owl:Class ;
+    rdfs:label "Location" .
+
+:Reason a owl:Class ;
+    rdfs:label "Reason" .
+
+:Source a owl:Class ;
+    rdfs:label "Source" .
+
+:hasParticipant a owl:ObjectProperty ;
+    rdfs:label "hasParticipant" ;
+    rdfs:domain :Meeting ;
+    rdfs:range :Person .
+
+:hasLocation a owl:ObjectProperty ;
+    rdfs:label "hasLocation" ;
+    rdfs:domain :Meeting ;
+    rdfs:range :Location .
+
+:hasTime a owl:DatatypeProperty ;
+    rdfs:label "hasTime" ;
+    rdfs:domain :Meeting ;
+    rdfs:range xsd:date .
+
+:hasReason a owl:ObjectProperty ;
+    rdfs:label "hasReason" ;
+    rdfs:domain :Meeting ;
+    rdfs:range :Reason .
+
+:documentedIn a owl:ObjectProperty ;
+    rdfs:label "documentedIn" ;
+    rdfs:domain :Meeting ;
+    rdfs:range :Source .

@@ -1,0 +1,179 @@
+@prefix : <http://www.example.org/test#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+<http://www.example.org/test#> a owl:Ontology .
+
+:BellTower a owl:Class ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :currentSoundPractice ;
+        owl:someValuesFrom :SoundPractice ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+    ] ,
+    [
+        a owl:Restriction ;
+        owl:onProperty :hasLocationContext ;
+        owl:someValuesFrom :LocationContext ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+    ] ,
+    [
+        a owl:Restriction ;
+        owl:onProperty :hasAddress ;
+        owl:someValuesFrom xsd:string ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+    ] ,
+    [
+        a owl:Restriction ;
+        owl:onProperty :hasBell ;
+        owl:someValuesFrom :Bell ;
+        owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger
+    ] ,
+    [
+        a owl:Restriction ;
+        owl:onProperty :hasSoundDocument ;
+        owl:someValuesFrom :SoundDocument 
+    ] .
+
+:SoundPractice a owl:Class ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasMethod ;
+        owl:someValuesFrom :SoundMethod ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+    ] ,
+    [
+        a owl:Restriction ;
+        owl:onProperty :hasHumanGroup ;
+        owl:someValuesFrom :HumanGroup 
+    ] .
+
+:SoundMethod a owl:Class .
+
+:LocationContext a owl:Class .
+
+:Bell a owl:Class ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasMountingSystem ;
+        owl:someValuesFrom :MountingSystem ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+    ] ,
+    [
+        a owl:Restriction ;
+        owl:onProperty :hasWeight ;
+        owl:onDataRange xsd:decimal ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+    ] ,
+    [
+        a owl:Restriction ;
+        owl:onProperty :hasMeasurement ;
+        owl:onDataRange xsd:string ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+    ] ,
+    [
+        a owl:Restriction ;
+        owl:onProperty :madeOfMaterial ;
+        owl:someValuesFrom :Material ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+    ] .
+
+:HumanGroup a owl:Class ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :isFormalized ;
+        owl:onDataRange xsd:boolean ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+    ] ,
+    [
+        a owl:Restriction ;
+        owl:onProperty :recognitionStatus ;
+        owl:onDataRange xsd:string 
+    ] ,
+    [
+        a owl:Restriction ;
+        owl:onProperty :hasTransmissionMethod ;
+        owl:someValuesFrom :TransmissionMethod 
+    ] ,
+    [
+        a owl:Restriction ;
+        owl:onProperty :hasAgeGroup ;
+        owl:onDataRange xsd:string 
+    ] ,
+    [
+        a owl:Restriction ;
+        owl:onProperty :hasGenderExclusivity ;
+        owl:someValuesFrom :GenderExclusivity 
+    ] .
+
+:TransmissionMethod a owl:Class .
+:GenderExclusivity a owl:Class .
+:Material a owl:Class .
+:MountingSystem a owl:Class .
+:SoundDocument a owl:Class .
+
+:currentSoundPractice a owl:ObjectProperty ;
+    rdfs:domain :BellTower ;
+    rdfs:range :SoundPractice .
+
+:hasMethod a owl:ObjectProperty ;
+    rdfs:domain :SoundPractice ;
+    rdfs:range :SoundMethod .
+
+:hasLocationContext a owl:ObjectProperty ;
+    rdfs:domain :BellTower ;
+    rdfs:range :LocationContext .
+
+:hasAddress a owl:DatatypeProperty ;
+    rdfs:domain :BellTower ;
+    rdfs:range xsd:string .
+
+:hasBell a owl:ObjectProperty ;
+    rdfs:domain :BellTower ;
+    rdfs:range :Bell .
+
+:hasSoundDocument a owl:ObjectProperty ;
+    rdfs:domain :BellTower ;
+    rdfs:range :SoundDocument .
+
+:hasMountingSystem a owl:ObjectProperty ;
+    rdfs:domain :Bell ;
+    rdfs:range :MountingSystem .
+
+:hasWeight a owl:DatatypeProperty ;
+    rdfs:domain :Bell ;
+    rdfs:range xsd:decimal .
+
+:hasMeasurement a owl:DatatypeProperty ;
+    rdfs:domain :Bell ;
+    rdfs:range xsd:string .
+
+:madeOfMaterial a owl:ObjectProperty ;
+    rdfs:domain :Bell ;
+    rdfs:range :Material .
+
+:hasHumanGroup a owl:ObjectProperty ;
+    rdfs:domain :SoundPractice ;
+    rdfs:range :HumanGroup .
+
+:isFormalized a owl:DatatypeProperty ;
+    rdfs:domain :HumanGroup ;
+    rdfs:range xsd:boolean .
+
+:recognitionStatus a owl:DatatypeProperty ;
+    rdfs:domain :HumanGroup ;
+    rdfs:range xsd:string .
+
+:hasTransmissionMethod a owl:ObjectProperty ;
+    rdfs:domain :HumanGroup ;
+    rdfs:range :TransmissionMethod .
+
+:hasAgeGroup a owl:DatatypeProperty ;
+    rdfs:domain :HumanGroup ;
+    rdfs:range xsd:string .
+
+:hasGenderExclusivity a owl:ObjectProperty ;
+    rdfs:domain :HumanGroup ;
+    rdfs:range :GenderExclusivity .

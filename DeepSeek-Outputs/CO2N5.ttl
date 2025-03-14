@@ -1,0 +1,42 @@
+@prefix : <http://www.example.org/test#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+<http://www.example.org/test#> a owl:Ontology .
+
+:MicrobialCommunity a owl:Class ;
+    rdfs:label "Microbial Community" .
+
+:BiogeochemicalProcess a owl:Class ;
+    rdfs:label "Biogeochemical Process" .
+
+:CarbonCycling a owl:Class ;
+    rdfs:label "Carbon Cycling" ;
+    rdfs:subClassOf :BiogeochemicalProcess .
+
+:NitrogenCycling a owl:Class ;
+    rdfs:label "Nitrogen Cycling" ;
+    rdfs:subClassOf :BiogeochemicalProcess .
+
+:CO2Fixation a owl:Class ;
+    rdfs:label "CO2 Fixation" ;
+    rdfs:subClassOf :CarbonCycling .
+
+:Ecosystem a owl:Class ;
+    rdfs:label "Ecosystem" .
+
+:GroundwaterEcosystem a owl:Class ;
+    rdfs:label "Groundwater Ecosystem" ;
+    rdfs:subClassOf :Ecosystem .
+
+:involvedIn a owl:ObjectProperty ;
+    rdfs:label "involved in" ;
+    rdfs:domain :MicrobialCommunity ;
+    rdfs:range :BiogeochemicalProcess .
+
+:occursIn a owl:ObjectProperty ;
+    rdfs:label "occurs in" ;
+    rdfs:domain :BiogeochemicalProcess ;
+    rdfs:range :Ecosystem .

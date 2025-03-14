@@ -1,0 +1,69 @@
+@prefix : <http://www.example.org/test#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+<http://www.example.org/test#> a owl:Ontology .
+
+:Person a owl:Class ;
+    rdfs:label "Person" ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasEvent ;
+        owl:someValuesFrom :Event
+    ] .
+
+:Event a owl:Class ;
+    rdfs:label "Event" ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :atLocation ;
+        owl:someValuesFrom :Location
+    ] ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasStartDate ;
+        owl:someValuesFrom xsd:date
+    ] ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :documentedIn ;
+        owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+        owl:onClass :Source
+    ] .
+
+:ResidenceEvent a owl:Class ;
+    rdfs:label "Residence Event" ;
+    rdfs:subClassOf :Event .
+
+:Location a owl:Class ;
+    rdfs:label "Location" .
+
+:Source a owl:Class ;
+    rdfs:label "Source" .
+
+:hasEvent a owl:ObjectProperty ;
+    rdfs:label "hasEvent" ;
+    rdfs:domain :Person ;
+    rdfs:range :Event .
+
+:atLocation a owl:ObjectProperty ;
+    rdfs:label "atLocation" ;
+    rdfs:domain :Event ;
+    rdfs:range :Location .
+
+:hasStartDate a owl:DatatypeProperty ;
+    rdfs:label "hasStartDate" ;
+    rdfs:domain :Event ;
+    rdfs:range xsd:date .
+
+:hasEndDate a owl:DatatypeProperty ;
+    rdfs:label "hasEndDate" ;
+    rdfs:domain :Event ;
+    rdfs:range xsd:date .
+
+:documentedIn a owl:ObjectProperty ;
+    rdfs:label "documentedIn" ;
+    rdfs:domain :Event ;
+    rdfs:range :Source .

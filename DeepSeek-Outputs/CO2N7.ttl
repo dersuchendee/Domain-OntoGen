@@ -1,0 +1,32 @@
+@prefix : <http://www.example.org/test#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+<http://www.example.org/test#> a owl:Ontology .
+
+:BeechForest a owl:Class ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :participatesIn ;
+        owl:someValuesFrom :CarbonSequestration
+    ] .
+
+:CarbonSequestration a owl:Class ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :contributesTo ;
+        owl:someValuesFrom :CarbonCycling
+    ] .
+
+:CarbonCycling a owl:Class .
+:NitrogenCycling a owl:Class .
+
+:participatesIn a owl:ObjectProperty ;
+    rdfs:domain :BeechForest ;
+    rdfs:range :CarbonSequestration .
+
+:contributesTo a owl:ObjectProperty ;
+    rdfs:domain :CarbonSequestration ;
+    rdfs:range :CarbonCycling .

@@ -1,0 +1,41 @@
+@prefix : <http://www.example.org/test#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+<http://www.example.org/test#> a owl:Ontology .
+
+:Organ a owl:Class ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasOriginalLocation ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+        owl:onClass :Church
+    ] .
+
+:Church a owl:Class ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasConstructionYear ;
+        owl:onDataRange xsd:int ;
+        owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger
+    ] .
+
+:OrganBuilder a owl:Class .
+
+:hasOriginalLocation a owl:ObjectProperty ;
+    rdfs:domain :Organ ;
+    rdfs:range :Church .
+
+:builtBy a owl:ObjectProperty ;
+    rdfs:domain :Organ ;
+    rdfs:range :OrganBuilder .
+
+:hasProductionYear a owl:DatatypeProperty ;
+    rdfs:domain :Organ ;
+    rdfs:range xsd:int .
+
+:hasConstructionYear a owl:DatatypeProperty ;
+    rdfs:domain :Church ;
+    rdfs:range xsd:int .

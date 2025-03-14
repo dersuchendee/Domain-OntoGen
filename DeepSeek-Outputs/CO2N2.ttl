@@ -1,0 +1,52 @@
+@prefix : <http://www.example.org/test#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+<http://www.example.org/test#> a owl:Ontology .
+
+:EnvironmentalCondition a owl:Class ;
+    rdfs:label "Environmental Condition" .
+
+:SoilMoisture a owl:Class ;
+    rdfs:subClassOf :EnvironmentalCondition ;
+    rdfs:label "Soil Moisture" .
+
+:pH a owl:Class ;
+    rdfs:subClassOf :EnvironmentalCondition ;
+    rdfs:label "pH" .
+
+:Process a owl:Class ;
+    rdfs:label "Process" .
+
+:CO2Fixation a owl:Class ;
+    rdfs:subClassOf :Process ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :occursIn ;
+        owl:someValuesFrom :GroundwaterEcosystem
+    ] ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :influencedBy ;
+        owl:someValuesFrom :EnvironmentalCondition
+    ] ;
+    rdfs:label "CO2 Fixation" .
+
+:Ecosystem a owl:Class ;
+    rdfs:label "Ecosystem" .
+
+:GroundwaterEcosystem a owl:Class ;
+    rdfs:subClassOf :Ecosystem ;
+    rdfs:label "Groundwater Ecosystem" .
+
+:occursIn a owl:ObjectProperty ;
+    rdfs:domain :Process ;
+    rdfs:range :Ecosystem ;
+    rdfs:label "occurs in" .
+
+:influencedBy a owl:ObjectProperty ;
+    rdfs:domain :Process ;
+    rdfs:range :EnvironmentalCondition ;
+    rdfs:label "influenced by" .

@@ -1,0 +1,118 @@
+@prefix : <http://www.example.org/test#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+<http://www.example.org/test#> a owl:Ontology .
+
+:Composer a owl:Class ;
+    rdfs:subClassOf :Person ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasNetworkMember ;
+        owl:someValuesFrom :NetworkEntity
+    ] .
+
+:NetworkEntity a owl:Class ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :involvedIn ;
+        owl:someValuesFrom :Event
+    ] .
+
+:Person a owl:Class .
+
+:Patron a owl:Class ;
+    rdfs:subClassOf :NetworkEntity .
+
+:Institution a owl:Class ;
+    rdfs:subClassOf :NetworkEntity .
+
+:Event a owl:Class ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasParticipant ;
+        owl:someValuesFrom :Person
+    ] ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasDate ;
+        owl:someValuesFrom xsd:date
+    ] ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasLocation ;
+        owl:someValuesFrom xsd:string
+    ] ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :documentedBy ;
+        owl:someValuesFrom :Source
+    ] .
+
+:Source a owl:Class ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasAnnotation ;
+        owl:someValuesFrom :Annotation
+    ] .
+
+:Annotation a owl:Class ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :ratesQuality ;
+        owl:someValuesFrom xsd:string
+    ] ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :ratesAccuracy ;
+        owl:someValuesFrom xsd:string
+    ] .
+
+:Collection a owl:Class ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :contains ;
+        owl:someValuesFrom :Event
+    ] .
+
+:hasNetworkMember a owl:ObjectProperty ;
+    rdfs:domain :Composer ;
+    rdfs:range :NetworkEntity .
+
+:involvedIn a owl:ObjectProperty ;
+    rdfs:domain :NetworkEntity ;
+    rdfs:range :Event .
+
+:hasParticipant a owl:ObjectProperty ;
+    rdfs:domain :Event ;
+    rdfs:range :Person .
+
+:hasDate a owl:DatatypeProperty ;
+    rdfs:domain :Event ;
+    rdfs:range xsd:date .
+
+:hasLocation a owl:DatatypeProperty ;
+    rdfs:domain :Event ;
+    rdfs:range xsd:string .
+
+:documentedBy a owl:ObjectProperty ;
+    rdfs:domain :Event ;
+    rdfs:range :Source .
+
+:hasAnnotation a owl:ObjectProperty ;
+    rdfs:domain :Source ;
+    rdfs:range :Annotation .
+
+:ratesQuality a owl:DatatypeProperty ;
+    rdfs:domain :Annotation ;
+    rdfs:range xsd:string .
+
+:ratesAccuracy a owl:DatatypeProperty ;
+    rdfs:domain :Annotation ;
+    rdfs:range xsd:string .
+
+:contains a owl:ObjectProperty ;
+    rdfs:domain :Collection ;
+    rdfs:range :Event .

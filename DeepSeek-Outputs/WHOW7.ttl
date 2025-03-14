@@ -1,0 +1,76 @@
+@prefix : <http://www.example.org/test#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+<http://www.example.org/test#> a owl:Ontology .
+
+:Hospital a owl:Class ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasAdmissionSummary ;
+        owl:someValuesFrom :HospitalAdmissionSummary
+    ] .
+
+:Admission a owl:Class ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasDiagnosisCode ;
+        owl:someValuesFrom :DiagnosisCode
+    ] .
+
+:HospitalAdmissionSummary a owl:Class ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :appliesToDiagnosisCode ;
+        owl:onClass :DiagnosisCode ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+    ] ,
+    [
+        a owl:Restriction ;
+        owl:onProperty :reportedByHospital ;
+        owl:onClass :Hospital ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+    ] .
+
+:DiagnosisCode a owl:Class .
+
+:hasAdmissionSummary a owl:ObjectProperty ;
+    rdfs:domain :Hospital ;
+    rdfs:range :HospitalAdmissionSummary .
+
+:appliesToDiagnosisCode a owl:ObjectProperty ;
+    rdfs:domain :HospitalAdmissionSummary ;
+    rdfs:range :DiagnosisCode .
+
+:reportedByHospital a owl:ObjectProperty ;
+    rdfs:domain :HospitalAdmissionSummary ;
+    rdfs:range :Hospital .
+
+:averageAdmissions a owl:DatatypeProperty ;
+    rdfs:domain :HospitalAdmissionSummary ;
+    rdfs:range xsd:decimal .
+
+:hasDiagnosisCode a owl:ObjectProperty ;
+    rdfs:domain :Admission ;
+    rdfs:range :DiagnosisCode .
+
+:EnvironmentalFactor a owl:Class .
+:WaterQuality a owl:Class ;
+    rdfs:subClassOf :EnvironmentalFactor .
+
+:HealthOutcome a owl:Class ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :measuredThrough ;
+        owl:someValuesFrom :Admission
+    ] .
+
+:affects a owl:ObjectProperty ;
+    rdfs:domain :EnvironmentalFactor ;
+    rdfs:range :HealthOutcome .
+
+:measuredThrough a owl:ObjectProperty ;
+    rdfs:domain :HealthOutcome ;
+    rdfs:range :Admission .

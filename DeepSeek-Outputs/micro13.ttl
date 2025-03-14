@@ -1,0 +1,53 @@
+@prefix : <http://www.example.org/test#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+<http://www.example.org/test#> a owl:Ontology .
+
+:Species a owl:Class ;
+    rdfs:label "Species" .
+
+:TrophicRelationship a owl:Class ;
+    rdfs:label "Trophic Relationship" ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasConsumer ;
+        owl:onClass :Species ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+    ] ,
+    [
+        a owl:Restriction ;
+        owl:onProperty :hasResource ;
+        owl:onClass :Species ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+    ] ,
+    [
+        a owl:Restriction ;
+        owl:onProperty :occursIn ;
+        owl:onClass :Habitat ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+    ] .
+
+:Habitat a owl:Class ;
+    rdfs:label "Habitat" .
+
+:AquiferMicrobeHabitat a owl:Class ;
+    rdfs:label "Aquifer Microbe Habitat" ;
+    rdfs:subClassOf :Habitat .
+
+:hasConsumer a owl:ObjectProperty ;
+    rdfs:label "has consumer" ;
+    rdfs:domain :TrophicRelationship ;
+    rdfs:range :Species .
+
+:hasResource a owl:ObjectProperty ;
+    rdfs:label "has resource" ;
+    rdfs:domain :TrophicRelationship ;
+    rdfs:range :Species .
+
+:occursIn a owl:ObjectProperty ;
+    rdfs:label "occurs in" ;
+    rdfs:domain :TrophicRelationship ;
+    rdfs:range :Habitat .

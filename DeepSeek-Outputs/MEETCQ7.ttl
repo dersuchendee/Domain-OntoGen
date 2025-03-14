@@ -1,0 +1,119 @@
+@prefix : <http://www.example.org/test#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+<http://www.example.org/test#> a owl:Ontology .
+
+:Event a owl:Class ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasEventType ;
+        owl:someValuesFrom :EventType
+    ] ,
+    [
+        a owl:Restriction ;
+        owl:onProperty :hasDate ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+        owl:onDataRange xsd:date
+    ] ,
+    [
+        a owl:Restriction ;
+        owl:onProperty :hasLocation ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+        owl:onDataRange xsd:string
+    ] .
+
+:EventType a owl:Class ;
+    rdfs:subClassOf owl:Thing .
+
+:Celebration a owl:Class ;
+    rdfs:subClassOf :EventType .
+
+:Festival a owl:Class ;
+    rdfs:subClassOf :EventType .
+
+:PrivateEvent a owl:Class ;
+    rdfs:subClassOf :EventType .
+
+:hasEventType a owl:ObjectProperty ;
+    rdfs:domain :Event ;
+    rdfs:range :EventType .
+
+:hasDate a owl:DatatypeProperty ;
+    rdfs:domain :Event ;
+    rdfs:range xsd:date .
+
+:hasLocation a owl:DatatypeProperty ;
+    rdfs:domain :Event ;
+    rdfs:range xsd:string .
+
+:Source a owl:Class .
+
+:hasSource a owl:ObjectProperty ;
+    rdfs:domain :Event ;
+    rdfs:range :Source .
+
+:Annotation a owl:Class ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :annotatesSource ;
+        owl:someValuesFrom :Source
+    ] .
+
+:annotatesSource a owl:ObjectProperty ;
+    rdfs:domain :Annotation ;
+    rdfs:range :Source .
+
+:hasQualityRating a owl:DatatypeProperty ;
+    rdfs:domain :Annotation ;
+    rdfs:range xsd:string .
+
+:hasAccuracy a owl:DatatypeProperty ;
+    rdfs:domain :Annotation ;
+    rdfs:range xsd:string .
+
+:Person a owl:Class .
+
+:Role a owl:Class .
+
+:Participation a owl:Class ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasParticipant ;
+        owl:someValuesFrom :Person
+    ] ,
+    [
+        a owl:Restriction ;
+        owl:onProperty :inEvent ;
+        owl:someValuesFrom :Event
+    ] ,
+    [
+        a owl:Restriction ;
+        owl:onProperty :withRole ;
+        owl:someValuesFrom :Role
+    ] .
+
+:hasParticipant a owl:ObjectProperty ;
+    rdfs:domain :Participation ;
+    rdfs:range :Person .
+
+:inEvent a owl:ObjectProperty ;
+    rdfs:domain :Participation ;
+    rdfs:range :Event .
+
+:withRole a owl:ObjectProperty ;
+    rdfs:domain :Participation ;
+    rdfs:range :Role .
+
+:Collection a owl:Class ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasMember ;
+        owl:someValuesFrom owl:Thing
+    ] .
+
+:hasMember a owl:ObjectProperty ;
+    rdfs:domain :Collection ;
+    rdfs:range owl:Thing .

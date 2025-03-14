@@ -1,0 +1,66 @@
+@prefix : <http://www.example.org/test#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+<http://www.example.org/test#> a owl:Ontology .
+
+:Enzyme a owl:Class ;
+    rdfs:label "Enzyme" ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasRole ;
+        owl:someValuesFrom :ProcessRole
+    ] .
+
+:BiochemicalProcess a owl:Class ;
+    rdfs:label "Biochemical Process" ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :partOfCycle ;
+        owl:someValuesFrom :Cycle
+    ] .
+
+:CO2FixationProcess a owl:Class ;
+    rdfs:label "CO2 Fixation Process" ;
+    rdfs:subClassOf :BiochemicalProcess ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :partOfCycle ;
+        owl:someValuesFrom :CarbonCycle
+    ] .
+
+:ProcessRole a owl:Class ;
+    rdfs:label "Process Role" ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :inProcess ;
+        owl:someValuesFrom :BiochemicalProcess
+    ] .
+
+:Cycle a owl:Class ;
+    rdfs:label "Cycle" .
+
+:CarbonCycle a owl:Class ;
+    rdfs:label "Carbon Cycle" ;
+    rdfs:subClassOf :Cycle .
+
+:NitrogenCycle a owl:Class ;
+    rdfs:label "Nitrogen Cycle" ;
+    rdfs:subClassOf :Cycle .
+
+:hasRole a owl:ObjectProperty ;
+    rdfs:label "has role" ;
+    rdfs:domain :Enzyme ;
+    rdfs:range :ProcessRole .
+
+:inProcess a owl:ObjectProperty ;
+    rdfs:label "in process" ;
+    rdfs:domain :ProcessRole ;
+    rdfs:range :BiochemicalProcess .
+
+:partOfCycle a owl:ObjectProperty ;
+    rdfs:label "part of cycle" ;
+    rdfs:domain :BiochemicalProcess ;
+    rdfs:range :Cycle .

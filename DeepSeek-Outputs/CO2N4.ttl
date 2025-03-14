@@ -1,0 +1,71 @@
+@prefix : <http://www.example.org/test#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+<http://www.example.org/test#> a owl:Ontology .
+
+:EnergyMetabolism a owl:Class ;
+    rdfs:label "Energy Metabolism" ;
+    rdfs:subClassOf :BiologicalProcess ,
+        [ a owl:Restriction ;
+          owl:onProperty :contributesTo ;
+          owl:someValuesFrom :CO2FixationPathway
+        ] ,
+        [ a owl:Restriction ;
+          owl:onProperty :occursIn ;
+          owl:someValuesFrom :AquaticEcosystem
+        ] ,
+        [ a owl:Restriction ;
+          owl:onProperty :partOfCycle ;
+          owl:someValuesFrom :CarbonCycling
+        ] .
+
+:CO2FixationPathway a owl:Class ;
+    rdfs:label "CO2 Fixation Pathway" ;
+    rdfs:subClassOf :BiologicalProcess ,
+        [ a owl:Restriction ;
+          owl:onProperty :occursIn ;
+          owl:someValuesFrom :AquaticEcosystem
+        ] ,
+        [ a owl:Restriction ;
+          owl:onProperty :partOfCycle ;
+          owl:someValuesFrom :CarbonCycling
+        ] .
+
+:AquaticEcosystem a owl:Class ;
+    rdfs:label "Aquatic Ecosystem" ;
+    rdfs:subClassOf :Ecosystem .
+
+:CarbonCycling a owl:Class ;
+    rdfs:label "Carbon Cycling" ;
+    rdfs:subClassOf :BiogeochemicalCycle .
+
+:NitrogenCycling a owl:Class ;
+    rdfs:label "Nitrogen Cycling" ;
+    rdfs:subClassOf :BiogeochemicalCycle .
+
+:BiogeochemicalCycle a owl:Class ;
+    rdfs:label "Biogeochemical Cycle" .
+
+:Ecosystem a owl:Class ;
+    rdfs:label "Ecosystem" .
+
+:BiologicalProcess a owl:Class ;
+    rdfs:label "Biological Process" .
+
+:contributesTo a owl:ObjectProperty ;
+    rdfs:label "contributes to" ;
+    rdfs:domain :EnergyMetabolism ;
+    rdfs:range :CO2FixationPathway .
+
+:occursIn a owl:ObjectProperty ;
+    rdfs:label "occurs in" ;
+    rdfs:domain :BiologicalProcess ;
+    rdfs:range :Ecosystem .
+
+:partOfCycle a owl:ObjectProperty ;
+    rdfs:label "part of cycle" ;
+    rdfs:domain :BiologicalProcess ;
+    rdfs:range :BiogeochemicalCycle .

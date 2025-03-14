@@ -1,0 +1,79 @@
+@prefix : <http://www.example.org/test#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+<http://www.example.org/test#> a owl:Ontology .
+
+:Microbe a owl:Class ;
+    rdfs:label "Microbe" .
+
+:AquaticFungi a owl:Class ;
+    rdfs:label "Aquatic Fungi" ;
+    rdfs:subClassOf :Microbe .
+
+:Heterotroph a owl:Class ;
+    rdfs:label "Heterotroph" ;
+    rdfs:subClassOf :Microbe .
+
+:Habitat a owl:Class ;
+    rdfs:label "Habitat" .
+
+:Aquifer a owl:Class ;
+    rdfs:label "Aquifer" ;
+    rdfs:subClassOf :Habitat .
+
+:Interaction a owl:Class ;
+    rdfs:label "Interaction" ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasInfluencer ;
+        owl:onClass :AquaticFungi ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+    ] , [
+        a owl:Restriction ;
+        owl:onProperty :hasInfluenced ;
+        owl:onClass :Heterotroph ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+    ] , [
+        a owl:Restriction ;
+        owl:onProperty :occursIn ;
+        owl:onClass :Aquifer ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+    ] , [
+        a owl:Restriction ;
+        owl:onProperty :affectsAbundance ;
+        owl:onDataRange xsd:string ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+    ] , [
+        a owl:Restriction ;
+        owl:onProperty :affectsActivity ;
+        owl:onDataRange xsd:string ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+    ] .
+
+:hasInfluencer a owl:ObjectProperty ;
+    rdfs:label "has influencer" ;
+    rdfs:domain :Interaction ;
+    rdfs:range :AquaticFungi .
+
+:hasInfluenced a owl:ObjectProperty ;
+    rdfs:label "has influenced" ;
+    rdfs:domain :Interaction ;
+    rdfs:range :Heterotroph .
+
+:occursIn a owl:ObjectProperty ;
+    rdfs:label "occurs in" ;
+    rdfs:domain :Interaction ;
+    rdfs:range :Aquifer .
+
+:affectsAbundance a owl:DatatypeProperty ;
+    rdfs:label "affects abundance" ;
+    rdfs:domain :Interaction ;
+    rdfs:range xsd:string .
+
+:affectsActivity a owl:DatatypeProperty ;
+    rdfs:label "affects activity" ;
+    rdfs:domain :Interaction ;
+    rdfs:range xsd:string .
