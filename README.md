@@ -1,6 +1,6 @@
 # Assessing the Capability of Large Language Models for Domain-Specific Ontology Generation
 This repository contains material for the paper Assessing the Capability of Large Language Models for Domain-Specific Ontology Generation, presented at the ELMKE workshop at ESWC 2025.
-Folders contain LLM generated ontologies and the excel file contains CQs and stories
+Folders contain LLM generated ontologies and the excel file contains CQs and stories. You can also find our presentation slides.
 
 
 ## Prompt used for ontology generation:
